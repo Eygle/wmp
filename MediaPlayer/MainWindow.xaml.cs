@@ -28,9 +28,28 @@ namespace MediaPlayer
         private bool _isLoopSingle = false;
         private bool _isPreview = false;
 
+        private System.Windows.Threading.DispatcherTimer _timer = new System.Windows.Threading.DispatcherTimer();
+
         public MainWindow()
         {
             InitializeComponent();
+            _timer.Interval = TimeSpan.FromMilliseconds(1000);
+            _timer.Tick += new EventHandler(synchronizeProgressBar);
+            _timer.Start();
+        }
+
+        ~MainWindow()
+        {
+            _timer.Stop();
+        }
+        void synchronizeProgressBar(object sender, EventArgs e)
+        {
+            if (mediaElement.HasVideo || mediaElement.HasAudio)
+            {
+                double pos = mediaElement.Position.TotalSeconds;
+                if (pos > videoProgressBar.Value)
+                    videoProgressBar.Value = pos;
+            }
         }
 
         private void SetPlayList(string dir, string[] str)
@@ -216,8 +235,13 @@ namespace MediaPlayer
         {
             try
             {
-                TimeSpan ts = new TimeSpan(0, 0, 0, 0, (int)videoProgressBar.Value);
-                mediaElement.Position = ts;
+                double prog = videoProgressBar.Value;
+                if (Math.Abs(prog - mediaElement.Position.TotalSeconds) > 2)
+                {
+                    TimeSpan ts = new TimeSpan(0, 0, 0, (int)prog);
+                    mediaElement.Position = ts;
+                    System.Console.WriteLine("User move to " + ts.TotalSeconds);
+                }
             }
             catch
             {
@@ -228,7 +252,8 @@ namespace MediaPlayer
         {
             try 
             {
-                this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
+                this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
+                System.Console.WriteLine("Total video seconds = " + this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds);
             }
             catch
             {
