@@ -94,6 +94,7 @@ namespace MediaPlayer
                 SetPlayList("", str);
                 mediaElement.Source = new Uri(str[0]);
                 mediaElement.Play();
+                videoProgressBar.Value = 0;
                 videoProgressBar.Visibility = System.Windows.Visibility.Visible;
             }
             catch
@@ -248,12 +249,27 @@ namespace MediaPlayer
             }
         }
 
+        private string getName(string path)
+        {
+            int lastSlash = path.LastIndexOf('/'), lastPoint = path.LastIndexOf('.');
+            System.Console.WriteLine(path);
+            System.Console.WriteLine("Last / " + lastSlash);
+            System.Console.WriteLine("Last . " + lastPoint);
+            if (lastPoint != -1 && lastPoint < path.Length)
+                path = path.Substring(0, lastPoint);
+            if (lastSlash != -1 && lastSlash + 1 < path.Length)
+                path = path.Substring(lastSlash + 1);
+            return path;
+        }
+
         private void mediaElement_MediaOpened(object sender, RoutedEventArgs e)
         {
             try 
             {
                 this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
                 System.Console.WriteLine("Total video seconds = " + this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds);
+                //MessageBox.Show(getName(mediaElement.Source.ToString()));
+                mediaTitle.Content = getName(mediaElement.Source.ToString());
             }
             catch
             {
@@ -292,6 +308,11 @@ namespace MediaPlayer
 
         private void MediaPlayer_Loaded(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void mediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            MessageBox.Show(e.ErrorException.Message);
         }
     }
 }
