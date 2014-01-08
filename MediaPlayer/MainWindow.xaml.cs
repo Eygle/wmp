@@ -89,19 +89,22 @@ namespace MediaPlayer
         {
 
             System.Windows.Forms.FolderBrowserDialog openFolderDialog1 = new System.Windows.Forms.FolderBrowserDialog();//.OpenFileDialog();
-            openFolderDialog1.ShowDialog();
-            try
+
+            if (openFolderDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                string[] str = Directory.GetFiles(openFolderDialog1.SelectedPath);
-                SetPlayList("", str);
-                mediaElement.Source = new Uri(str[0]);
-                mediaElement.Play();
-                videoProgressBar.Value = 0;
-                videoProgressBar.Visibility = System.Windows.Visibility.Visible;
-            }
-            catch
-            {
-                MessageBox.Show("File could not be loaded!");
+                try
+                {
+                    string[] str = Directory.GetFiles(openFolderDialog1.SelectedPath);
+                    SetPlayList("", str);
+                    mediaElement.Source = new Uri(str[0]);
+                    mediaElement.Play();
+                    videoProgressBar.Value = 0;
+                    videoProgressBar.Visibility = System.Windows.Visibility.Visible;
+                }
+                catch
+                {
+                    MessageBox.Show("File could not be loaded!");
+                }
             }
         }
 
