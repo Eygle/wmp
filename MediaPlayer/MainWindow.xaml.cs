@@ -64,8 +64,9 @@ namespace MediaPlayer
         {
             System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             openFileDialog1.Multiselect = true;
-            openFileDialog1.ShowDialog();
-            if (openFileDialog1.CheckFileExists)
+            System.Windows.Forms.DialogResult res = openFileDialog1.ShowDialog();
+            if (res == System.Windows.Forms.DialogResult.OK && openFileDialog1.CheckFileExists)
+            {
                 try
                 {
                     string[] str = openFileDialog1.FileNames;
@@ -73,15 +74,16 @@ namespace MediaPlayer
                     mediaElement.Source = new Uri(_pathList.First());
                     videoProgressBar.Value = 0;
                     mediaElement.Play();
-                    /*if (mediaElement.HasAudio || mediaElement.HasAnimatedProperties || mediaElement.HasVideo)*/
-                    videoProgressBar.Visibility = System.Windows.Visibility.Visible;
-                    /*else
-                        videoProgressBar.Visibility = System.Windows.Visibility.Hidden;*/
+                    if (mediaElement.HasAudio || mediaElement.HasVideo)
+                        videoProgressBar.Visibility = System.Windows.Visibility.Visible;
+                    else
+                        videoProgressBar.Visibility = System.Windows.Visibility.Hidden;
                 }
                 catch
                 {
                     MessageBox.Show("File could not be loaded!");
                 }
+            }
         }
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
