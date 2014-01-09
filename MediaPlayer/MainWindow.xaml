@@ -60,6 +60,7 @@
                 <Separator />
                 <MenuItem Click="Quit_Click" Header="Quit" />
             </MenuItem>
+            <MenuItem Header="Youtube" />
         </Menu>
         <Rectangle Fill="#FF070303" Margin="0,29,0,72" x:Name="mediaElementBackground" Stroke="Black" />
         <MediaElement LoadedBehavior="Manual" Margin="0,29,0,72" x:Name="mediaElement" MediaOpened="mediaElement_MediaOpened" MediaEnded="mediaElement_MediaEnded" MediaFailed="mediaElement_MediaFailed" />
