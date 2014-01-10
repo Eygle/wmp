@@ -211,8 +211,10 @@ namespace MediaPlayer
         }
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            grid1.Width = Width - 22;
+            grid1.Width = Width - 16;
             grid1.Height = Height - 39;
+            Tabulations.Width = Width - 16;
+            Tabulations.Height = Height - 62;
         }
 
 
@@ -300,9 +302,10 @@ namespace MediaPlayer
         private void showPlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             _isPreview = _isPreview ? false : true;
-            mediaElement.Visibility = _isPreview ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
-            mediaElementBackground.Visibility = _isPreview ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
-            grid2.Visibility = _isPreview ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            //mediaElement.Visibility = _isPreview ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
+            //mediaElementBackground.Visibility = _isPreview ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
+            //grid2.Visibility = _isPreview ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            TabPlaylists.Focus();
         }
 
         private void cameraButton_Click(object sender, RoutedEventArgs e)
@@ -318,6 +321,68 @@ namespace MediaPlayer
         private void mediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
             MessageBox.Show(e.ErrorException.Message);
+        }
+
+        private void MediaPlayer_StateChanged(object sender, EventArgs e)
+        {
+            if (MediaPlayer.WindowState.Equals(System.Windows.WindowState.Maximized))
+            {
+                MessageBox.Show("Maximized: " + MediaPlayer);
+                //grid1.Width = this.MaxWidth - 22;
+                //grid1.Height = this.MaxHeight - 39;
+            }
+            //this.WindowState = MediaPlayer.WindowState.Equals(System.Windows.WindowState.Maximized) ? System.Windows.WindowState.Normal : System.Windows.WindowState.Maximized;
+            //MessageBox.Show("coucou" + MediaPlayer.Width);
+            //grid1.Width = this.Width - 22;
+            //grid1.Height = this.Height - 39;
+        }
+
+        private bool checkUrl(string url)
+        {
+            string pat = @"http://www\.youtube\.com/watch\?v=([A-Za-z0-9_]+)$";
+
+            Regex r = new Regex(pat, RegexOptions.IgnoreCase);
+            return r.Match(url).Success;
+        }
+
+        private string formatUrl(string url)
+        {
+            return url.Replace("watch?v=", "embed/");
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string url = YoutubeLink.Text;
+
+            if (checkUrl(url))
+            {
+                url = this.formatUrl(url);
+                YoutubeEmbededPlayer.Navigate(this.formatUrl(url));
+            }
+            else
+            {
+                MessageBox.Show("Le lien n'est pas valide !");
+            }
+        }
+
+        private void YoutubeLink_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (YoutubeLink.Text == "Insert Youtube URL here")
+                YoutubeLink.Text = "";
+            YoutubeLink.Foreground = new SolidColorBrush(Colors.Black);
+        }
+
+        private void YoutubeLink_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (YoutubeLink.Text == "")
+                YoutubeLink.Text = "Insert Youtube URL here";
+            YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
+        }
+
+        private void TabItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (YoutubeLink.Text == "Insert Youtube URL here")
+             YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
         }
     }
 }
