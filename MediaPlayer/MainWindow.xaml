@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" x:Name="MediaPlayer" x:Class="MediaPlayer.MainWindow"
-        Title="MediaPlayer" ResizeMode="CanResize" Background="#FF333333" BorderBrush="{x:Null}" SizeChanged="Window_SizeChanged" mc:Ignorable="d" Height="500" Width="700" MinWidth="550" MinHeight="450" Loaded="MediaPlayer_Loaded">
+        Title="MediaPlayer" ResizeMode="CanResize" Background="#FFFFFF" BorderBrush="{x:Null}" SizeChanged="Window_SizeChanged" mc:Ignorable="d" Height="500" Width="700" MinWidth="550" MinHeight="450">
     <Window.Resources>
         <Style x:Key="ButtonFocusVisual">
             <Setter Property="Control.Template">
@@ -51,23 +51,25 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Background="#FF333333" x:Name="grid1">
-        <Menu Height="23" x:Name="menu1" VerticalAlignment="Top" Margin="0,0,0,0" Grid.ColumnSpan="3" UsesItemContainerTemplate="True">
-            <MenuItem Header="File">
-                <MenuItem Click="OpenFile_Click" Header="Open File" />
-                <MenuItem Click="OpenFolder_Click" Header="Open Folder" />
-                <MenuItem Click="OpenFromYouTube_Click" Header="Open From YouTube" />
-                <Separator />
-                <MenuItem Click="Quit_Click" Header="Quit" />
-            </MenuItem>
-        </Menu>
+    <Grid Background="White" x:Name="grid1">
 
-        <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="0,23,0,0" VerticalAlignment="Top" BorderThickness="0" Width="693.6" Height="447.4">
-            <TabItem Header="Medias">
-                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
-                    <Rectangle Fill="#FF070303" Margin="0,0,0,72" x:Name="mediaElementBackground" Stroke="Black" />
-                    <MediaElement LoadedBehavior="Manual" Margin="0,0,3,72.2" x:Name="mediaElement" MediaOpened="mediaElement_MediaOpened" MediaEnded="mediaElement_MediaEnded" MediaFailed="mediaElement_MediaFailed" />
-                    <Button Focusable="False" ForceCursor="False" Foreground="Black" Height="30" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="6,0,0,29" x:Name="playButton" OpacityMask="#FFF5ADAD" VerticalAlignment="Bottom" Width="30" Click="playButton_Click" BorderBrush="White" Style="{DynamicResource ButtonStyle1}" RenderTransformOrigin="0.5,0.5">
+
+        <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" BorderThickness="0" Width="693.6" Height="447.4">
+            <TabItem Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFFFFF" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="149*"/>
+                        <ColumnDefinition Width="541*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="#FF070303" Margin="0,0,-0.4,71.8" x:Name="mediaElementBackground" Stroke="Black" Grid.ColumnSpan="2" />
+                    <MediaElement LoadedBehavior="Manual" Margin="0,0,2.6,71.8" x:Name="mediaElement" MediaOpened="mediaElement_MediaOpened" MediaEnded="mediaElement_MediaEnded" MediaFailed="mediaElement_MediaFailed" Grid.ColumnSpan="2" />
+                    <Button Focusable="False" ForceCursor="False" Foreground="Black" Height="30" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="6,0,0,28.8" x:Name="playButton" OpacityMask="#FFF5ADAD" VerticalAlignment="Bottom" Width="30" Click="playButton_Click" BorderBrush="White" Style="{DynamicResource ButtonStyle1}" RenderTransformOrigin="0.5,0.5">
                         <Button.Background>
                             <ImageBrush ImageSource="Images/play.png">
                                 <ImageBrush.RelativeTransform>
@@ -81,82 +83,110 @@
                             </ImageBrush>
                         </Button.Background>
                     </Button>
-                    <Slider Height="20" LargeChange="1" Margin="6,0,6,75" Maximum="100" x:Name="videoProgressBar" VerticalAlignment="Bottom" Visibility="Hidden" ValueChanged="videoProgressBar_ValueChanged" />
-                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,36" x:Name="Prev" VerticalAlignment="Bottom" Width="20" Click="prevButton_Click">
+                    <Slider Height="20" LargeChange="1" Margin="6,0,5.6,74.8" Maximum="100" x:Name="videoProgressBar" VerticalAlignment="Bottom" Visibility="Hidden" ValueChanged="videoProgressBar_ValueChanged" Grid.ColumnSpan="2" />
+                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,35.8" x:Name="Prev" VerticalAlignment="Bottom" Width="20" Click="prevButton_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/prev.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="117,0,0,36" x:Name="stopButton" VerticalAlignment="Bottom" Width="20" Click="stopButton_Click">
+                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="117,0,0,35.8" x:Name="stopButton" VerticalAlignment="Bottom" Width="20" Click="stopButton_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/stop.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" IsTabStop="True" Margin="143,0,0,36" x:Name="nextButton" VerticalAlignment="Bottom" Width="20" Click="nextButton_Click">
+                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" IsTabStop="True" Margin="143,0,0,35.8" x:Name="nextButton" VerticalAlignment="Bottom" Width="20" Click="nextButton_Click" Grid.ColumnSpan="2">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/next.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" ForceCursor="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,10" x:Name="slowDownButton" VerticalAlignment="Bottom" Width="20" Click="slowDownButton_Click">
+                    <Button Focusable="False" ForceCursor="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,9.8" x:Name="slowDownButton" VerticalAlignment="Bottom" Width="20" Click="slowDownButton_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/prev.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="143,0,0,10" x:Name="speedUpButton" VerticalAlignment="Bottom" Width="20" Click="speedUpButton_Click">
+                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="143,0,0,9.8" x:Name="speedUpButton" VerticalAlignment="Bottom" Width="20" Click="speedUpButton_Click" Grid.ColumnSpan="2">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/next.png" />
                         </Button.Background>
                     </Button>
-                    <Label Content="x1" HorizontalContentAlignment="Center" IsEnabled="True" IsTabStop="False" Margin="107,0,0,10" MaxHeight="20" MaxWidth="35" x:Name="speedLabel" Padding="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="35" Height="20" VerticalAlignment="Bottom" />
-                    <Slider Height="23" HorizontalAlignment="Right" LargeChange="0.1" Margin="0,0,38,36" Maximum="1" x:Name="volumeBar" Value="0.5" VerticalAlignment="Bottom" Width="100" ValueChanged="volumeBar_ValueChanged" />
-                    <Button BorderBrush="{x:Null}" Focusable="False" Height="23" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,144,36" x:Name="volumeButton" VerticalAlignment="Bottom" Width="23" Click="volumeButton_Click">
+                    <Label Content="x1" HorizontalContentAlignment="Center" IsEnabled="True" IsTabStop="False" Margin="107,0,0,9.8" MaxHeight="20" MaxWidth="35" x:Name="speedLabel" Padding="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="35" Height="20" VerticalAlignment="Bottom" />
+                    <Slider Height="23" HorizontalAlignment="Right" LargeChange="0.1" Margin="0,0,37.6,35.8" Maximum="1" x:Name="volumeBar" Value="0.5" VerticalAlignment="Bottom" Width="100" ValueChanged="volumeBar_ValueChanged" Grid.Column="1" />
+                    <Button BorderBrush="{x:Null}" Focusable="False" Height="23" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,143.6,35.8" x:Name="volumeButton" VerticalAlignment="Bottom" Width="23" Click="volumeButton_Click" Grid.Column="1">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/speaker.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="224,0,0,36" x:Name="LoopSingleButton" VerticalAlignment="Bottom" Width="20" Click="LoopSingleButton_Click">
+                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="75.4,0,0,35.8" x:Name="LoopSingleButton" VerticalAlignment="Bottom" Width="20" Click="LoopSingleButton_Click" Grid.Column="1">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/repeat.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="198,0,0,36" x:Name="loopAllButton" VerticalAlignment="Bottom" Width="20" Click="loopAllButton_Click">
+                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="49.4,0,0,35.8" x:Name="loopAllButton" VerticalAlignment="Bottom" Width="20" Click="loopAllButton_Click" Grid.Column="1">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/loop.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" IsHitTestVisible="True" Margin="0,0,388,26" x:Name="showPlaylistButton" Click="showPlaylistButton_Click" HorizontalAlignment="Right" Width="30" Height="30" VerticalAlignment="Bottom">
+                    <Button Focusable="False" IsHitTestVisible="True" Margin="0,0,387.6,25.8" x:Name="showPlaylistButton" Click="showPlaylistButton_Click" HorizontalAlignment="Right" Width="30" Height="30" VerticalAlignment="Bottom" Grid.Column="1">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/playlist.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" Height="30" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,340,26" x:Name="fullscreenButton" VerticalAlignment="Bottom" Width="30" Click="fullscreenButton_Click" BorderThickness="0" Cursor="Hand">
+                    <Button Focusable="False" Height="30" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,339.6,25.8" x:Name="fullscreenButton" VerticalAlignment="Bottom" Width="30" Click="fullscreenButton_Click" BorderThickness="0" Cursor="Hand" Grid.Column="1">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/fullscreen.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" Height="30" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,304,26" x:Name="cameraButton" VerticalAlignment="Bottom" Width="30" Click="cameraButton_Click" BorderThickness="0" Cursor="Hand">
+                    <Button Focusable="False" Height="30" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,303.6,25.8" x:Name="cameraButton" VerticalAlignment="Bottom" Width="30" Click="cameraButton_Click" BorderThickness="0" Cursor="Hand" Grid.Column="1">
                         <Button.Background>
                             <ImageBrush ImageSource="/MediaPlayer;component/Images/snapshot.png" />
                         </Button.Background>
                     </Button>
-                    <Image x:Name="captureImage" HorizontalAlignment="Left" Height="371" Margin="160,29,0,0" VerticalAlignment="Top" Width="371"/>
-                    <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="278" Height="26" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top"/>
+                    <!--<Image x:Name="captureImage" HorizontalAlignment="Left" Height="371" Margin="11.4,0,0,0" VerticalAlignment="Top" Width="371" Grid.Column="1"/>-->
+                    <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,9.6,9.8" VerticalAlignment="Bottom" Width="278" Height="26" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Grid.Column="1"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TabPlaylists" Header="Playlists">
-                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
-                    <Rectangle Margin="0,0,0,0" x:Name="rectangle1" Stroke="#FFB5B1B1" Fill="#FFE3E3E3" />
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFFFFF" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="33*"/>
+                        <ColumnDefinition Width="82*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Margin="0,0,-0.4,-0.2" x:Name="rectangle1" Stroke="#FFB5B1B1" Fill="#FFE3E3E3" Grid.ColumnSpan="2" />
                     <GridSplitter HorizontalAlignment="Left" Margin="7,6,0,0" x:Name="gridSplitter1" VerticalAlignment="Top"/>
-                    <ListBox Margin="199,5,0,0" x:Name="playList" />
-                    <TreeView Margin="7,5,0,0" x:Name="treeView1" HorizontalAlignment="Left" />
+                    <ListBox Margin="1.4,5,4.6,4.8" x:Name="playList" Grid.Column="1" />
+                    <TreeView Margin="7,5,0,4.8" x:Name="treeView1" HorizontalAlignment="Left" />
                 </Grid>
             </TabItem>
             <TabItem Header="Youtube" GotFocus="TabItem_GotFocus">
-                <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="White" Margin="0,0,0,0">
                     <TextBox Width="0" Height="0" TabIndex="0"/>
                     <TextBox x:Name="YoutubeLink" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Text="Insert Youtube URL here" VerticalAlignment="Top" Width="584" GotFocus="YoutubeLink_GotFocus" LostFocus="YoutubeLink_LostFocus"/>
-                    <Button x:Name="YoutubePlayButton" Content="Play" HorizontalAlignment="Left" Margin="599,10,0,0" VerticalAlignment="Top" Width="72" Height="22" Click="Button_Click"/>
+                    <Button x:Name="YoutubePlayButton" Content="Play" HorizontalAlignment="Left" Margin="599,10,0,0" VerticalAlignment="Top" Width="72" Height="22" Click="YoutubeButton_Click"/>
                     <WebBrowser x:Name="YoutubeEmbededPlayer" HorizontalAlignment="Left" Margin="5,42,5,5" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="CamCaptureTab" Header="Camera Capture" GotFocus="CamCaptureTab_GotFocus">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFFFFF" Margin="0,0,0,0">
+                    <Image x:Name="captureImage" Margin="10,10,10,10" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="149,384,0,0" Width="85" Height="30" VerticalAlignment="Top" Click="saveButton_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -28,6 +28,8 @@ namespace MediaPlayer
         private bool _isLoopSingle = false;
         private bool _isPreview = false;
 
+        private WebCam webcam;
+
         private System.Windows.Threading.DispatcherTimer _timer = new System.Windows.Threading.DispatcherTimer();
 
         public MainWindow()
@@ -42,23 +44,46 @@ namespace MediaPlayer
         {
             _timer.Stop();
         }
-        void synchronizeProgressBar(object sender, EventArgs e)
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (mediaElement.HasVideo || mediaElement.HasAudio)
-            {
-                double pos = mediaElement.Position.TotalSeconds;
-                if (pos > videoProgressBar.Value)
-                    videoProgressBar.Value = pos;
-            }
+            grid1.Width = ActualWidth - 16;
+            grid1.Height = ActualHeight - 40;
+            Tabulations.Width = ActualWidth - 16;
+            Tabulations.Height = ActualHeight - 40;
         }
 
-        private void SetPlayList(string dir, string[] str)
+        // UTILS METHODS
+
+
+        private string getName(string path)
         {
-            _pathList.Clear();
-            for (int i = 0; i < str.Length; ++i)
-                _pathList.Add(dir + str[i]);
-            this.playList.ItemsSource = _pathList;
+            int lastSlash = path.LastIndexOf('/'), lastPoint = path.LastIndexOf('.');
+            System.Console.WriteLine(path);
+            System.Console.WriteLine("Last / " + lastSlash);
+            System.Console.WriteLine("Last . " + lastPoint);
+            if (lastPoint != -1 && lastPoint < path.Length)
+                path = path.Substring(0, lastPoint);
+            if (lastSlash != -1 && lastSlash + 1 < path.Length)
+                path = path.Substring(lastSlash + 1);
+            return path;
         }
+
+        private bool checkUrl(string url)
+        {
+            string pat = @"http://www\.youtube\.com/watch\?v=([A-Za-z0-9_]+)$";
+
+            Regex r = new Regex(pat, RegexOptions.IgnoreCase);
+            return r.Match(url).Success;
+        }
+
+        private string formatUrl(string url)
+        {
+            return url.Replace("watch?v=", "embed/");
+        }
+
+
+        // MEDIA PLAYER
 
         private void OpenFile_Click(object sender, RoutedEventArgs e)
         {
@@ -106,16 +131,6 @@ namespace MediaPlayer
                     MessageBox.Show("File could not be loaded!");
                 }
             }
-        }
-
-        private void OpenFromYouTube_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Quit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
 
         private void playButton_Click(object sender, RoutedEventArgs e)
@@ -209,79 +224,6 @@ namespace MediaPlayer
                 speedLabel.Content = "x" + mediaElement.SpeedRatio;
             }
         }
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            grid1.Width = Width - 16;
-            grid1.Height = Height - 39;
-            Tabulations.Width = Width - 16;
-            Tabulations.Height = Height - 62;
-        }
-
-
-        private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            mediaElement.Stop();
-            if (_isLoopSingle)
-                mediaElement.Source = new Uri(_pathList[_listIndex]);
-            else if (_isLoopAll)
-                try
-                {
-                    _listIndex++;
-                    if (_listIndex >= _pathList.Count)
-                        _listIndex = 0;
-                    mediaElement.Source = new Uri(_pathList[_listIndex]);
-                    mediaElement.Play();
-                    videoProgressBar.Value = 0;
-                }
-                catch
-                {
-                    MessageBox.Show("File could not be loaded!");
-                }
-        }
-
-        private void videoProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            try
-            {
-                double prog = videoProgressBar.Value;
-                if (Math.Abs(prog - mediaElement.Position.TotalSeconds) > 2)
-                {
-                    TimeSpan ts = new TimeSpan(0, 0, 0, (int)prog);
-                    mediaElement.Position = ts;
-                    System.Console.WriteLine("User move to " + ts.TotalSeconds);
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        private string getName(string path)
-        {
-            int lastSlash = path.LastIndexOf('/'), lastPoint = path.LastIndexOf('.');
-            System.Console.WriteLine(path);
-            System.Console.WriteLine("Last / " + lastSlash);
-            System.Console.WriteLine("Last . " + lastPoint);
-            if (lastPoint != -1 && lastPoint < path.Length)
-                path = path.Substring(0, lastPoint);
-            if (lastSlash != -1 && lastSlash + 1 < path.Length)
-                path = path.Substring(lastSlash + 1);
-            return path;
-        }
-
-        private void mediaElement_MediaOpened(object sender, RoutedEventArgs e)
-        {
-            try 
-            {
-                this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
-                System.Console.WriteLine("Total video seconds = " + this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds);
-                //MessageBox.Show(getName(mediaElement.Source.ToString()));
-                mediaTitle.Content = getName(mediaElement.Source.ToString());
-            }
-            catch
-            {
-            }
-        }
 
         private void loopAllButton_Click(object sender, RoutedEventArgs e)
         {
@@ -310,12 +252,43 @@ namespace MediaPlayer
 
         private void cameraButton_Click(object sender, RoutedEventArgs e)
         {
-            CaptureWindow capturWin = new CaptureWindow();
-            capturWin.Show();
+            //CaptureWindow capturWin = new CaptureWindow();
+            //capturWin.Show();
         }
 
-        private void MediaPlayer_Loaded(object sender, RoutedEventArgs e)
+        private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
+            mediaElement.Stop();
+            if (_isLoopSingle)
+                mediaElement.Source = new Uri(_pathList[_listIndex]);
+            else if (_isLoopAll)
+                try
+                {
+                    _listIndex++;
+                    if (_listIndex >= _pathList.Count)
+                        _listIndex = 0;
+                    mediaElement.Source = new Uri(_pathList[_listIndex]);
+                    mediaElement.Play();
+                    videoProgressBar.Value = 0;
+                }
+                catch
+                {
+                    MessageBox.Show("File could not be loaded!");
+                }
+        }
+
+        private void mediaElement_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
+                System.Console.WriteLine("Total video seconds = " + this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds);
+                //MessageBox.Show(getName(mediaElement.Source.ToString()));
+                mediaTitle.Content = getName(mediaElement.Source.ToString());
+            }
+            catch
+            {
+            }
         }
 
         private void mediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
@@ -337,20 +310,51 @@ namespace MediaPlayer
             //grid1.Height = this.Height - 39;
         }
 
-        private bool checkUrl(string url)
+        void synchronizeProgressBar(object sender, EventArgs e)
         {
-            string pat = @"http://www\.youtube\.com/watch\?v=([A-Za-z0-9_]+)$";
-
-            Regex r = new Regex(pat, RegexOptions.IgnoreCase);
-            return r.Match(url).Success;
+            if (mediaElement.HasVideo || mediaElement.HasAudio)
+            {
+                double pos = mediaElement.Position.TotalSeconds;
+                if (pos > videoProgressBar.Value)
+                    videoProgressBar.Value = pos;
+            }
         }
 
-        private string formatUrl(string url)
+        private void videoProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            return url.Replace("watch?v=", "embed/");
+            try
+            {
+                double prog = videoProgressBar.Value;
+                if (Math.Abs(prog - mediaElement.Position.TotalSeconds) > 2)
+                {
+                    TimeSpan ts = new TimeSpan(0, 0, 0, (int)prog);
+                    mediaElement.Position = ts;
+                    System.Console.WriteLine("User move to " + ts.TotalSeconds);
+                }
+            }
+            catch
+            {
+            }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        //PLAYLISTS
+
+
+        private void SetPlayList(string dir, string[] str)
+        {
+            _pathList.Clear();
+            for (int i = 0; i < str.Length; ++i)
+                _pathList.Add(dir + str[i]);
+            this.playList.ItemsSource = _pathList;
+        }
+
+
+
+        //Youtube
+
+
+        private void YoutubeButton_Click(object sender, RoutedEventArgs e)
         {
             string url = YoutubeLink.Text;
 
@@ -383,6 +387,24 @@ namespace MediaPlayer
         {
             if (YoutubeLink.Text == "Insert Youtube URL here")
              YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
+        }
+
+
+        // CAMERA CAPTURE
+
+
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Helper.SaveImageCapture((BitmapSource)captureImage.Source);
+            this.Close();
+        }
+
+        private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
+        {
+            webcam = new WebCam();
+            webcam.InitializeWebCam(ref captureImage);
+            webcam.Start();
+            webcam.Continue();
         }
     }
 }
