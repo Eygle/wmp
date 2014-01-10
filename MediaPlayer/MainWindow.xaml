@@ -54,7 +54,7 @@
     <Grid Background="White" x:Name="grid1">
 
 
-        <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" BorderThickness="0" Width="693.6" Height="447.4">
+        <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="-1,-1,0,0" VerticalAlignment="Top" Width="693.6" Height="447.4">
             <TabItem Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -143,6 +143,16 @@
                     </Button>
                     <!--<Image x:Name="captureImage" HorizontalAlignment="Left" Height="371" Margin="11.4,0,0,0" VerticalAlignment="Top" Width="371" Grid.Column="1"/>-->
                     <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,9.6,9.8" VerticalAlignment="Bottom" Width="278" Height="26" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Grid.Column="1"/>
+                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="49,0,0,9.4" x:Name="openFileButton" VerticalAlignment="Bottom" Width="20" Click="OpenFile_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/loop.png" />
+                        </Button.Background>
+                    </Button>
+                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="75,0,0,9.4" x:Name="openFolderButton" VerticalAlignment="Bottom" Width="20" Click="OpenFolder_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/loop.png" />
+                        </Button.Background>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TabPlaylists" Header="Playlists">
@@ -185,8 +195,8 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid Background="#FFFFFF" Margin="0,0,0,0">
-                    <Image x:Name="captureImage" Margin="10,10,10,10" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="149,384,0,0" Width="85" Height="30" VerticalAlignment="Top" Click="saveButton_Click"/>
+                    <Image x:Name="captureImage" Margin="10,10,10,40" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+                    <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Center" Margin="0,0,0,5" Width="85" Height="30" VerticalAlignment="Bottom" Click="saveButton_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

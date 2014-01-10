@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
-using WebCam_Capture;
+//using WebCam_Capture;
 
 namespace MediaPlayer
 {
@@ -26,7 +26,6 @@ namespace MediaPlayer
         private bool _isPause = false;
         private bool _isLoopAll = false;
         private bool _isLoopSingle = false;
-        private bool _isPreview = false;
 
         private WebCam webcam;
 
@@ -35,14 +34,12 @@ namespace MediaPlayer
         public MainWindow()
         {
             InitializeComponent();
-            _timer.Interval = TimeSpan.FromMilliseconds(1000);
-            _timer.Tick += new EventHandler(synchronizeProgressBar);
-            _timer.Start();
+            //initTimer();
         }
 
         ~MainWindow()
         {
-            _timer.Stop();
+            //_timer.Stop();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -50,18 +47,21 @@ namespace MediaPlayer
             grid1.Width = ActualWidth - 16;
             grid1.Height = ActualHeight - 40;
             Tabulations.Width = ActualWidth - 16;
-            Tabulations.Height = ActualHeight - 40;
+            Tabulations.Height = ActualHeight - 38.3;
         }
 
         // UTILS METHODS
 
+        private void initTimer()
+        {
+            _timer.Interval = TimeSpan.FromMilliseconds(1000);
+            _timer.Tick += new EventHandler(synchronizeProgressBar);
+            _timer.Start();
+        }
 
         private string getName(string path)
         {
             int lastSlash = path.LastIndexOf('/'), lastPoint = path.LastIndexOf('.');
-            System.Console.WriteLine(path);
-            System.Console.WriteLine("Last / " + lastSlash);
-            System.Console.WriteLine("Last . " + lastPoint);
             if (lastPoint != -1 && lastPoint < path.Length)
                 path = path.Substring(0, lastPoint);
             if (lastSlash != -1 && lastSlash + 1 < path.Length)
@@ -113,7 +113,7 @@ namespace MediaPlayer
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
 
-            System.Windows.Forms.FolderBrowserDialog openFolderDialog1 = new System.Windows.Forms.FolderBrowserDialog();//.OpenFileDialog();
+            System.Windows.Forms.FolderBrowserDialog openFolderDialog1 = new System.Windows.Forms.FolderBrowserDialog();
 
             if (openFolderDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -243,15 +243,12 @@ namespace MediaPlayer
 
         private void showPlaylistButton_Click(object sender, RoutedEventArgs e)
         {
-            _isPreview = _isPreview ? false : true;
-            //mediaElement.Visibility = _isPreview ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
-            //mediaElementBackground.Visibility = _isPreview ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
-            //grid2.Visibility = _isPreview ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
             TabPlaylists.Focus();
         }
 
         private void cameraButton_Click(object sender, RoutedEventArgs e)
         {
+            CamCaptureTab.Focus();
             //CaptureWindow capturWin = new CaptureWindow();
             //capturWin.Show();
         }

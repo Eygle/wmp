@@ -84,7 +84,6 @@
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="WebCam.cs" />
-    <Compile Include="YoutubePlayer.cs" />
     <Page Include="CaptureWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
