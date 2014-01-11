@@ -470,7 +470,6 @@ namespace MediaPlayer
 
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
-            Console.Out.WriteLine("test");
             webcam.Start();
             webcam.Continue();
         }
