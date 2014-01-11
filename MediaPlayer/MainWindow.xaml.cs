@@ -35,6 +35,8 @@ namespace MediaPlayer
         {
             InitializeComponent();
             initTimer();
+            webcam = new WebCam();
+            webcam.InitializeWebCam(ref captureImage);
         }
 
         ~MainWindow()
@@ -437,8 +439,6 @@ namespace MediaPlayer
 
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
-            webcam = new WebCam();
-            webcam.InitializeWebCam(ref captureImage);
             webcam.Start();
             webcam.Continue();
         }
