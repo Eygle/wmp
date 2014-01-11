@@ -85,6 +85,66 @@ namespace MediaPlayer
 
         // MEDIA PLAYER
 
+        private void goNextMedia()
+        {
+            System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _pathList.Count + " current: " + _listIndex);
+            if (_listIndex >= 0 && _listIndex <= _pathList.Count)
+            {
+                try
+                {
+                    if (_listIndex >= _pathList.Count - 1 && !_isLoopAll)
+                        return;
+                    _listIndex++;
+                    if (_listIndex >= _pathList.Count)
+                        _listIndex = 0;
+                    mediaElement.Source = new Uri(_pathList[_listIndex]);
+                }
+                catch
+                {
+                    MessageBox.Show("File could not be loaded!");
+                }
+            }
+        }
+
+        private void goPreviousMedia()
+        {
+            System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _pathList.Count + " current: " + _listIndex);
+            if (_listIndex >= 0 && _listIndex <= _pathList.Count)
+            {
+                try
+                {
+                    if (_listIndex <= 0 && !_isLoopAll)
+                        return;
+                    _listIndex--;
+                    if (_listIndex < 0)
+                        _listIndex = _pathList.Count - 1;
+                    mediaElement.Source = new Uri(_pathList[_listIndex]);
+                }
+                catch
+                {
+                    MessageBox.Show("File could not be loaded!");
+                }
+            }
+        }
+
+        private void setPlayPauseButon(string state)
+        {
+        }
+
+        private void playMedia()
+        {
+            videoProgressBar.Value = 0;
+            mediaElement.Play();
+        }
+
+        private void pauseMedia()
+        {
+        }
+
+        private void stopMedia()
+        {
+        }
+
         private void OpenFile_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -97,12 +157,7 @@ namespace MediaPlayer
                     string[] str = openFileDialog1.FileNames;
                     SetPlayList(openFileDialog1.InitialDirectory, str);
                     mediaElement.Source = new Uri(_pathList.First());
-                    videoProgressBar.Value = 0;
-                    mediaElement.Play();
-                    if (mediaElement.HasAudio || mediaElement.HasVideo)
-                        videoProgressBar.Visibility = System.Windows.Visibility.Visible;
-                    else
-                        videoProgressBar.Visibility = System.Windows.Visibility.Hidden;
+                    this.playMedia();
                 }
                 catch
                 {
@@ -110,6 +165,22 @@ namespace MediaPlayer
                 }
             }
         }
+
+        private string[] getFilesWithAllowedExt(string[] files)
+        {
+            var res = new List<string>(files);
+            string[] allowedExt = {".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi"};
+
+            for (int i = 0; i < files.Length; ++i)
+            {
+                if (!allowedExt.Contains(System.IO.Path.GetExtension(files[i])))
+                {
+                    res.RemoveAt(i);
+                }
+            }
+            return res.ToArray();
+        }
+
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
 
@@ -119,12 +190,10 @@ namespace MediaPlayer
             {
                 try
                 {
-                    string[] str = Directory.GetFiles(openFolderDialog1.SelectedPath);
+                    string[] str = this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath));
                     SetPlayList("", str);
                     mediaElement.Source = new Uri(str[0]);
-                    mediaElement.Play();
-                    videoProgressBar.Value = 0;
-                    videoProgressBar.Visibility = System.Windows.Visibility.Visible;
+                    this.playMedia();
                 }
                 catch
                 {
@@ -155,36 +224,12 @@ namespace MediaPlayer
 
         private void prevButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_listIndex > 0 && _listIndex <= _pathList.Count)
-                try
-                {
-                    _listIndex--;
-                    mediaElement.Stop();
-                    mediaElement.Source = new Uri(_pathList[_listIndex]);
-                    mediaElement.Play();
-                    videoProgressBar.Value = 0;
-                }
-                catch
-                {
-                    MessageBox.Show("File could not be loaded!");
-                }
+            this.goPreviousMedia();
         }
 
         private void nextButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_listIndex >= 0 && _listIndex < _pathList.Count - 1)
-                try
-                {
-                    _listIndex++;
-                    mediaElement.Stop();
-                    mediaElement.Source = new Uri(_pathList[_listIndex]);
-                    mediaElement.Play();
-                    videoProgressBar.Value = 0;
-                }
-                catch
-                {
-                    MessageBox.Show("File could not be loaded!");
-                }
+            this.goNextMedia();
         }
 
         private void volumeButton_Click(object sender, RoutedEventArgs e)
@@ -301,22 +346,10 @@ namespace MediaPlayer
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
             mediaElement.Stop();
-            if (_isLoopSingle)
-                mediaElement.Source = new Uri(_pathList[_listIndex]);
-            else if (_isLoopAll)
-                try
-                {
-                    _listIndex++;
-                    if (_listIndex >= _pathList.Count)
-                        _listIndex = 0;
-                    mediaElement.Source = new Uri(_pathList[_listIndex]);
-                    mediaElement.Play();
-                    videoProgressBar.Value = 0;
-                }
-                catch
-                {
-                    MessageBox.Show("File could not be loaded!");
-                }
+            if (this._isLoopSingle)
+                this.playMedia();
+            else
+                this.goNextMedia();
         }
 
         private void mediaElement_MediaOpened(object sender, RoutedEventArgs e)
@@ -324,7 +357,6 @@ namespace MediaPlayer
             try
             {
                 this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
-                System.Console.WriteLine("Media maximum = " + this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds);
                 mediaTitle.Content = getName(mediaElement.Source.ToString());
                 GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                 if (mediaElement.HasAudio || mediaElement.HasVideo)
@@ -365,7 +397,6 @@ namespace MediaPlayer
                 {
                     TimeSpan ts = new TimeSpan(0, 0, 0, (int)prog);
                     mediaElement.Position = ts;
-                    System.Console.WriteLine("User move to " + ts.TotalSeconds);
                 }
             }
             catch

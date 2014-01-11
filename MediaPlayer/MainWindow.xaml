@@ -150,7 +150,7 @@
                             </Button.Background>
                         </Button>
                         <!--<Image x:Name="captureImage" HorizontalAlignment="Left" Height="371" Margin="11.4,0,0,0" VerticalAlignment="Top" Width="371" Grid.Column="1"/>-->
-                        <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,9.6,9.8" VerticalAlignment="Bottom" Width="278" Height="26" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Grid.Column="1"/>
+                        <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,9.2,0.4" VerticalAlignment="Bottom" Width="278" Height="35" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Grid.Column="1"/>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="49,0,0,9.4" x:Name="openFileButton" VerticalAlignment="Bottom" Width="20" Click="OpenFile_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/loop.png" />
