@@ -201,7 +201,7 @@
                     <WebBrowser x:Name="YoutubeEmbededPlayer" HorizontalAlignment="Left" Margin="5,42,5,5" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="CamCaptureTab" Header="Camera Capture" GotFocus="CamCaptureTab_GotFocus">
+            <TabItem x:Name="CamCaptureTab" Header="Camera Capture" GotFocus="CamCaptureTab_GotFocus" LostFocus="CamCaptureTab_LostFocus">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="White" Offset="0"/>

@@ -73,7 +73,7 @@ namespace MediaPlayer
 
         private bool checkUrl(string url)
         {
-            string pat = @"http://www\.youtube\.com/watch\?v=([A-Za-z0-9_]+)$";
+            string pat = @"http[s]?://www\.youtube\.com/watch\?v=([A-Za-z0-9_]+)$";
 
             Regex r = new Regex(pat, RegexOptions.IgnoreCase);
             return r.Match(url).Success;
@@ -470,6 +470,7 @@ namespace MediaPlayer
 
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
+            Console.Out.WriteLine("test");
             webcam.Start();
             webcam.Continue();
         }
@@ -478,6 +479,11 @@ namespace MediaPlayer
         {
             Random rnd = new Random();
             this._pathList = this._pathList.OrderBy(x => rnd.Next()).ToList();
+        }
+
+        private void CamCaptureTab_LostFocus(object sender, RoutedEventArgs e)
+        {
+            webcam.Stop();
         }
     }
 }
