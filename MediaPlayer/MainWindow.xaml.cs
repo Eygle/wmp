@@ -34,12 +34,14 @@ namespace MediaPlayer
         public MainWindow()
         {
             InitializeComponent();
-            //initTimer();
+            initTimer();
+            webcam = new WebCam();
+            webcam.InitializeWebCam(ref captureImage);
         }
 
         ~MainWindow()
         {
-            //_timer.Stop();
+            _timer.Stop();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -71,7 +73,7 @@ namespace MediaPlayer
 
         private bool checkUrl(string url)
         {
-            string pat = @"http://www\.youtube\.com/watch\?v=([A-Za-z0-9_]+)$";
+            string pat = @"http[s]?://www\.youtube\.com/watch\?v=([A-Za-z0-9_]+)$";
 
             Regex r = new Regex(pat, RegexOptions.IgnoreCase);
             return r.Match(url).Success;
@@ -85,6 +87,66 @@ namespace MediaPlayer
 
         // MEDIA PLAYER
 
+        private void goNextMedia()
+        {
+            System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _pathList.Count + " current: " + _listIndex);
+            if (_listIndex >= 0 && _listIndex <= _pathList.Count)
+            {
+                try
+                {
+                    if (_listIndex >= _pathList.Count - 1 && !_isLoopAll)
+                        return;
+                    _listIndex++;
+                    if (_listIndex >= _pathList.Count)
+                        _listIndex = 0;
+                    mediaElement.Source = new Uri(_pathList[_listIndex]);
+                }
+                catch
+                {
+                    MessageBox.Show("File could not be loaded!");
+                }
+            }
+        }
+
+        private void goPreviousMedia()
+        {
+            System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _pathList.Count + " current: " + _listIndex);
+            if (_listIndex >= 0 && _listIndex <= _pathList.Count)
+            {
+                try
+                {
+                    if (_listIndex <= 0 && !_isLoopAll)
+                        return;
+                    _listIndex--;
+                    if (_listIndex < 0)
+                        _listIndex = _pathList.Count - 1;
+                    mediaElement.Source = new Uri(_pathList[_listIndex]);
+                }
+                catch
+                {
+                    MessageBox.Show("File could not be loaded!");
+                }
+            }
+        }
+
+        private void setPlayPauseButon(string state)
+        {
+        }
+
+        private void playMedia()
+        {
+            videoProgressBar.Value = 0;
+            mediaElement.Play();
+        }
+
+        private void pauseMedia()
+        {
+        }
+
+        private void stopMedia()
+        {
+        }
+
         private void OpenFile_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -97,12 +159,7 @@ namespace MediaPlayer
                     string[] str = openFileDialog1.FileNames;
                     SetPlayList(openFileDialog1.InitialDirectory, str);
                     mediaElement.Source = new Uri(_pathList.First());
-                    videoProgressBar.Value = 0;
-                    mediaElement.Play();
-                    if (mediaElement.HasAudio || mediaElement.HasVideo)
-                        videoProgressBar.Visibility = System.Windows.Visibility.Visible;
-                    else
-                        videoProgressBar.Visibility = System.Windows.Visibility.Hidden;
+                    this.playMedia();
                 }
                 catch
                 {
@@ -110,6 +167,22 @@ namespace MediaPlayer
                 }
             }
         }
+
+        private string[] getFilesWithAllowedExt(string[] files)
+        {
+            var res = new List<string>(files);
+            string[] allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
+
+            for (int i = 0; i < files.Length; ++i)
+            {
+                if (!allowedExt.Contains(System.IO.Path.GetExtension(files[i])))
+                {
+                    res.RemoveAt(i);
+                }
+            }
+            return res.ToArray();
+        }
+
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
 
@@ -119,12 +192,10 @@ namespace MediaPlayer
             {
                 try
                 {
-                    string[] str = Directory.GetFiles(openFolderDialog1.SelectedPath);
+                    string[] str = this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath));
                     SetPlayList("", str);
                     mediaElement.Source = new Uri(str[0]);
-                    mediaElement.Play();
-                    videoProgressBar.Value = 0;
-                    videoProgressBar.Visibility = System.Windows.Visibility.Visible;
+                    this.playMedia();
                 }
                 catch
                 {
@@ -155,36 +226,12 @@ namespace MediaPlayer
 
         private void prevButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_listIndex > 0 && _listIndex <= _pathList.Count)
-                try
-                {
-                    _listIndex--;
-                    mediaElement.Stop();
-                    mediaElement.Source = new Uri(_pathList[_listIndex]);
-                    mediaElement.Play();
-                    videoProgressBar.Value = 0;
-                }
-                catch
-                {
-                    MessageBox.Show("File could not be loaded!");
-                }
+            this.goPreviousMedia();
         }
 
         private void nextButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_listIndex >= 0 && _listIndex < _pathList.Count - 1)
-                try
-                {
-                    _listIndex++;
-                    mediaElement.Stop();
-                    mediaElement.Source = new Uri(_pathList[_listIndex]);
-                    mediaElement.Play();
-                    videoProgressBar.Value = 0;
-                }
-                catch
-                {
-                    MessageBox.Show("File could not be loaded!");
-                }
+            this.goNextMedia();
         }
 
         private void volumeButton_Click(object sender, RoutedEventArgs e)
@@ -253,25 +300,58 @@ namespace MediaPlayer
             //capturWin.Show();
         }
 
+        private void fillMusicInfos()
+        {
+            string path = Uri.UnescapeDataString(mediaElement.Source.AbsolutePath);
+
+            byte[] b = new byte[128];
+            string[] infos = new string[5]; //Title; Artist; Album; Year; Comm;
+            bool isSet = false;
+
+            try
+            {
+                FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+                fs.Seek(-128, SeekOrigin.End);
+                fs.Read(b, 0, 128);
+                //Set flag
+                String sFlag = System.Text.Encoding.Default.GetString(b, 0, 3);
+                if (sFlag.CompareTo("TAG") == 0) isSet = true;
+
+                if (isSet)
+                {
+                    infos[0] = System.Text.Encoding.Default.GetString(b, 3, 30).Replace("\0", ""); //Title
+                    infos[1] = System.Text.Encoding.Default.GetString(b, 33, 30).Replace("\0", ""); //Artist
+                    infos[2] = System.Text.Encoding.Default.GetString(b, 63, 30).Replace("\0", ""); //Album
+                    infos[3] = System.Text.Encoding.Default.GetString(b, 93, 4).Replace("\0", ""); //Year
+
+                    musicTitle.Foreground = new SolidColorBrush(Colors.White);
+                    musicSinger.Foreground = new SolidColorBrush(Colors.White);
+                    musicAlbum.Foreground = new SolidColorBrush(Colors.White);
+                    musicYear.Foreground = new SolidColorBrush(Colors.White);
+
+                    musicTitle.Content = "Title:\t" + infos[0];
+                    musicSinger.Content = "Artist:\t" + infos[1];
+                    musicAlbum.Content = "Album:\t" + infos[2];
+                    musicYear.Content = "Year:\t" + infos[3];
+                    GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
+                }
+                fs.Close();
+                fs.Dispose();
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
             mediaElement.Stop();
-            if (_isLoopSingle)
-                mediaElement.Source = new Uri(_pathList[_listIndex]);
-            else if (_isLoopAll)
-                try
-                {
-                    _listIndex++;
-                    if (_listIndex >= _pathList.Count)
-                        _listIndex = 0;
-                    mediaElement.Source = new Uri(_pathList[_listIndex]);
-                    mediaElement.Play();
-                    videoProgressBar.Value = 0;
-                }
-                catch
-                {
-                    MessageBox.Show("File could not be loaded!");
-                }
+            if (this._isLoopSingle)
+                this.playMedia();
+            else
+                this.goNextMedia();
         }
 
         private void mediaElement_MediaOpened(object sender, RoutedEventArgs e)
@@ -279,9 +359,16 @@ namespace MediaPlayer
             try
             {
                 this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
-                System.Console.WriteLine("Total video seconds = " + this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds);
-                //MessageBox.Show(getName(mediaElement.Source.ToString()));
                 mediaTitle.Content = getName(mediaElement.Source.ToString());
+                GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
+                if (mediaElement.HasAudio || mediaElement.HasVideo)
+                    videoProgressBar.Visibility = System.Windows.Visibility.Visible;
+                else
+                    videoProgressBar.Visibility = System.Windows.Visibility.Hidden;
+                if (mediaElement.HasAudio && !mediaElement.HasVideo)
+                {
+                    this.fillMusicInfos();
+                }
             }
             catch
             {
@@ -291,20 +378,6 @@ namespace MediaPlayer
         private void mediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
             MessageBox.Show(e.ErrorException.Message);
-        }
-
-        private void MediaPlayer_StateChanged(object sender, EventArgs e)
-        {
-            if (MediaPlayer.WindowState.Equals(System.Windows.WindowState.Maximized))
-            {
-                MessageBox.Show("Maximized: " + MediaPlayer);
-                //grid1.Width = this.MaxWidth - 22;
-                //grid1.Height = this.MaxHeight - 39;
-            }
-            //this.WindowState = MediaPlayer.WindowState.Equals(System.Windows.WindowState.Maximized) ? System.Windows.WindowState.Normal : System.Windows.WindowState.Maximized;
-            //MessageBox.Show("coucou" + MediaPlayer.Width);
-            //grid1.Width = this.Width - 22;
-            //grid1.Height = this.Height - 39;
         }
 
         void synchronizeProgressBar(object sender, EventArgs e)
@@ -326,7 +399,6 @@ namespace MediaPlayer
                 {
                     TimeSpan ts = new TimeSpan(0, 0, 0, (int)prog);
                     mediaElement.Position = ts;
-                    System.Console.WriteLine("User move to " + ts.TotalSeconds);
                 }
             }
             catch
@@ -398,10 +470,19 @@ namespace MediaPlayer
 
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
-            webcam = new WebCam();
-            webcam.InitializeWebCam(ref captureImage);
             webcam.Start();
             webcam.Continue();
+        }
+
+        private void Random_Click(object sender, RoutedEventArgs e)
+        {
+            Random rnd = new Random();
+            this._pathList = this._pathList.OrderBy(x => rnd.Next()).ToList();
+        }
+
+        private void CamCaptureTab_LostFocus(object sender, RoutedEventArgs e)
+        {
+            webcam.Stop();
         }
     }
 }
