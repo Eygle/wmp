@@ -77,7 +77,7 @@
                     		</RadialGradientBrush>
                     	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="Images\playCommu.png">
+                            <ImageBrush ImageSource="Images/playCommu.png">
                             </ImageBrush>
                         </Button.Background>
                     </Button>

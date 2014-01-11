@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using MediaPlayer.ViewModel;
 //using WebCam_Capture;
 
 namespace MediaPlayer
@@ -26,8 +27,10 @@ namespace MediaPlayer
         private bool _isPause = false;
         private bool _isLoopAll = false;
         private bool _isLoopSingle = false;
+        private string[] _allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
 
         private WebCam webcam;
+        private CurrentPlaylist _playList;
 
         private System.Windows.Threading.DispatcherTimer _timer = new System.Windows.Threading.DispatcherTimer();
 
@@ -158,6 +161,7 @@ namespace MediaPlayer
                 {
                     string[] str = openFileDialog1.FileNames;
                     SetPlayList(openFileDialog1.InitialDirectory, str);
+                    //this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
                     mediaElement.Source = new Uri(_pathList.First());
                     this.playMedia();
                 }
@@ -171,11 +175,9 @@ namespace MediaPlayer
         private string[] getFilesWithAllowedExt(string[] files)
         {
             var res = new List<string>(files);
-            string[] allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
-
             for (int i = 0; i < files.Length; ++i)
             {
-                if (!allowedExt.Contains(System.IO.Path.GetExtension(files[i])))
+                if (!_allowedExt.Contains(System.IO.Path.GetExtension(files[i])))
                 {
                     res.RemoveAt(i);
                 }
@@ -194,6 +196,7 @@ namespace MediaPlayer
                 {
                     string[] str = this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath));
                     SetPlayList("", str);
+                    //this._playList.addFolder(this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath)));
                     mediaElement.Source = new Uri(str[0]);
                     this.playMedia();
                 }
