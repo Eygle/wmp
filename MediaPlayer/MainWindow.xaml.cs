@@ -305,7 +305,7 @@ namespace MediaPlayer
             string path = Uri.UnescapeDataString(mediaElement.Source.AbsolutePath);
 
             byte[] b = new byte[128];
-            string[] infos = new string[5]; //Title; Singer; Album; Year; Comm;
+            string[] infos = new string[5]; //Title; Artist; Album; Year; Comm;
             bool isSet = false;
 
             try
@@ -320,7 +320,7 @@ namespace MediaPlayer
                 if (isSet)
                 {
                     infos[0] = System.Text.Encoding.Default.GetString(b, 3, 30).Replace("\0", ""); //Title
-                    infos[1] = System.Text.Encoding.Default.GetString(b, 33, 30).Replace("\0", ""); //Singer
+                    infos[1] = System.Text.Encoding.Default.GetString(b, 33, 30).Replace("\0", ""); //Artist
                     infos[2] = System.Text.Encoding.Default.GetString(b, 63, 30).Replace("\0", ""); //Album
                     infos[3] = System.Text.Encoding.Default.GetString(b, 93, 4).Replace("\0", ""); //Year
 
@@ -330,7 +330,7 @@ namespace MediaPlayer
                     musicYear.Foreground = new SolidColorBrush(Colors.White);
 
                     musicTitle.Content = "Title:\t" + infos[0];
-                    musicSinger.Content = "Singer:\t" + infos[1];
+                    musicSinger.Content = "Artist:\t" + infos[1];
                     musicAlbum.Content = "Album:\t" + infos[2];
                     musicYear.Content = "Year:\t" + infos[3];
                     GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
