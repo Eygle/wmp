@@ -51,106 +51,182 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Background="White" x:Name="grid1">
+    <Grid Background="#FFCECECE" x:Name="grid1">
 
 
         <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="-1,-1,0,0" VerticalAlignment="Top" Width="693.6" Height="447.4">
-            <TabItem Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True">
+            <TabItem Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True" Foreground="Black" RenderTransformOrigin="0,0.5">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="#FFF0F0F0" Offset="0"/>
-                        <GradientStop Color="White" Offset="1"/>
+                        <GradientStop Color="#FF8A1717" Offset="1"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid Background="#FFFFFF" Margin="0,0,0,0">
+                <Grid Background="White" Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="149*"/>
                         <ColumnDefinition Width="541*"/>
                     </Grid.ColumnDefinitions>
                     <Rectangle Fill="#FF070303" Margin="0,0,-0.4,71.8" x:Name="mediaElementBackground" Stroke="Black" Grid.ColumnSpan="2" />
                     <MediaElement LoadedBehavior="Manual" Margin="0,0,2.6,71.8" x:Name="mediaElement" MediaOpened="mediaElement_MediaOpened" MediaEnded="mediaElement_MediaEnded" MediaFailed="mediaElement_MediaFailed" Grid.ColumnSpan="2" />
-                    <Button Focusable="False" ForceCursor="False" Foreground="Black" Height="30" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="6,0,0,28.8" x:Name="playButton" OpacityMask="#FFF5ADAD" VerticalAlignment="Bottom" Width="30" Click="playButton_Click" BorderBrush="White" Style="{DynamicResource ButtonStyle1}" RenderTransformOrigin="0.5,0.5">
+                    <Button Focusable="False" ForceCursor="False" Foreground="Black" Height="30" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="11.444,0,0,25.8" x:Name="playButton" OpacityMask="#FFF5ADAD" VerticalAlignment="Bottom" Width="30" Click="playButton_Click" Style="{DynamicResource ButtonStyle1}" RenderTransformOrigin="0.5,0.5" BorderThickness="0">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="White"/>
+                    			<GradientStop Color="#FFCECECE"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="Images/play.png">
-                                <ImageBrush.RelativeTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleY="1" ScaleX="1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform Angle="0"/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </ImageBrush.RelativeTransform>
+                            <ImageBrush ImageSource="pack://siteoforigin:,,,/playCommu.png">
                             </ImageBrush>
                         </Button.Background>
                     </Button>
                     <Slider Height="20" LargeChange="1" Margin="6,0,5.6,74.8" Maximum="100" x:Name="videoProgressBar" VerticalAlignment="Bottom" Visibility="Hidden" ValueChanged="videoProgressBar_ValueChanged" Grid.ColumnSpan="2" />
-                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,35.8" x:Name="Prev" VerticalAlignment="Bottom" Width="20" Click="prevButton_Click">
+                    <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,35.8" x:Name="Prev" VerticalAlignment="Bottom" Width="20" Click="prevButton_Click" Style="{DynamicResource ButtonStyle1}">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/prev.png" />
+                            <ImageBrush ImageSource="prevCommu.png" />
                         </Button.Background>
                     </Button>
                     <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="117,0,0,35.8" x:Name="stopButton" VerticalAlignment="Bottom" Width="20" Click="stopButton_Click">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/stop.png" />
+                        	<ImageBrush ImageSource="stopCommu.png"/>
                         </Button.Background>
                     </Button>
                     <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" IsTabStop="True" Margin="143,0,0,35.8" x:Name="nextButton" VerticalAlignment="Bottom" Width="20" Click="nextButton_Click" Grid.ColumnSpan="2">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/next.png" />
+                            <ImageBrush ImageSource="nextCommu.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" ForceCursor="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,9.8" x:Name="slowDownButton" VerticalAlignment="Bottom" Width="20" Click="slowDownButton_Click">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/prev.png" />
-                        </Button.Background>
+                    <Button Focusable="False" ForceCursor="False" Height="19.8" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,10" x:Name="slowDownButton" VerticalAlignment="Bottom" Width="20" Click="slowDownButton_Click" Style="{DynamicResource ButtonStyle1}" BorderThickness="0,0,1,1">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="White" Offset="1"/>
+                    			<GradientStop Color="White" Offset="1"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
+                    	<Button.Background>
+                    		<ImageBrush ImageSource="slowDownCommu.png"/>
+                    	</Button.Background>
                     </Button>
                     <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="143,0,0,9.8" x:Name="speedUpButton" VerticalAlignment="Bottom" Width="20" Click="speedUpButton_Click" Grid.ColumnSpan="2">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/next.png" />
+                            <ImageBrush ImageSource="speedUpCommu.png" />
                         </Button.Background>
                     </Button>
-                    <Label Content="x1" HorizontalContentAlignment="Center" IsEnabled="True" IsTabStop="False" Margin="107,0,0,9.8" MaxHeight="20" MaxWidth="35" x:Name="speedLabel" Padding="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="35" Height="20" VerticalAlignment="Bottom" />
-                    <Slider Height="23" HorizontalAlignment="Right" LargeChange="0.1" Margin="0,0,37.6,35.8" Maximum="1" x:Name="volumeBar" Value="0.5" VerticalAlignment="Bottom" Width="100" ValueChanged="volumeBar_ValueChanged" Grid.Column="1" />
-                    <Button BorderBrush="{x:Null}" Focusable="False" Height="23" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,143.6,35.8" x:Name="volumeButton" VerticalAlignment="Bottom" Width="23" Click="volumeButton_Click" Grid.Column="1">
+                    <Label Content="x1" HorizontalContentAlignment="Center" IsEnabled="True" IsTabStop="False" Margin="111,0,0,9.4" MaxHeight="20" MaxWidth="35" x:Name="speedLabel" Padding="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="35" Height="20" VerticalAlignment="Bottom" />
+                    <Slider Height="23" HorizontalAlignment="Right" LargeChange="0.1" Margin="0,0,37.6,35.8" Maximum="1" x:Name="volumeBar" Value="0.5" VerticalAlignment="Bottom" Width="100" ValueChanged="volumeBar_ValueChanged" Grid.Column="1" Background="Transparent" Foreground="#FFC8C8C8" />
+                    <Button Focusable="False" Height="23" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,143.6,35.8" x:Name="volumeButton" VerticalAlignment="Bottom" Width="23" Click="volumeButton_Click" Grid.Column="1">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/speaker.png" />
+                            <ImageBrush ImageSource="volumeCommu.png" />
                         </Button.Background>
                     </Button>
                     <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="75.4,0,0,35.8" x:Name="LoopSingleButton" VerticalAlignment="Bottom" Width="20" Click="LoopSingleButton_Click" Grid.Column="1">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/repeat.png" />
+                            <ImageBrush ImageSource="LoopOneCommu.png" />
                         </Button.Background>
                     </Button>
                     <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="49.4,0,0,35.8" x:Name="loopAllButton" VerticalAlignment="Bottom" Width="20" Click="loopAllButton_Click" Grid.Column="1">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/loop.png" />
+                            <ImageBrush ImageSource="LoopAllCommu.png" />
                         </Button.Background>
                     </Button>
                     <Button Focusable="False" IsHitTestVisible="True" Margin="0,0,387.6,25.8" x:Name="showPlaylistButton" Click="showPlaylistButton_Click" HorizontalAlignment="Right" Width="30" Height="30" VerticalAlignment="Bottom" Grid.Column="1">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/playlist.png" />
+                            <ImageBrush ImageSource="ShowPlaylistCommu.png" />
                         </Button.Background>
                     </Button>
                     <Button Focusable="False" Height="30" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,339.6,25.8" x:Name="fullscreenButton" VerticalAlignment="Bottom" Width="30" Click="fullscreenButton_Click" BorderThickness="0" Cursor="Hand" Grid.Column="1">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/fullscreen.png" />
+                            <ImageBrush ImageSource="fullscreenCommu.png" />
                         </Button.Background>
                     </Button>
-                    <Button Focusable="False" Height="30" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,303.6,25.8" x:Name="cameraButton" VerticalAlignment="Bottom" Width="30" Click="cameraButton_Click" BorderThickness="0" Cursor="Hand" Grid.Column="1">
+                    <Button Focusable="False" Height="30" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,292.6,25.8" x:Name="cameraButton" VerticalAlignment="Bottom" Width="41" Click="cameraButton_Click" BorderThickness="0" Cursor="Hand" Grid.Column="1">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="/MediaPlayer;component/Images/snapshot.png" />
+                            <ImageBrush ImageSource="CameraCommu.png" />
                         </Button.Background>
                     </Button>
                     <!--<Image x:Name="captureImage" HorizontalAlignment="Left" Height="371" Margin="11.4,0,0,0" VerticalAlignment="Top" Width="371" Grid.Column="1"/>-->
                     <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,9.6,9.8" VerticalAlignment="Bottom" Width="278" Height="26" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Grid.Column="1"/>
                     <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="49,0,0,9.4" x:Name="openFileButton" VerticalAlignment="Bottom" Width="20" Click="OpenFile_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="Images/loop.png" />
+                            <ImageBrush ImageSource="OpenGlobalFileCommu.png" />
                         </Button.Background>
                     </Button>
                     <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="75,0,0,9.4" x:Name="openFolderButton" VerticalAlignment="Bottom" Width="20" Click="OpenFolder_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
+                    	<Button.BorderBrush>
+                    		<RadialGradientBrush>
+                    			<GradientStop Color="Black" Offset="0"/>
+                    			<GradientStop Color="White"/>
+                    		</RadialGradientBrush>
+                    	</Button.BorderBrush>
                         <Button.Background>
-                            <ImageBrush ImageSource="Images/loop.png" />
+                            <ImageBrush ImageSource="openGlobalFolder.png" />
                         </Button.Background>
                     </Button>
                 </Grid>
