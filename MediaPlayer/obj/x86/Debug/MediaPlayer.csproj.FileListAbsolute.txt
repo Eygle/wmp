@@ -1,0 +1,19 @@
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\bin\Debug\MediaPlayer.exe.config
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\bin\Debug\MediaPlayer.exe
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\bin\Debug\MediaPlayer.pdb
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\bin\Debug\Microsoft.QualityTools.Testing.Fakes.dll
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\MediaPlayer.csprojResolveAssemblyReference.cache
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\CaptureWindow.baml
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\MainWindow.baml
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\Simple Styles.baml
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\App.baml
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\CaptureWindow.g.cs
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\App.g.cs
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\MediaPlayer_MarkupCompile.cache
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\MediaPlayer.g.resources
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\MediaPlayer.Properties.Resources.resources
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\MediaPlayer.csproj.GenerateResource.Cache
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\MediaPlayer.exe
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\obj\x86\Debug\MediaPlayer.pdb
+C:\Users\Yoann Deshaies\Documents\wmp\MediaPlayer\bin\Debug\playCommu.png
