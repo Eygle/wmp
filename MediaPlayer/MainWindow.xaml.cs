@@ -324,16 +324,16 @@ namespace MediaPlayer
                     infos[2] = System.Text.Encoding.Default.GetString(b, 63, 30).Replace("\0", ""); //Album
                     infos[3] = System.Text.Encoding.Default.GetString(b, 93, 4).Replace("\0", ""); //Year
 
-                    musicTitle.Foreground = new SolidColorBrush(Colors.White);
-                    musicSinger.Foreground = new SolidColorBrush(Colors.White);
-                    musicAlbum.Foreground = new SolidColorBrush(Colors.White);
-                    musicYear.Foreground = new SolidColorBrush(Colors.White);
+                    //musicTitle.Foreground = new SolidColorBrush(Colors.White);
+                    //musicSinger.Foreground = new SolidColorBrush(Colors.White);
+                    //musicAlbum.Foreground = new SolidColorBrush(Colors.White);
+                    //musicYear.Foreground = new SolidColorBrush(Colors.White);
 
-                    musicTitle.Content = "Title:\t" + infos[0];
-                    musicSinger.Content = "Artist:\t" + infos[1];
-                    musicAlbum.Content = "Album:\t" + infos[2];
-                    musicYear.Content = "Year:\t" + infos[3];
-                    GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
+                    //musicTitle.Content = "Title:\t" + infos[0];
+                    //musicSinger.Content = "Artist:\t" + infos[1];
+                    //musicAlbum.Content = "Album:\t" + infos[2];
+                    //musicYear.Content = "Year:\t" + infos[3];
+                    //GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
                 }
                 fs.Close();
                 fs.Dispose();
@@ -360,7 +360,7 @@ namespace MediaPlayer
             {
                 this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
                 mediaTitle.Content = getName(mediaElement.Source.ToString());
-                GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
+                //GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                 if (mediaElement.HasAudio || mediaElement.HasVideo)
                     videoProgressBar.Visibility = System.Windows.Visibility.Visible;
                 else
