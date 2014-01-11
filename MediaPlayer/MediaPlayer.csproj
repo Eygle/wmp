@@ -187,6 +187,45 @@
   <ItemGroup>
     <Folder Include="View\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CameraCommu.png" />
+    <Resource Include="Images\cursorCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fullscreenCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoopAllCommu.png" />
+    <Resource Include="Images\LoopOneCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\nextCommu.png" />
+    <Resource Include="Images\openFileCommu.png" />
+    <Resource Include="Images\OpenFolderCommu.png" />
+    <Resource Include="Images\OpenGlobalFileCommu.png" />
+    <Resource Include="Images\openGlobalFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\playCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\prevCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ShowPlaylistCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ShuffleCommu.png" />
+    <Resource Include="Images\slideBarCommu.png" />
+    <Resource Include="Images\slowDownCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\speedUpCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\stopCommu.png" />
+    <Resource Include="Images\volumeCommu.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
