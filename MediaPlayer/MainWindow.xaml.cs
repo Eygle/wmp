@@ -34,12 +34,12 @@ namespace MediaPlayer
         public MainWindow()
         {
             InitializeComponent();
-            //initTimer();
+            initTimer();
         }
 
         ~MainWindow()
         {
-            //_timer.Stop();
+            _timer.Stop();
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -253,6 +253,51 @@ namespace MediaPlayer
             //capturWin.Show();
         }
 
+        private void fillMusicInfos()
+        {
+            string path = Uri.UnescapeDataString(mediaElement.Source.AbsolutePath);
+
+            byte[] b = new byte[128];
+            string[] infos = new string[5]; //Title; Singer; Album; Year; Comm;
+            bool isSet = false;
+
+            try
+            {
+                FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+                fs.Seek(-128, SeekOrigin.End);
+                fs.Read(b, 0, 128);
+                //Set flag
+                String sFlag = System.Text.Encoding.Default.GetString(b, 0, 3);
+                if (sFlag.CompareTo("TAG") == 0) isSet = true;
+
+                if (isSet)
+                {
+                    infos[0] = System.Text.Encoding.Default.GetString(b, 3, 30).Replace("\0", ""); //Title
+                    infos[1] = System.Text.Encoding.Default.GetString(b, 33, 30).Replace("\0", ""); //Singer
+                    infos[2] = System.Text.Encoding.Default.GetString(b, 63, 30).Replace("\0", ""); //Album
+                    infos[3] = System.Text.Encoding.Default.GetString(b, 93, 4).Replace("\0", ""); //Year
+
+                    musicTitle.Foreground = new SolidColorBrush(Colors.White);
+                    musicSinger.Foreground = new SolidColorBrush(Colors.White);
+                    musicAlbum.Foreground = new SolidColorBrush(Colors.White);
+                    musicYear.Foreground = new SolidColorBrush(Colors.White);
+
+                    musicTitle.Content = "Title:\t" + infos[0];
+                    musicSinger.Content = "Singer:\t" + infos[1];
+                    musicAlbum.Content = "Album:\t" + infos[2];
+                    musicYear.Content = "Year:\t" + infos[3];
+                    GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
+                }
+                fs.Close();
+                fs.Dispose();
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
             mediaElement.Stop();
@@ -279,9 +324,17 @@ namespace MediaPlayer
             try
             {
                 this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
-                System.Console.WriteLine("Total video seconds = " + this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds);
-                //MessageBox.Show(getName(mediaElement.Source.ToString()));
+                System.Console.WriteLine("Media maximum = " + this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds);
                 mediaTitle.Content = getName(mediaElement.Source.ToString());
+                GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
+                if (mediaElement.HasAudio || mediaElement.HasVideo)
+                    videoProgressBar.Visibility = System.Windows.Visibility.Visible;
+                else
+                    videoProgressBar.Visibility = System.Windows.Visibility.Hidden;
+                if (mediaElement.HasAudio && !mediaElement.HasVideo)
+                {
+                    this.fillMusicInfos();
+                }
             }
             catch
             {
@@ -291,20 +344,6 @@ namespace MediaPlayer
         private void mediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
             MessageBox.Show(e.ErrorException.Message);
-        }
-
-        private void MediaPlayer_StateChanged(object sender, EventArgs e)
-        {
-            if (MediaPlayer.WindowState.Equals(System.Windows.WindowState.Maximized))
-            {
-                MessageBox.Show("Maximized: " + MediaPlayer);
-                //grid1.Width = this.MaxWidth - 22;
-                //grid1.Height = this.MaxHeight - 39;
-            }
-            //this.WindowState = MediaPlayer.WindowState.Equals(System.Windows.WindowState.Maximized) ? System.Windows.WindowState.Normal : System.Windows.WindowState.Maximized;
-            //MessageBox.Show("coucou" + MediaPlayer.Width);
-            //grid1.Width = this.Width - 22;
-            //grid1.Height = this.Height - 39;
         }
 
         void synchronizeProgressBar(object sender, EventArgs e)
