@@ -42,7 +42,7 @@ namespace MediaPlayer.ViewModel
             for (int i = 0; i < names.Count(); ++i)
                 fullPaths.Add(pathName + names[i]);
             MediaFactory f = new MediaFactory();
-            List<Media> medias = new List<Media>();
+            List<IMedia> medias = new List<IMedia>();
             foreach (string fullPath in fullPaths)
                 medias.Add(f.createMedia(fullPath));
             this.addToPlaylist(medias);
@@ -51,15 +51,36 @@ namespace MediaPlayer.ViewModel
         public void addFolder(string[] pathNames)
         {
             MediaFactory f = new MediaFactory();
-            List<Media> medias = new List<Media>();
+            List<IMedia> medias = new List<IMedia>();
             for (int i = 0; i < pathNames.Count(); ++i)
                 medias.Add(f.createMedia(pathNames[i]));
             this.addToPlaylist(medias);
         }
 
-        private void addToPlaylist(List<Media> items)
+        public string getMediaPath(int index)
         {
-            foreach (Media item in items)
+            return this._playlist.getMediaAtIndex(index).getPath();
+        }
+
+
+        public string getMediaTitle(int index)
+        {
+            return this._playlist.getMediaAtIndex(index).getTitle();
+        }
+
+        public int Count()
+        {
+            return this._playlist.count();
+        }
+
+        public void shuffle()
+        {
+            this._playlist.shuffle();
+        }
+
+        private void addToPlaylist(List<IMedia> items)
+        {
+            foreach (IMedia item in items)
                 this._playlist.add(item);
         }
     }

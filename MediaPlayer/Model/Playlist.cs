@@ -13,19 +13,19 @@ namespace MediaPlayer.Model
         [XmlElement(ElementName = "PlaylistName")]
         private string _name;
         [XmlElement(ElementName = "TotalLength")]
-        private int _totalLength;
+        private long _totalLength;
         [XmlElement(ElementName = "NumberElements")]
         private int _size;
         [XmlElement(ElementName = "Content")]
-        private List<Media> _content;
+        private List<IMedia> _content;
 
         public Playlist()
         {
             this._name = "default";
-            this._content = new List<Media>();
+            this._content = new List<IMedia>();
         }
 
-        public Playlist(string playlistName, List<Media> content)
+        public Playlist(string playlistName, List<IMedia> content)
         {
             this._name = playlistName;
             this._content = content;
@@ -38,18 +38,34 @@ namespace MediaPlayer.Model
             this._totalLength = 0;
         }
 
-        public void add(Media item)
+        public void add(IMedia item)
         {
             this._content.Add(item);
             this._size++;
-            this._totalLength += item.length;
+            this._totalLength += item.getLengthLong();
         }
 
-        public void remove(Media item)
+        public void remove(IMedia item)
         {
             this._size--;
-            this._totalLength -= item.length;
+            this._totalLength -= item.getLengthLong();
             this._content.Remove(item);
+        }
+
+        public IMedia getMediaAtIndex(int index)
+        {
+            return this._content[index];
+        }
+
+        public int count()
+        {
+            return this._content.Count;
+        }
+
+        public void shuffle()
+        {
+            Random rnd = new Random();
+            this._content = this._content.OrderBy(x => rnd.Next()).ToList();
         }
     }
 }

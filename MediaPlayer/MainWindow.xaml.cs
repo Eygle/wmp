@@ -15,6 +15,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using MediaPlayer.ViewModel;
+using MediaPlayer.Model;
 //using WebCam_Capture;
 
 namespace MediaPlayer
@@ -29,7 +30,7 @@ namespace MediaPlayer
         private bool _isLoopSingle = false;
         private string[] _allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
 
-        private WebCam webcam;
+        private WebCam _webcam;
         private CurrentPlaylist _playList;
 
         private System.Windows.Threading.DispatcherTimer _timer = new System.Windows.Threading.DispatcherTimer();
@@ -38,8 +39,9 @@ namespace MediaPlayer
         {
             InitializeComponent();
             initTimer();
-            webcam = new WebCam();
-            webcam.InitializeWebCam(ref captureImage);
+            _webcam = new WebCam();
+            _playList = new CurrentPlaylist();
+            _webcam.InitializeWebCam(ref captureImage);
         }
 
         ~MainWindow()
@@ -92,17 +94,17 @@ namespace MediaPlayer
 
         private void goNextMedia()
         {
-            System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _pathList.Count + " current: " + _listIndex);
-            if (_listIndex >= 0 && _listIndex <= _pathList.Count)
+            System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _playList.Count() + " current: " + _listIndex);
+            if (_listIndex >= 0 && _listIndex <= this._playList.Count())
             {
                 try
                 {
-                    if (_listIndex >= _pathList.Count - 1 && !_isLoopAll)
+                    if (_listIndex >= this._playList.Count() - 1 && !_isLoopAll)
                         return;
                     _listIndex++;
-                    if (_listIndex >= _pathList.Count)
+                    if (_listIndex >= this._playList.Count())
                         _listIndex = 0;
-                    mediaElement.Source = new Uri(_pathList[_listIndex]);
+                    mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
                 }
                 catch
                 {
@@ -113,8 +115,8 @@ namespace MediaPlayer
 
         private void goPreviousMedia()
         {
-            System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _pathList.Count + " current: " + _listIndex);
-            if (_listIndex >= 0 && _listIndex <= _pathList.Count)
+            System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _playList.Count() + " current: " + _listIndex);
+            if (_listIndex >= 0 && _listIndex <= this._playList.Count())
             {
                 try
                 {
@@ -122,8 +124,8 @@ namespace MediaPlayer
                         return;
                     _listIndex--;
                     if (_listIndex < 0)
-                        _listIndex = _pathList.Count - 1;
-                    mediaElement.Source = new Uri(_pathList[_listIndex]);
+                        _listIndex = this._playList.Count() - 1;
+                    mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
                 }
                 catch
                 {
@@ -161,8 +163,8 @@ namespace MediaPlayer
                 {
                     string[] str = openFileDialog1.FileNames;
                     SetPlayList(openFileDialog1.InitialDirectory, str);
-                    //this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
-                    mediaElement.Source = new Uri(_pathList.First());
+                    this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
+                    mediaElement.Source = new Uri(_playList.getMediaPath(0));
                     this.playMedia();
                 }
                 catch
@@ -196,7 +198,7 @@ namespace MediaPlayer
                 {
                     string[] str = this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath));
                     SetPlayList("", str);
-                    //this._playList.addFolder(this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath)));
+                    this._playList.addFolder(this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath)));
                     mediaElement.Source = new Uri(str[0]);
                     this.playMedia();
                 }
@@ -362,7 +364,7 @@ namespace MediaPlayer
             try
             {
                 this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
-                mediaTitle.Content = getName(mediaElement.Source.ToString());
+                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);//getName(mediaElement.Source.ToString());
                 //GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                 if (mediaElement.HasAudio || mediaElement.HasVideo)
                     videoProgressBar.Visibility = System.Windows.Visibility.Visible;
@@ -473,19 +475,18 @@ namespace MediaPlayer
 
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
-            webcam.Start();
-            webcam.Continue();
+            _webcam.Start();
+            _webcam.Continue();
         }
 
         private void Random_Click(object sender, RoutedEventArgs e)
         {
-            Random rnd = new Random();
-            this._pathList = this._pathList.OrderBy(x => rnd.Next()).ToList();
+            this._playList.shuffle();
         }
 
         private void CamCaptureTab_LostFocus(object sender, RoutedEventArgs e)
         {
-            webcam.Stop();
+            _webcam.Stop();
         }
     }
 }

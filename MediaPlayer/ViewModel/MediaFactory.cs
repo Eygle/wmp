@@ -17,20 +17,19 @@ namespace MediaPlayer.ViewModel
         {
         }
 
-        public Media createMedia(string pathName)
+        public IMedia createMedia(string pathName)
         {
             if (!this._allowedExt.Contains(System.IO.Path.GetExtension(pathName)))
             {
                 Console.Out.WriteLine("Error tmp");
+                return null;
             }
 
-            Media.Type type = Media.Type.AUDIO;
             if (this._videoExt.Contains(System.IO.Path.GetExtension(pathName)))
-                type = Media.Type.VIDEO;
+                return new Video(pathName);
             else if (this._imageExt.Contains(System.IO.Path.GetExtension(pathName)))
-                type = Media.Type.IMAGE;
-            Media media = new Media(69, "n/a", pathName, type);
-            return media;
+                return new mediaImage(pathName);
+            return new Audio(pathName);
         }
     }
 }
