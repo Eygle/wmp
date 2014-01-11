@@ -171,7 +171,7 @@ namespace MediaPlayer
         private string[] getFilesWithAllowedExt(string[] files)
         {
             var res = new List<string>(files);
-            string[] allowedExt = {".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi"};
+            string[] allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
 
             for (int i = 0; i < files.Length; ++i)
             {
