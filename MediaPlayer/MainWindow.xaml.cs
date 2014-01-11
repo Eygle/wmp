@@ -473,5 +473,11 @@ namespace MediaPlayer
             webcam.Start();
             webcam.Continue();
         }
+
+        private void Random_Click(object sender, RoutedEventArgs e)
+        {
+            Random rnd = new Random();
+            this._pathList = this._pathList.OrderBy(x => rnd.Next()).ToList();
+        }
     }
 }

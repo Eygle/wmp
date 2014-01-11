@@ -92,44 +92,44 @@
                             </Button.Background>
                         </Button>
                         <Slider Height="20" LargeChange="1" Margin="6,0,5.6,74.8" Maximum="100" x:Name="videoProgressBar" VerticalAlignment="Bottom" Visibility="Hidden" ValueChanged="videoProgressBar_ValueChanged" Grid.ColumnSpan="2" />
-                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,35.8" x:Name="Prev" VerticalAlignment="Bottom" Width="20" Click="prevButton_Click">
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="85,0,0,35.4" x:Name="Prev" VerticalAlignment="Bottom" Width="20" Click="prevButton_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="/MediaPlayer;component/Images/prev.png" />
                             </Button.Background>
                         </Button>
-                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="117,0,0,35.8" x:Name="stopButton" VerticalAlignment="Bottom" Width="20" Click="stopButton_Click">
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="111,0,0,35.4" x:Name="stopButton" VerticalAlignment="Bottom" Width="20" Click="stopButton_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="/MediaPlayer;component/Images/stop.png" />
                             </Button.Background>
                         </Button>
-                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" IsTabStop="True" Margin="143,0,0,35.8" x:Name="nextButton" VerticalAlignment="Bottom" Width="20" Click="nextButton_Click" Grid.ColumnSpan="2">
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" IsTabStop="True" Margin="137,0,0,35.4" x:Name="nextButton" VerticalAlignment="Bottom" Width="20" Click="nextButton_Click" Grid.ColumnSpan="2">
                             <Button.Background>
                                 <ImageBrush ImageSource="/MediaPlayer;component/Images/next.png" />
                             </Button.Background>
                         </Button>
-                        <Button Focusable="False" ForceCursor="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,9.8" x:Name="slowDownButton" VerticalAlignment="Bottom" Width="20" Click="slowDownButton_Click">
+                        <Button Focusable="False" ForceCursor="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="85,0,0,9.4" x:Name="slowDownButton" VerticalAlignment="Bottom" Width="20" Click="slowDownButton_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="/MediaPlayer;component/Images/prev.png" />
                             </Button.Background>
                         </Button>
-                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="143,0,0,9.8" x:Name="speedUpButton" VerticalAlignment="Bottom" Width="20" Click="speedUpButton_Click" Grid.ColumnSpan="2">
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="137,0,0,9.4" x:Name="speedUpButton" VerticalAlignment="Bottom" Width="20" Click="speedUpButton_Click" Grid.ColumnSpan="2">
                             <Button.Background>
                                 <ImageBrush ImageSource="/MediaPlayer;component/Images/next.png" />
                             </Button.Background>
                         </Button>
-                        <Label Content="x1" HorizontalContentAlignment="Center" IsEnabled="True" IsTabStop="False" Margin="107,0,0,9.8" MaxHeight="20" MaxWidth="35" x:Name="speedLabel" Padding="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="35" Height="20" VerticalAlignment="Bottom" />
+                        <Label Content="x1" HorizontalContentAlignment="Center" IsEnabled="True" IsTabStop="False" Margin="101,0,0,9.4" MaxHeight="20" MaxWidth="35" x:Name="speedLabel" Padding="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="35" Height="20" VerticalAlignment="Bottom" />
                         <Slider Height="23" HorizontalAlignment="Right" LargeChange="0.1" Margin="0,0,37.6,35.8" Maximum="1" x:Name="volumeBar" Value="0.5" VerticalAlignment="Bottom" Width="100" ValueChanged="volumeBar_ValueChanged" Grid.Column="1" />
                         <Button BorderBrush="{x:Null}" Focusable="False" Height="23" HorizontalAlignment="Right" IsHitTestVisible="True" Margin="0,0,143.6,35.8" x:Name="volumeButton" VerticalAlignment="Bottom" Width="23" Click="volumeButton_Click" Grid.Column="1">
                             <Button.Background>
                                 <ImageBrush ImageSource="/MediaPlayer;component/Images/speaker.png" />
                             </Button.Background>
                         </Button>
-                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="75.4,0,0,35.8" x:Name="LoopSingleButton" VerticalAlignment="Bottom" Width="20" Click="LoopSingleButton_Click" Grid.Column="1">
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="66.8,0,0,34.4" x:Name="LoopSingleButton" VerticalAlignment="Bottom" Width="20" Click="LoopSingleButton_Click" Grid.Column="1">
                             <Button.Background>
                                 <ImageBrush ImageSource="/MediaPlayer;component/Images/repeat.png" />
                             </Button.Background>
                         </Button>
-                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="49.4,0,0,35.8" x:Name="loopAllButton" VerticalAlignment="Bottom" Width="20" Click="loopAllButton_Click" Grid.Column="1">
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="39.8,0,0,34.4" x:Name="loopAllButton" VerticalAlignment="Bottom" Width="20" Click="loopAllButton_Click" Grid.Column="1">
                             <Button.Background>
                                 <ImageBrush ImageSource="/MediaPlayer;component/Images/loop.png" />
                             </Button.Background>
@@ -151,14 +151,19 @@
                         </Button>
                         <!--<Image x:Name="captureImage" HorizontalAlignment="Left" Height="371" Margin="11.4,0,0,0" VerticalAlignment="Top" Width="371" Grid.Column="1"/>-->
                         <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,9.2,0.4" VerticalAlignment="Bottom" Width="278" Height="35" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Grid.Column="1"/>
-                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="49,0,0,9.4" x:Name="openFileButton" VerticalAlignment="Bottom" Width="20" Click="OpenFile_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="39.8,0,0,9.4" x:Name="openFileButton" VerticalAlignment="Bottom" Width="20" Click="OpenFile_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/loop.png" />
                             </Button.Background>
                         </Button>
-                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="75,0,0,9.4" x:Name="openFolderButton" VerticalAlignment="Bottom" Width="20" Click="OpenFolder_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="66.8,0,0,9.4" x:Name="openFolderButton" VerticalAlignment="Bottom" Width="20" Click="OpenFolder_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/loop.png" />
+                            </Button.Background>
+                        </Button>
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="90.8,0,0,34.4" x:Name="Random" VerticalAlignment="Bottom" Width="20" Grid.Column="1" Click="Random_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/repeat.png" />
                             </Button.Background>
                         </Button>
                     </Grid>
