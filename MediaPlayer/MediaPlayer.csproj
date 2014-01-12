@@ -83,6 +83,9 @@
       <DependentUpon>CaptureWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper.cs" />
+    <Compile Include="Model\Media.cs" />
+    <Compile Include="Model\Playlist.cs" />
+    <Compile Include="ViewModel\CurrentPlaylist.cs" />
     <Compile Include="WebCam.cs" />
     <Page Include="CaptureWindow.xaml">
       <SubType>Designer</SubType>
@@ -161,6 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\snapshot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
