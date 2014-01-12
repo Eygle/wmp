@@ -274,9 +274,9 @@
                     <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="1" Margin="0,6,10.2,-6">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Title" CellTemplate="{StaticResource titleTemplate}" />
-                                <GridViewColumn Header="File Size" CellTemplate="{StaticResource fileSizeTemplate}" />
-                                <GridViewColumn Header="Time" CellTemplate="{StaticResource lengthStringTemplate}" />
+                                <GridViewColumn Width="100" Header="Title" CellTemplate="{StaticResource titleTemplate}" />
+                                <GridViewColumn Width="100" Header="File Size" CellTemplate="{StaticResource fileSizeTemplate}" />
+                                <GridViewColumn Width="100" Header="Time" CellTemplate="{StaticResource lengthStringTemplate}" />
                             </GridView>
                         </ListView.View>
                     </ListView>

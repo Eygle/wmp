@@ -83,9 +83,13 @@
       <DependentUpon>CaptureWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper.cs" />
-    <Compile Include="Model\Media.cs" />
+    <Compile Include="Model\Image.cs" />
+    <Compile Include="Model\Video.cs" />
+    <Compile Include="Model\Audio.cs" />
+    <Compile Include="Model\IMedia.cs" />
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="ViewModel\CurrentPlaylist.cs" />
+    <Compile Include="ViewModel\MediaFactory.cs" />
     <Compile Include="WebCam.cs" />
     <Page Include="CaptureWindow.xaml">
       <SubType>Designer</SubType>
@@ -225,6 +229,17 @@
   <ItemGroup>
     <Resource Include="Images\stopCommu.png" />
     <Resource Include="Images\volumeCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Shell32">
+      <Guid>{50A7E9B0-70EF-11D1-B75A-00A0C90564FE}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
