@@ -71,12 +71,6 @@
 
         <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="-1,-1,0,0" VerticalAlignment="Top" Width="693.6" Height="447.4">
             <TabItem Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True" Foreground="Black" RenderTransformOrigin="0,0.5">
-                <TabItem.Background>
-                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
-                        <GradientStop Color="#FF8A1717" Offset="1"/>
-                    </LinearGradientBrush>
-                </TabItem.Background>
                 <Grid Background="White" Margin="0,2,0.2,-2.6">
                     <Rectangle Fill="#FF070303" Margin="0,0,-0.4,90" x:Name="mediaElementBackground" Stroke="Black" />
                     <MediaElement LoadedBehavior="Manual" Margin="0,0,2.6,90" x:Name="mediaElement" MediaOpened="mediaElement_MediaOpened" MediaEnded="mediaElement_MediaEnded" MediaFailed="mediaElement_MediaFailed" />
@@ -264,7 +258,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/fullscreenCommu.png" />
+                                <ImageBrush ImageSource="ShuffleCommu.png" />
                             </Button.Background>
                         </Button>
                     </Grid>

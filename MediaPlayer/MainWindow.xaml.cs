@@ -114,7 +114,7 @@ namespace MediaPlayer
         private void goNextMedia()
         {
             System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _playList.Count() + " current: " + _listIndex);
-            if (_listIndex >= 0 && _listIndex <= this._playList.Count())
+            if (_listIndex >= 0 && _listIndex < this._playList.Count())
             {
                 try
                 {
@@ -135,7 +135,7 @@ namespace MediaPlayer
         private void goPreviousMedia()
         {
             System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _playList.Count() + " current: " + _listIndex);
-            if (_listIndex >= 0 && _listIndex <= this._playList.Count())
+            if (_listIndex >= 0 && _listIndex < this._playList.Count())
             {
                 try
                 {
@@ -182,8 +182,8 @@ namespace MediaPlayer
                 {
                     string[] str = openFileDialog1.FileNames;
                     this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
-                    SetPlayList(openFileDialog1.InitialDirectory, str);
-                    this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
+                    //SetPlayList(openFileDialog1.InitialDirectory, str);
+                    this.playList.ItemsSource = this._playList.getPlayList();
                     mediaElement.Source = new Uri(_playList.getMediaPath(0));
                     this.playMedia();
                 }
@@ -218,8 +218,8 @@ namespace MediaPlayer
                 {
                     string[] str = this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath));
                     this._playList.addFolder(this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath)));
-                    SetPlayList("", str);
-                    this._playList.addFolder(this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath)));
+                    //SetPlayList("", str);
+                    this.playList.ItemsSource = this._playList.getPlayList();
                     mediaElement.Source = new Uri(str[0]);
                     this.playMedia();
                 }
@@ -326,46 +326,6 @@ namespace MediaPlayer
             //capturWin.Show();
         }
 
-        private void fillMusicInfos()
-        {
-            string path = Uri.UnescapeDataString(mediaElement.Source.AbsolutePath);
-
-            byte[] b = new byte[128];
-            string[] infos = new string[5]; //Title; Artist; Album; Year; Comm;
-            bool isSet = false;
-
-            try
-            {
-                FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-                fs.Seek(-128, SeekOrigin.End);
-                fs.Read(b, 0, 128);
-                //Set flag
-                String sFlag = System.Text.Encoding.Default.GetString(b, 0, 3);
-                if (sFlag.CompareTo("TAG") == 0) isSet = true;
-
-                if (isSet)
-                {
-                    infos[0] = System.Text.Encoding.Default.GetString(b, 3, 30).Replace("\0", ""); //Title
-                    infos[1] = System.Text.Encoding.Default.GetString(b, 33, 30).Replace("\0", ""); //Artist
-                    infos[2] = System.Text.Encoding.Default.GetString(b, 63, 30).Replace("\0", ""); //Album
-                    infos[3] = System.Text.Encoding.Default.GetString(b, 93, 4).Replace("\0", ""); //Year
-
-                    //musicTitle.Content = "Title:\t" + infos[0];
-                    //musicSinger.Content = "Artist:\t" + infos[1];
-                    //musicAlbum.Content = "Album:\t" + infos[2];
-                    //musicYear.Content = "Year:\t" + infos[3];
-                    //GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
-                }
-                fs.Close();
-                fs.Dispose();
-            }
-            catch (IOException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-        }
-
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
             mediaElement.Stop();
@@ -391,10 +351,6 @@ namespace MediaPlayer
                     GridProgressBar.Visibility = System.Windows.Visibility.Visible;
                 else
                     GridProgressBar.Visibility = System.Windows.Visibility.Hidden;
-                if (mediaElement.HasAudio && !mediaElement.HasVideo)
-                {
-                    this.fillMusicInfos();
-                }
             }
             catch
             {
@@ -443,10 +399,7 @@ namespace MediaPlayer
             for (int i = 0; i < str.Length; ++i)
                 _pathList.Add(dir + str[i]);
             //this.playList.ItemsSource = _pathList;
-            ObservableCollection<IMedia> oc = new ObservableCollection<IMedia>();
-            foreach (IMedia item in this._playList.getPlayList())
-                oc.Add(item);
-            this.playList.ItemsSource = oc;
+            this.playList.ItemsSource = this._playList.getPlayList();
         }
 
         //Youtube

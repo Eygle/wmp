@@ -154,6 +154,7 @@
     <Resource Include="play.png" />
     <Resource Include="prevCommu.png" />
     <Resource Include="ShowPlaylistCommu.png" />
+    <Resource Include="ShuffleCommu.png" />
     <Resource Include="slowDownCommu.png" />
     <Resource Include="speedUpCommu.png" />
     <Resource Include="stopCommu.png" />
