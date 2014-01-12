@@ -1,6 +1,7 @@
 ﻿using MediaPlayer.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -68,9 +69,12 @@ namespace MediaPlayer.ViewModel
             return this._playlist.getMediaAtIndex(index).Title;
         }
 
-        public List<IMedia> getPlayList()
+        public ObservableCollection<IMedia> getPlayList()
         {
-            return this._playlist.getPlayList();
+            ObservableCollection<IMedia> oc = new ObservableCollection<IMedia>();
+            foreach (IMedia item in this._playlist.getPlayList())
+                oc.Add(item);
+            return oc;
         }
 
         public int Count()

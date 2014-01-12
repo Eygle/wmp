@@ -425,10 +425,7 @@ namespace MediaPlayer
             for (int i = 0; i < str.Length; ++i)
                 _pathList.Add(dir + str[i]);
             //this.playList.ItemsSource = _pathList;
-            ObservableCollection<IMedia> oc = new ObservableCollection<IMedia>();
-            foreach (IMedia item in this._playList.getPlayList())
-                oc.Add(item);
-            this.playList.ItemsSource = oc;
+            this.playList.ItemsSource = this._playList.getPlayList();
         }
 
         //Youtube
