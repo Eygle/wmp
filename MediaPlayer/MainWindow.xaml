@@ -287,7 +287,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TreeView Margin="7,5,0,5" x:Name="treeView1" HorizontalAlignment="Left" Width="184" />
+                    <TreeView Margin="7,5,5,5" x:Name="treeView1" />
                 </Grid>
             </TabItem>
             <TabItem Header="Youtube" GotFocus="TabItem_GotFocus">
@@ -299,8 +299,8 @@
                 </TabItem.Background>
                 <Grid Background="White" Margin="0,0,0,0">
                     <TextBox Width="0" Height="0" TabIndex="0"/>
-                    <TextBox x:Name="YoutubeLink" HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" TextWrapping="Wrap" Text="Insert Youtube URL here" VerticalAlignment="Top" Width="584" GotFocus="YoutubeLink_GotFocus" LostFocus="YoutubeLink_LostFocus"/>
-                    <Button x:Name="YoutubePlayButton" Content="Play" HorizontalAlignment="Left" Margin="599,10,0,0" VerticalAlignment="Top" Width="72" Height="22" Click="YoutubeButton_Click"/>
+                    <TextBox x:Name="YoutubeLink" Height="22" Margin="10,10,90,0" TextWrapping="Wrap" Text="Insert Youtube URL here" VerticalAlignment="Top" GotFocus="YoutubeLink_GotFocus" LostFocus="YoutubeLink_LostFocus"/>
+                    <Button x:Name="YoutubePlayButton" Content="Play" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="72" Height="22" Click="YoutubeButton_Click"/>
                     <WebBrowser x:Name="YoutubeEmbededPlayer" HorizontalAlignment="Left" Margin="5,42,5,5" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
