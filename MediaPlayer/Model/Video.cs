@@ -1,19 +1,18 @@
-﻿using Shell32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using Shell32;
 
 namespace MediaPlayer.Model
 {
     [Serializable]
-    public class Audio : IMedia
+    public class Video : IMedia
     {
         private string _lengthString;
-        private long   _lengthLong;
+        private long _lengthLong;
         private string _title;
         private string _genre;
         private string _pathName;
@@ -22,7 +21,7 @@ namespace MediaPlayer.Model
         private string _year;
         private mediaType _type;
 
-        public Audio() { }
+        public Video() { }
 
         Dictionary<int, KeyValuePair<string, string>> GetFileProps(string filename)
         {
@@ -41,25 +40,20 @@ namespace MediaPlayer.Model
             return fileProps;
         }
 
-        public Audio(string path)
+        public Video(string path)
         {
-            this._pathName = path;
+            this.PathName = path;
+
             Dictionary<int, KeyValuePair<string, string>> fileProps = GetFileProps(path);
             /*foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
             {
                 Console.WriteLine(kv.ToString());
             }*/
-            this._lengthString = fileProps[27].Value;
-            this._title = fileProps[21].Value;
-            this._fileSize = fileProps[1].Value;
-            this._artist = fileProps[20].Value;
-            this._year = fileProps[15].Value;
-            this._genre = null;
-            long[] multipliers = new long[] { 3600, 60, 1 };
+
+            this.LengthString = fileProps[27].Value;
+            long[] multipliers = new long[] { 3600, 60, 1};
             int i = 0;
-            this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
-        
-            _type = mediaType.AUDIO;
+            this.LengthLong = this.LengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
         }
 
         public string LengthString

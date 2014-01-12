@@ -11,13 +11,15 @@ namespace MediaPlayer.Model
     [Serializable]
     public class mediaImage : IMedia
     {
-        public string LengthString { get; set; }
-        public long LengthLong { get; set; }
-        public string Title { get; set; }
-        public string Genre { get; set; }
-        public string PathName { get; set; }
-        public string FileSize { get; set; }
-        public mediaType Type { get; set; }
+        private string _lengthString;
+        private long _lengthLong;
+        private string _title;
+        private string _genre;
+        private string _pathName;
+        private string _fileSize;
+        private string _artist;
+        private string _year;
+        private mediaType _type;
 
         public mediaImage() { }
 
@@ -53,6 +55,60 @@ namespace MediaPlayer.Model
             this.FileSize = fileProps[1].Value;
             this.Genre = null;
             Type = mediaType.IMAGE;
+        }
+
+
+        public string LengthString
+        {
+            get { return this._lengthString; }
+            set { this._lengthString = value; }
+        }
+
+        public long LengthLong
+        {
+            get { return this._lengthLong; }
+            set { this._lengthLong = value; }
+        }
+
+        public string Title
+        {
+            get { return this._title; }
+            set { this._title = value; }
+        }
+        public string Genre
+        {
+            get { return this._genre; }
+            set { this._genre = value; }
+        }
+
+        public string PathName
+        {
+            get { return this._pathName; }
+            set { this._pathName = value; }
+        }
+
+        public string FileSize
+        {
+            get { return this._fileSize; }
+            set { this._fileSize = value; }
+        }
+
+        public string Artist
+        {
+            get { return this._artist; }
+            set { this._artist = value; }
+        }
+
+        public string Year
+        {
+            get { return this._year; }
+            set { this._year = value; }
+        }
+
+        public mediaType Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
     }
 }

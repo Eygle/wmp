@@ -39,6 +39,7 @@ namespace MediaPlayer
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
             initTimer();
             _webcam = new WebCam();
             _playList = new CurrentPlaylist();
@@ -163,6 +164,7 @@ namespace MediaPlayer
                 try
                 {
                     string[] str = openFileDialog1.FileNames;
+                    this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
                     SetPlayList(openFileDialog1.InitialDirectory, str);
                     this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
                     mediaElement.Source = new Uri(_playList.getMediaPath(0));
@@ -198,6 +200,7 @@ namespace MediaPlayer
                 try
                 {
                     string[] str = this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath));
+                    this._playList.addFolder(this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath)));
                     SetPlayList("", str);
                     this._playList.addFolder(this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath)));
                     mediaElement.Source = new Uri(str[0]);
@@ -423,8 +426,13 @@ namespace MediaPlayer
                 _pathList.Add(dir + str[i]);
             //this.playList.ItemsSource = _pathList;
             ObservableCollection<IMedia> oc = new ObservableCollection<IMedia>();
+            Console.WriteLine("Title");
             foreach (IMedia item in this._playList.getPlayList())
+            {
+                Console.WriteLine("Title");
+                Console.WriteLine(item.Title);
                 oc.Add(item);
+            }
             this.playList.ItemsSource = oc;
         }
 
