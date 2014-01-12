@@ -113,7 +113,6 @@ namespace MediaPlayer
 
         private void goNextMedia()
         {
-            System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _playList.Count() + " current: " + _listIndex);
             if (_listIndex >= 0 && _listIndex < this._playList.Count())
             {
                 try
@@ -134,7 +133,6 @@ namespace MediaPlayer
 
         private void goPreviousMedia()
         {
-            System.Console.WriteLine("isLoopAll: " + this._isLoopAll + " isLoopSingle: " + _isLoopSingle + " total: " + _playList.Count() + " current: " + _listIndex);
             if (_listIndex >= 0 && _listIndex < this._playList.Count())
             {
                 try
@@ -322,8 +320,13 @@ namespace MediaPlayer
         private void cameraButton_Click(object sender, RoutedEventArgs e)
         {
             CamCaptureTab.Focus();
-            //CaptureWindow capturWin = new CaptureWindow();
-            //capturWin.Show();
+        }
+
+
+
+        private void Random_Click(object sender, RoutedEventArgs e)
+        {
+            this._playList.shuffle();
         }
 
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
@@ -440,25 +443,18 @@ namespace MediaPlayer
              YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
         }
 
-
         // CAMERA CAPTURE
 
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             Helper.SaveImageCapture((BitmapSource)captureImage.Source);
-            this.Close();
         }
 
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
             _webcam.Start();
             _webcam.Continue();
-        }
-
-        private void Random_Click(object sender, RoutedEventArgs e)
-        {
-            this._playList.shuffle();
         }
 
         private void CamCaptureTab_LostFocus(object sender, RoutedEventArgs e)

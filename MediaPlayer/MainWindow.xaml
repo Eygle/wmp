@@ -273,12 +273,14 @@
                 </TabItem.Background>
                 <Grid Background="#FFFFFF" Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="33*"/>
-                        <ColumnDefinition Width="82*"/>
+                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="21*"/>
+                        <ColumnDefinition Width="161*"/>
+                        <ColumnDefinition Width="491*"/>
                     </Grid.ColumnDefinitions>
-                    <Rectangle Margin="0,0,-0.4,-0.2" x:Name="rectangle1" Stroke="#FFB5B1B1" Fill="#FFE3E3E3" Grid.ColumnSpan="2" />
+                    <Rectangle Margin="0,0,-0.8,-0.6" x:Name="rectangle1" Stroke="#FFB5B1B1" Fill="#FFE3E3E3" Grid.ColumnSpan="4" />
                     <GridSplitter HorizontalAlignment="Left" Margin="7,6,0,0" x:Name="gridSplitter1" VerticalAlignment="Top"/>
-                    <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="1" Margin="0,6,10.2,6">
+                    <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="3" Margin="0,6,10.2,6.4">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="100" Header="Title" CellTemplate="{StaticResource titleTemplate}" />
@@ -287,7 +289,7 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TreeView Margin="7,5,5,5" x:Name="treeView1" />
+                    <TreeView Margin="7,5,5,5.4" x:Name="treeView1" Grid.ColumnSpan="3" />
                 </Grid>
             </TabItem>
             <TabItem Header="Youtube" GotFocus="TabItem_GotFocus">
@@ -312,7 +314,7 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid Background="#FFFFFF" Margin="0,0,0,0">
-                    <Image x:Name="captureImage" Margin="10,10,10,40" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+                    <Image x:Name="captureImage" Margin="10,10,10,40" VerticalAlignment="Bottom" />
                     <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Center" Margin="0,0,0,5" Width="85" Height="30" VerticalAlignment="Bottom" Click="saveButton_Click"/>
                 </Grid>
             </TabItem>
