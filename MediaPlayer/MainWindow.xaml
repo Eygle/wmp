@@ -50,6 +50,21 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+        <DataTemplate x:Key="titleTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Path=Title}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="fileSizeTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Path=FileSize}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="lengthStringTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Path=LengthString}"/>
+        </DataTemplate>
     </Window.Resources>
     <Grid Background="#FFCECECE" x:Name="grid1">
 
@@ -259,10 +274,9 @@
                     <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="1" Margin="0,6,10.2,-6">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="140" Header="Title"
-                                    DisplayMemberBinding="{Binding Title}"  />
-                                <GridViewColumn Width="140" Header="FileSize"  
-                                    DisplayMemberBinding="{Binding FileSize}" />
+                                <GridViewColumn Header="Title" CellTemplate="{StaticResource titleTemplate}" />
+                                <GridViewColumn Header="File Size" CellTemplate="{StaticResource fileSizeTemplate}" />
+                                <GridViewColumn Header="Time" CellTemplate="{StaticResource lengthStringTemplate}" />
                             </GridView>
                         </ListView.View>
                     </ListView>

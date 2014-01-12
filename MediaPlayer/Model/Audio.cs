@@ -58,7 +58,6 @@ namespace MediaPlayer.Model
             long[] multipliers = new long[] { 3600, 60, 1 };
             int i = 0;
             this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
-        
             _type = mediaType.AUDIO;
         }
 

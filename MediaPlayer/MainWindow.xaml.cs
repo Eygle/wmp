@@ -426,13 +426,8 @@ namespace MediaPlayer
                 _pathList.Add(dir + str[i]);
             //this.playList.ItemsSource = _pathList;
             ObservableCollection<IMedia> oc = new ObservableCollection<IMedia>();
-            Console.WriteLine("Title");
             foreach (IMedia item in this._playList.getPlayList())
-            {
-                Console.WriteLine("Title");
-                Console.WriteLine(item.Title);
                 oc.Add(item);
-            }
             this.playList.ItemsSource = oc;
         }
 
