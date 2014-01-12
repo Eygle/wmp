@@ -42,19 +42,24 @@ namespace MediaPlayer.Model
         {
             this._content.Add(item);
             this._size++;
-            this._totalLength += item.getLengthLong();
+            this._totalLength += item.LengthLong;
         }
 
         public void remove(IMedia item)
         {
             this._size--;
-            this._totalLength -= item.getLengthLong();
+            this._totalLength -= item.LengthLong;
             this._content.Remove(item);
         }
 
         public IMedia getMediaAtIndex(int index)
         {
             return this._content[index];
+        }
+
+        public List<IMedia> getPlayList()
+        {
+            return this._content;
         }
 
         public int count()

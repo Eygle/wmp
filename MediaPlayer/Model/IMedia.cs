@@ -15,12 +15,12 @@ namespace MediaPlayer.Model
     //[Serializable]
     public interface IMedia
     {
-        string getTitle();
-        mediaType getType();
-        string getLengthString();
-        long getLengthLong();
-        string getGenre();
-        string getPath();
-        string getFileSize();
+        string Title { get; set; }
+        mediaType Type { get; set; }
+        string LengthString { get; set; }
+        long LengthLong { get; set; }
+        string Genre { get; set; }
+        string PathName { get; set; }
+        string FileSize { get; set; }
     }
 }

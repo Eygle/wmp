@@ -256,7 +256,7 @@
                     </Grid.ColumnDefinitions>
                     <Rectangle Margin="0,0,-0.4,-0.2" x:Name="rectangle1" Stroke="#FFB5B1B1" Fill="#FFE3E3E3" Grid.ColumnSpan="2" />
                     <GridSplitter HorizontalAlignment="Left" Margin="7,6,0,0" x:Name="gridSplitter1" VerticalAlignment="Top"/>
-                    <ListBox Margin="1.4,5,4.6,4.8" x:Name="playList" Grid.Column="1" />
+                    <ListBox Margin="1.4,5,4.6,4.8" x:Name="playList" Grid.Column="1" ItemsSource="{Binding Path=IMedia }" DisplayMemberPath="Title"/>
                     <TreeView Margin="7,5,0,4.8" x:Name="treeView1" HorizontalAlignment="Left" />
                 </Grid>
             </TabItem>

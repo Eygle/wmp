@@ -12,15 +12,15 @@ namespace MediaPlayer.Model
     [Serializable]
     public class Audio : IMedia
     {
-        private string _lengthString;
-        private long _lengthLong;
-        private string _title;
-        private string _genre;
-        private string _path;
-        private string _fileSize;
-        private string _artist;
-        private string _year;
-        private mediaType type;
+        public string LengthString { get; set; }
+        public long LengthLong { get; set; }
+        public string Title { get; set; }
+        public string Genre { get; set; }
+        public string PathName { get; set; }
+        public string FileSize { get; set; }
+        public string Artist { get; set; }
+        public string Year { get; set; }
+        public mediaType Type { get; set; }
 
         public Audio() { }
 
@@ -43,58 +43,23 @@ namespace MediaPlayer.Model
 
         public Audio(string path)
         {
-            this._path = path;
+            this.PathName = path;
             Dictionary<int, KeyValuePair<string, string>> fileProps = GetFileProps(path);
             /*foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
             {
                 Console.WriteLine(kv.ToString());
             }*/
-            this._lengthString = fileProps[27].Value;
-            this._title = fileProps[21].Value;
-            this._fileSize = fileProps[1].Value;
-            this._artist = fileProps[20].Value;
-            this._year = fileProps[15].Value;
-            this._genre = null;
+            this.LengthString = fileProps[27].Value;
+            this.Title = fileProps[21].Value;
+            this.FileSize = fileProps[1].Value;
+            this.Artist = fileProps[20].Value;
+            this.Year = fileProps[15].Value;
+            this.Genre = null;
             long[] multipliers = new long[] { 3600, 60, 1 };
             int i = 0;
-            this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
+            this.LengthLong = this.LengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
         
-            type = mediaType.AUDIO;
-        }
-
-        string IMedia.getTitle()
-        {
-            return this._title;
-        }
-
-        string IMedia.getPath()
-        {
-            return this._path;
-        }
-
-        mediaType IMedia.getType()
-        {
-            return this.type;
-        }
-
-        string IMedia.getLengthString()
-        {
-            return this._lengthString;
-        }
-
-        long IMedia.getLengthLong()
-        {
-            return this._lengthLong;
-        }
-
-        string IMedia.getGenre()
-        {
-            return this._genre;
-        }
-
-        string IMedia.getFileSize()
-        {
-            return this._fileSize;
+            Type = mediaType.AUDIO;
         }
     }
 }

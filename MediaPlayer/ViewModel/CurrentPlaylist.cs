@@ -59,13 +59,18 @@ namespace MediaPlayer.ViewModel
 
         public string getMediaPath(int index)
         {
-            return this._playlist.getMediaAtIndex(index).getPath();
+            return this._playlist.getMediaAtIndex(index).PathName;
         }
 
 
         public string getMediaTitle(int index)
         {
-            return this._playlist.getMediaAtIndex(index).getTitle();
+            return this._playlist.getMediaAtIndex(index).Title;
+        }
+
+        public List<IMedia> getPlayList()
+        {
+            return this._playlist.getPlayList();
         }
 
         public int Count()

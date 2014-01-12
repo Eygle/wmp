@@ -11,13 +11,13 @@ namespace MediaPlayer.Model
     [Serializable]
     public class mediaImage : IMedia
     {
-        private string _lengthString;
-        private long _lengthLong;
-        private string _title;
-        private string _genre;
-        private string _path;
-        private string _fileSize;
-        private mediaType type;
+        public string LengthString { get; set; }
+        public long LengthLong { get; set; }
+        public string Title { get; set; }
+        public string Genre { get; set; }
+        public string PathName { get; set; }
+        public string FileSize { get; set; }
+        public mediaType Type { get; set; }
 
         public mediaImage() { }
 
@@ -40,54 +40,19 @@ namespace MediaPlayer.Model
 
         public mediaImage(string path)
         {
-            this._path = path;
+            this.PathName = path;
 
             Dictionary<int, KeyValuePair<string, string>> fileProps = GetFileProps(path);
             /*foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
             {
                 Console.WriteLine(kv.ToString());
             }*/
-            this._lengthString = null;
-            this._lengthLong = 0;
-            this._title = fileProps[0].Value;
-            this._fileSize = fileProps[1].Value;
-            this._genre = null;
-            type = mediaType.IMAGE;
-        }
-
-        string IMedia.getTitle()
-        {
-            return this._title;
-        }
-
-        string IMedia.getPath()
-        {
-            return this._path;
-        }
-
-        mediaType IMedia.getType()
-        {
-            return this.type;
-        }
-
-        string IMedia.getLengthString()
-        {
-            return this._lengthString;
-        }
-
-        long IMedia.getLengthLong()
-        {
-            return this._lengthLong;
-        }
-
-        string IMedia.getGenre()
-        {
-            return this._genre;
-        }
-
-        string IMedia.getFileSize()
-        {
-            return this._fileSize;
+            this.LengthString = null;
+            this.LengthLong = 0;
+            this.Title = fileProps[0].Value;
+            this.FileSize = fileProps[1].Value;
+            this.Genre = null;
+            Type = mediaType.IMAGE;
         }
     }
 }

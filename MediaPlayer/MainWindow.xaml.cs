@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using MediaPlayer.ViewModel;
 using MediaPlayer.Model;
+using System.Collections.ObjectModel;
 //using WebCam_Capture;
 
 namespace MediaPlayer
@@ -420,10 +421,12 @@ namespace MediaPlayer
             _pathList.Clear();
             for (int i = 0; i < str.Length; ++i)
                 _pathList.Add(dir + str[i]);
-            this.playList.ItemsSource = _pathList;
+            //this.playList.ItemsSource = _pathList;
+            ObservableCollection<IMedia> oc = new ObservableCollection<IMedia>();
+            foreach (IMedia item in this._playList.getPlayList())
+                oc.Add(item);
+            this.playList.ItemsSource = oc;
         }
-
-
 
         //Youtube
 
