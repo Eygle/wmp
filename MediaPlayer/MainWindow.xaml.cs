@@ -17,7 +17,6 @@ using System.Threading;
 using MediaPlayer.ViewModel;
 using MediaPlayer.Model;
 using System.Collections.ObjectModel;
-//using WebCam_Capture;
 
 namespace MediaPlayer
 {
@@ -29,6 +28,7 @@ namespace MediaPlayer
         private bool _isPause = false;
         private bool _isLoopAll = false;
         private bool _isLoopSingle = false;
+        private int _timeDurationSize = 2;
         private string[] _allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
 
         private WebCam _webcam;
@@ -78,9 +78,26 @@ namespace MediaPlayer
             return path;
         }
 
+        private string formatTime(System.TimeSpan time)
+        {
+            string res = "";
+
+            if (time.Hours > 0 || this._timeDurationSize == 3)
+                res += time.Hours + ":";
+            if ((time.Hours > 0 || this._timeDurationSize == 3) && time.Minutes < 10)
+                res += "0" + time.Minutes + ":";
+            else
+                res += time.Minutes + ":";
+            if (time.Seconds < 10)
+                res += "0" + time.Seconds;
+            else
+                res += time.Seconds;
+            return res;
+        }
+
         private bool checkUrl(string url)
         {
-            string pat = @"http[s]?://www\.youtube\.com/watch\?v=([A-Za-z0-9_]+)$";
+            string pat = @"http[s]?://www\.youtube\.com/watch\?v=(.*)$";
 
             Regex r = new Regex(pat, RegexOptions.IgnoreCase);
             return r.Match(url).Success;
@@ -333,11 +350,6 @@ namespace MediaPlayer
                     infos[2] = System.Text.Encoding.Default.GetString(b, 63, 30).Replace("\0", ""); //Album
                     infos[3] = System.Text.Encoding.Default.GetString(b, 93, 4).Replace("\0", ""); //Year
 
-                    //musicTitle.Foreground = new SolidColorBrush(Colors.White);
-                    //musicSinger.Foreground = new SolidColorBrush(Colors.White);
-                    //musicAlbum.Foreground = new SolidColorBrush(Colors.White);
-                    //musicYear.Foreground = new SolidColorBrush(Colors.White);
-
                     //musicTitle.Content = "Title:\t" + infos[0];
                     //musicSinger.Content = "Artist:\t" + infos[1];
                     //musicAlbum.Content = "Album:\t" + infos[2];
@@ -367,13 +379,18 @@ namespace MediaPlayer
         {
             try
             {
-                this.videoProgressBar.Maximum = this.mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
+                System.TimeSpan total = this.mediaElement.NaturalDuration.TimeSpan;
+                this._timeDurationSize = 2;
+                this.videoProgressBar.Maximum = total.TotalSeconds;
+                this.totalTimeLabel.Content = this.formatTime(total);
+                this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
+                this._timeDurationSize = total.Hours > 0 ? 3 : 2;
                 mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);//getName(mediaElement.Source.ToString());
                 //GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                 if (mediaElement.HasAudio || mediaElement.HasVideo)
-                    videoProgressBar.Visibility = System.Windows.Visibility.Visible;
+                    GridProgressBar.Visibility = System.Windows.Visibility.Visible;
                 else
-                    videoProgressBar.Visibility = System.Windows.Visibility.Hidden;
+                    GridProgressBar.Visibility = System.Windows.Visibility.Hidden;
                 if (mediaElement.HasAudio && !mediaElement.HasVideo)
                 {
                     this.fillMusicInfos();
@@ -396,6 +413,7 @@ namespace MediaPlayer
                 double pos = mediaElement.Position.TotalSeconds;
                 if (pos > videoProgressBar.Value)
                     videoProgressBar.Value = pos;
+                this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, (int)mediaElement.Position.TotalSeconds));
             }
         }
 
