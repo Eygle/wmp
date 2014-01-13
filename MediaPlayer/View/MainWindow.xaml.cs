@@ -29,6 +29,7 @@ namespace MediaPlayer
         private bool _isLoopAll = false;
         private bool _isLoopSingle = false;
         private bool _isShuffle = false;
+        private bool _fullScreen = false;
         private int _timeDurationSize = 2;
         private string[] _allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
 
@@ -347,6 +348,7 @@ namespace MediaPlayer
             }
             else
             {
+                this._playList.resetPlayList();
                 Random.Background = this.loadImage("../Images/ShuffleCommu.png");
             }
         }
@@ -503,6 +505,21 @@ namespace MediaPlayer
                 mediaElement.Source = new Uri(this._playList.getMediaPath(this._listIndex));
                 this.playMedia();
             }
+        }
+
+        private void FullScreen_Click(object sender, RoutedEventArgs e)
+        {
+            if (!this._fullScreen)
+            {
+                this.WindowStyle = WindowStyle.None;
+                this.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+                this.WindowState = WindowState.Normal;
+            }
+            this._fullScreen = !this._fullScreen;
         }
     }
 }

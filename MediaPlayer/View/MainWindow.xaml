@@ -238,6 +238,17 @@
                                 <ImageBrush ImageSource="../Images/ShuffleCommu.png" />
                             </Button.Background>
                         </Button>
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="125.8,0,0,36.2" x:Name="FullScreen" VerticalAlignment="Bottom" Width="20" Click="FullScreen_Click" BorderThickness="0" Cursor="Hand" Grid.Column="1">
+                            <Button.BorderBrush>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="Black" Offset="0"/>
+                                    <GradientStop Color="White"/>
+                                </RadialGradientBrush>
+                            </Button.BorderBrush>
+                            <Button.Background>
+                                <ImageBrush ImageSource="/MediaPlayer;component/Images/ShuffleCommu.png" />
+                            </Button.Background>
+                        </Button>
                     </Grid>
                 </Grid>
             </TabItem>
