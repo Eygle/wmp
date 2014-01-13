@@ -203,10 +203,8 @@ namespace MediaPlayer
             {
                 try
                 {
-                    string[] str = openFileDialog1.FileNames;
                     this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
                     this.playList.ItemsSource = this._playList.getPlayList();
-
                     if (mediaElement.Source == null)
                     {
                         mediaElement.Source = new Uri(this._playList.getMediaPath(0));
@@ -229,13 +227,14 @@ namespace MediaPlayer
             {
                 try
                 {
-                    this._playList.addFolder(this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath)));
+                    this._playList.addFolder(Directory.GetFiles(openFolderDialog1.SelectedPath));
                     this.playList.ItemsSource = this._playList.getPlayList();
      				if (mediaElement.Source == null)
                     {
                         mediaElement.Source = new Uri(this._playList.getMediaPath(0));
                         this.playMedia();
-                    }                }
+                    }
+                }
                 catch
                 {
                     MessageBox.Show("File could not be loaded!");
