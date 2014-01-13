@@ -123,7 +123,7 @@ namespace MediaPlayer
             }
             catch
             {
-                MessageBox.Show("File '"+ imagePath +"' don't exist");
+                MessageBox.Show("File '" + imagePath + "' don't exist");
             }
             return brush;
         }
@@ -206,9 +206,10 @@ namespace MediaPlayer
                     string[] str = openFileDialog1.FileNames;
                     this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
                     this.playList.ItemsSource = this._playList.getPlayList();
+
                     if (mediaElement.Source == null)
                     {
-                        mediaElement.Source = new Uri(_playList.getMediaPath(0));
+                        mediaElement.Source = new Uri(this._playList.getMediaPath(0));
                         this.playMedia();
                     }
                 }
@@ -242,11 +243,14 @@ namespace MediaPlayer
                 try
                 {
                     string[] str = this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath));
-                    this._playList.addFolder(this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath)));
+                    this._playList.addFolder(str); // this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath))
                     //SetPlayList("", str);
                     this.playList.ItemsSource = this._playList.getPlayList();
-                    mediaElement.Source = new Uri(str[0]);
-                    this.playMedia();
+                    if (mediaElement.Source == null)
+                    {
+                        mediaElement.Source = new Uri(this._playList.getMediaPath(0));
+                        this.playMedia();
+                    }
                 }
                 catch
                 {
@@ -478,7 +482,7 @@ namespace MediaPlayer
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
         {
             if (YoutubeLink.Text == "Insert Youtube URL here")
-             YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
+                YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
         }
 
         // CAMERA CAPTURE
@@ -498,6 +502,18 @@ namespace MediaPlayer
         private void CamCaptureTab_LostFocus(object sender, RoutedEventArgs e)
         {
             _webcam.Stop();
+        }
+
+        private void mediaElementBackground_Drop(object sender, DragEventArgs e)
+        {
+            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+            this._playList.addFolder(files);
+            this.playList.ItemsSource = this._playList.getPlayList();
+            if (!this._isPause)
+            {
+                mediaElement.Source = new Uri(this._playList.getMediaPath(this._listIndex));
+                this.playMedia();
+            }
         }
     }
 }

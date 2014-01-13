@@ -96,7 +96,7 @@
         <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="-1,-1,0,0" VerticalAlignment="Top" Width="693.6" Height="447.4">
             <TabItem Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True" Foreground="Black" RenderTransformOrigin="0,0.5">
                 <Grid Background="White" Margin="0,2,0.2,-2.6">
-                    <Rectangle Fill="#FF070303" Margin="0,0,-0.4,90" x:Name="mediaElementBackground" Stroke="Black" />
+                    <Rectangle Fill="#FF070303" Margin="0,0,-0.4,90" x:Name="mediaElementBackground" Stroke="Black" Drop="mediaElementBackground_Drop" />
                     <MediaElement LoadedBehavior="Manual" Margin="0,0,2.6,90" x:Name="mediaElement" MediaOpened="mediaElement_MediaOpened" MediaEnded="mediaElement_MediaEnded" MediaFailed="mediaElement_MediaFailed" />
                     <Grid x:Name="GridMusicInfos" Margin="0,0,0,70" Visibility="Hidden" >
                         <Label x:Name="musicTitle" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
