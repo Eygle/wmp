@@ -92,7 +92,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/playCommu.png">
+                                <ImageBrush ImageSource="../Images/playCommu.png">
                                 </ImageBrush>
                             </Button.Background>
                         </Button>
@@ -110,7 +110,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/prevCommu.png" />
+                                <ImageBrush ImageSource="../Images/prevCommu.png" />
                             </Button.Background>
                         </Button>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="117,0,0,35.8" x:Name="stopButton" VerticalAlignment="Bottom" Width="20" Click="stopButton_Click">
@@ -121,7 +121,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/stopCommu.png"/>
+                                <ImageBrush ImageSource="../Images/stopCommu.png"/>
                             </Button.Background>
                         </Button>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" IsTabStop="True" Margin="143,0,0,35.8" x:Name="nextButton" VerticalAlignment="Bottom" Width="20" Click="nextButton_Click" Grid.ColumnSpan="2">
@@ -132,7 +132,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/nextCommu.png" />
+                                <ImageBrush ImageSource="../Images/nextCommu.png" />
                             </Button.Background>
                         </Button>
                         <Button Focusable="False" ForceCursor="False" Height="19.8" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,10" x:Name="slowDownButton" VerticalAlignment="Bottom" Width="20" Click="slowDownButton_Click" BorderThickness="0,0,1,1">
@@ -143,7 +143,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/slowDownCommu.png"/>
+                                <ImageBrush ImageSource="../Images/slowDownCommu.png"/>
                             </Button.Background>
                         </Button>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="143,0,0,9.8" x:Name="speedUpButton" VerticalAlignment="Bottom" Width="20" Click="speedUpButton_Click" Grid.ColumnSpan="2">
@@ -154,7 +154,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/speedUpCommu.png" />
+                                <ImageBrush ImageSource="../Images/speedUpCommu.png" />
                             </Button.Background>
                         </Button>
                         <Label Content="x1" HorizontalContentAlignment="Center" IsEnabled="True" IsTabStop="False" Margin="111,0,0,9.4" MaxHeight="20" MaxWidth="35" x:Name="speedLabel" Padding="1" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="35" Height="20" VerticalAlignment="Bottom" />
@@ -167,7 +167,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/volumeCommu.png" />
+                                <ImageBrush ImageSource="../Images/volumeCommu.png" />
                             </Button.Background>
                         </Button>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="75.4,0,0,35.8" x:Name="LoopSingleButton" VerticalAlignment="Bottom" Width="20" Click="LoopSingleButton_Click" Grid.Column="1">
@@ -178,7 +178,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/LoopOneCommu.png" />
+                                <ImageBrush ImageSource="../Images/LoopOneCommu.png" />
                             </Button.Background>
                         </Button>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="49.4,0,0,35.8" x:Name="loopAllButton" VerticalAlignment="Bottom" Width="20" Click="loopAllButton_Click" Grid.Column="1">
@@ -189,7 +189,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/LoopAllCommu.png" />
+                                <ImageBrush ImageSource="../Images/LoopAllCommu.png" />
                             </Button.Background>
                         </Button>
 
@@ -202,7 +202,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/OpenGlobalFileCommu.png" />
+                                <ImageBrush ImageSource="../Images/OpenGlobalFileCommu.png" />
                             </Button.Background>
                         </Button>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="75,0,0,9.4" x:Name="openFolderButton" VerticalAlignment="Bottom" Width="20" Click="OpenFolder_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
@@ -213,7 +213,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/openGlobalFolder.png" />
+                                <ImageBrush ImageSource="../Images/openGlobalFolder.png" />
                             </Button.Background>
                         </Button>
                         <Button Focusable="False" IsHitTestVisible="True" Margin="100.8,0,0,9.4" x:Name="showPlaylistButton" Click="showPlaylistButton_Click" HorizontalAlignment="Left" Width="20" Height="20" VerticalAlignment="Bottom" Grid.Column="1">
@@ -224,7 +224,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/ShowPlaylistCommu.png" />
+                                <ImageBrush ImageSource="../Images/ShowPlaylistCommu.png" />
                             </Button.Background>
                         </Button>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="100.8,0,0,36.2" x:Name="Random" VerticalAlignment="Bottom" Width="20" Click="Random_Click" BorderThickness="0" Cursor="Hand" Grid.Column="1">
@@ -235,7 +235,7 @@
                                 </RadialGradientBrush>
                             </Button.BorderBrush>
                             <Button.Background>
-                                <ImageBrush ImageSource="Images/ShuffleCommu.png" />
+                                <ImageBrush ImageSource="../Images/ShuffleCommu.png" />
                             </Button.Background>
                         </Button>
                     </Grid>

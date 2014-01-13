@@ -168,20 +168,20 @@ namespace MediaPlayer
             this._isPause = false;
             GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
             mediaElement.Play();
-            playButton.Background = this.loadImage("Images/PauseCommu.png");
+            playButton.Background = this.loadImage("../Images/PauseCommu.png");
         }
 
         private void pauseMedia()
         {
             this._isPause = true;
-            playButton.Background = this.loadImage("Images/PlayCommu.png");
+            playButton.Background = this.loadImage("../Images/PlayCommu.png");
             mediaElement.Pause();
         }
 
         private void stopMedia()
         {
             this._isPause = false;
-            playButton.Background = this.loadImage("Images/PlayCommu.png");
+            playButton.Background = this.loadImage("../Images/PlayCommu.png");
             mediaElement.Stop();
             videoProgressBar.Value = 0;
         }
@@ -263,12 +263,12 @@ namespace MediaPlayer
             {
                 _savedVolume = volumeBar.Value;
                 volumeBar.Value = 0;
-                volumeButton.Background = this.loadImage("Images/MuteCommu.png");
+                volumeButton.Background = this.loadImage("../Images/MuteCommu.png");
             }
             else
             {
                 volumeBar.Value = _savedVolume;
-                volumeButton.Background = this.loadImage("Images/volumeCommu.png");
+                volumeButton.Background = this.loadImage("../Images/volumeCommu.png");
             }
         }
 
@@ -298,13 +298,13 @@ namespace MediaPlayer
         private void refreshLoopsButons()
         {
             if (this._isLoopAll)
-                loopAllButton.Background = this.loadImage("Images/loopActivCommu.png");
+                loopAllButton.Background = this.loadImage("../Images/loopActivCommu.png");
             else
-                loopAllButton.Background = this.loadImage("Images/LoopAllCommu.png");
+                loopAllButton.Background = this.loadImage("../Images/LoopAllCommu.png");
             if (this._isLoopSingle)
-                LoopSingleButton.Background = this.loadImage("Images/loopOneActiveCommu.png");
+                LoopSingleButton.Background = this.loadImage("../Images/loopOneActiveCommu.png");
             else
-                LoopSingleButton.Background = this.loadImage("Images/LoopOneCommu.png");
+                LoopSingleButton.Background = this.loadImage("../Images/LoopOneCommu.png");
         }
 
         private void loopAllButton_Click(object sender, RoutedEventArgs e)
@@ -336,11 +336,11 @@ namespace MediaPlayer
             if (this._isShuffle)
             {
                 this._playList.shuffle();
-                Random.Background = this.loadImage("Images/shuffleActiveCommu.png");
+                Random.Background = this.loadImage("../Images/shuffleActiveCommu.png");
             }
             else
             {
-                Random.Background = this.loadImage("Images/ShuffleCommu.png");
+                Random.Background = this.loadImage("../Images/ShuffleCommu.png");
             }
         }
 
@@ -369,7 +369,7 @@ namespace MediaPlayer
                 else
                     GridProgressBar.Visibility = System.Windows.Visibility.Hidden;
                 IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
-                if (mediaElement.HasAudio && !mediaElement.HasVideo)
+                if (currentMedia.Type == mediaType.AUDIO)
                 {
                     musicTitle.Content = "Title:\t" + currentMedia.Title;
                     musicSinger.Content = "Artist:\t" + currentMedia.Artist;
