@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
 using MediaPlayer;
 
@@ -53,9 +54,12 @@ namespace MediaPlayer.ViewModel
             List<IMedia> medias = new List<IMedia>();
             foreach (string fullPath in fullPaths)
             {
-                IMedia m = f.createMedia(fullPath);
-                if (m != null)
-                    medias.Add(m);
+                    IMedia m = f.createMedia(fullPath);
+                    if (m != null)
+                    {
+                        _oc.Add(m);
+                        medias.Add(m);
+                    }
             }
            this.addToPlaylist(medias);
         }
@@ -68,7 +72,10 @@ namespace MediaPlayer.ViewModel
             {
                 IMedia m = f.createMedia(pathNames[i]);
                 if (m != null)
+                {
+                    _oc.Add(m);
                     medias.Add(m);
+                }
             }
             this.addToPlaylist(medias);
         }
@@ -84,11 +91,15 @@ namespace MediaPlayer.ViewModel
             return this._playlist.getMediaAtIndex(index).Title;
         }
 
-        public ObservableCollection<IMedia> getPlayList()
+        public void resetPlayList()
         {
             _oc.Clear();
             foreach (IMedia item in this._playlist.getPlayList())
                 _oc.Add(item);
+        }
+
+        public ObservableCollection<IMedia> getPlayList()
+        {
             return _oc;
         }
 
@@ -102,7 +113,7 @@ namespace MediaPlayer.ViewModel
             Random rnd = new Random();
             List<IMedia> mediaList =  this._playlist.getPlayList().OrderBy(x => rnd.Next()).ToList();
             _oc.Clear();
-            foreach (IMedia item in this._playlist.getPlayList())
+            foreach (IMedia item in mediaList)
                 _oc.Add(item);
         }
 
@@ -117,8 +128,7 @@ namespace MediaPlayer.ViewModel
             {
                 this._playlist.add(item);
             }
-            _oc.Clear();
-            this.getPlayList();
+            this.resetPlayList();
         }
     }
 }

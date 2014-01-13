@@ -191,7 +191,7 @@
     <Resource Include="Images\ShowPlaylistCommu.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ShuffleCommu.png" />
+    <Resource Include="Images\shuffleCommu.png" />
     <Resource Include="Images\slideBarCommu.png" />
     <Resource Include="Images\slowDownCommu.png" />
   </ItemGroup>
