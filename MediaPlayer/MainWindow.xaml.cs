@@ -34,7 +34,6 @@ namespace MediaPlayer
 
         private WebCam _webcam;
         private CurrentPlaylist _playList;
-        private CurrentPlaylist _savePlayList;
 
         private System.Windows.Threading.DispatcherTimer _timer = new System.Windows.Threading.DispatcherTimer();
 
@@ -360,13 +359,11 @@ namespace MediaPlayer
             this._isShuffle = this._isShuffle ? false : true;
             if (this._isShuffle)
             {
-                //this._savePlaylist = new CurrentPlaylist(this._playList);
                 this._playList.shuffle();
                 Random.Background = this.loadImage("Images/shuffleActiveCommu.png");
             }
             else
             {
-                //this._playList =  new CurrentPlaylist(this._savePlaylist);
                 Random.Background = this.loadImage("Images/ShuffleCommu.png");
             }
         }
@@ -390,12 +387,21 @@ namespace MediaPlayer
                 this.totalTimeLabel.Content = this.formatTime(total);
                 this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
                 this._timeDurationSize = total.Hours > 0 ? 3 : 2;
-                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);//getName(mediaElement.Source.ToString());
-                //GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
+                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);
+                GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                 if (mediaElement.HasAudio || mediaElement.HasVideo)
                     GridProgressBar.Visibility = System.Windows.Visibility.Visible;
                 else
                     GridProgressBar.Visibility = System.Windows.Visibility.Hidden;
+                IMedia currentMedia = this._playList.getMediaAtIndex(this._listIndex);
+                if (currentMedia.Type == Audio)
+                {
+                    musicTitle.Content = "Title:\t" + currentMedia.Title;
+                    musicSinger.Content = "Artist:\t" + currentMedia.Artist;
+                    musicAlbum.Content = "Album:\t" + currentMedia.Album;
+                    musicYear.Content = "Year:\t" + currentMedia.Year;
+                    GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
+                }
             }
             catch
             {
