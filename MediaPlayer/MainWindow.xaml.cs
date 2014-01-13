@@ -108,6 +108,16 @@ namespace MediaPlayer
             return url.Replace("watch?v=", "embed/");
         }
 
+        private ImageBrush loadImage(string imagePath)
+        {
+            Uri resourceUri = new Uri(imagePath, UriKind.Relative);
+            System.Windows.Resources.StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+
+            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+            var brush = new ImageBrush();
+            brush.ImageSource = temp;
+            return brush;
+        }
 
         // MEDIA PLAYER
 
@@ -299,27 +309,33 @@ namespace MediaPlayer
         private void loopAllButton_Click(object sender, RoutedEventArgs e)
         {
             this._isLoopAll = this._isLoopAll ? false : true;
+            if (this._isLoopAll)
+                loopAllButton.Background = this.loadImage("Images/LoopOneCommu.png"); //TODO put here loopAllHover image
+            else
+                loopAllButton.Background = this.loadImage("Images/LoopAllCommu.png");
         }
 
         private void LoopSingleButton_Click(object sender, RoutedEventArgs e)
         {
-
             this._isLoopSingle = this._isLoopSingle ? false : true;
+            if (this._isLoopSingle)
+                LoopSingleButton.Background = this.loadImage("Images/LoopAllCommu.png"); //TODO put here loopSingleHover image
+            else
+                LoopSingleButton.Background = this.loadImage("Images/LoopOneCommu.png");
         }
 
         private void fullscreenButton_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = this.WindowState == System.Windows.WindowState.Maximized ? System.Windows.WindowState.Normal : System.Windows.WindowState.Maximized;
+            if (this.WindowState == System.Windows.WindowState.Maximized)
+                fullscreenButton.Background = this.loadImage("Images/fullscreenCommu.png"); //TODO put here minmized image
+            else
+                fullscreenButton.Background = this.loadImage("Images/fullscreenCommu.png");
         }
 
         private void showPlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             TabPlaylists.Focus();
-        }
-
-        private void cameraButton_Click(object sender, RoutedEventArgs e)
-        {
-            CamCaptureTab.Focus();
         }
 
 
