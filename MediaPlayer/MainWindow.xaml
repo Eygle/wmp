@@ -109,7 +109,7 @@
                             <ColumnDefinition Width="149*"/>
                             <ColumnDefinition Width="541*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Focusable="False" ForceCursor="False" Foreground="Black" Height="30" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="11.444,0,0,25.8" x:Name="playButton" OpacityMask="#FFF5ADAD" VerticalAlignment="Bottom" Width="30" Click="playButton_Click" Style="{DynamicResource ButtonStyle1}" RenderTransformOrigin="0.5,0.5" BorderThickness="0">
+                        <Button Focusable="False" ForceCursor="False" Foreground="Black" Height="30" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="11.444,0,0,25.8" x:Name="playButton" OpacityMask="#FFF5ADAD" VerticalAlignment="Bottom" Width="30" Click="playButton_Click" RenderTransformOrigin="0.5,0.5" BorderThickness="0">
                             <Button.BorderBrush>
                                 <RadialGradientBrush>
                                     <GradientStop Color="White"/>
@@ -127,7 +127,7 @@
                             <Slider Height="20" LargeChange="1" Margin="50,5,50,0" Maximum="100" x:Name="videoProgressBar" VerticalAlignment="Top" ValueChanged="videoProgressBar_ValueChanged" Grid.ColumnSpan="2" />
                             <Label x:Name="totalTimeLabel" Content="" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Top" Width="50" HorizontalContentAlignment="Right"/>
                         </Grid>
-                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,35.8" x:Name="Prev" VerticalAlignment="Bottom" Width="20" Click="prevButton_Click" Style="{DynamicResource ButtonStyle1}">
+                        <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,35.8" x:Name="Prev" VerticalAlignment="Bottom" Width="20" Click="prevButton_Click">
                             <Button.BorderBrush>
                                 <RadialGradientBrush>
                                     <GradientStop Color="Black"/>
@@ -160,7 +160,7 @@
                                 <ImageBrush ImageSource="Images\nextCommu.png" />
                             </Button.Background>
                         </Button>
-                        <Button Focusable="False" ForceCursor="False" Height="19.8" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,10" x:Name="slowDownButton" VerticalAlignment="Bottom" Width="20" Click="slowDownButton_Click" Style="{DynamicResource ButtonStyle1}" BorderThickness="0,0,1,1">
+                        <Button Focusable="False" ForceCursor="False" Height="19.8" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,10" x:Name="slowDownButton" VerticalAlignment="Bottom" Width="20" Click="slowDownButton_Click" BorderThickness="0,0,1,1">
                             <Button.BorderBrush>
                                 <RadialGradientBrush>
                                     <GradientStop Color="White" Offset="1"/>
