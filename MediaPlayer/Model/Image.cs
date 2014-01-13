@@ -15,6 +15,7 @@ namespace MediaPlayer.Model
         private long _lengthLong;
         private string _title;
         private string _genre;
+        private string _album;
         private string _pathName;
         private string _fileSize;
         private string _artist;
@@ -109,6 +110,12 @@ namespace MediaPlayer.Model
         {
             get { return this._type; }
             set { this._type = value; }
+        }
+
+        public string Album
+        {
+            get { return this._album; }
+            set { this._album = value; }
         }
     }
 }

@@ -12,6 +12,7 @@ namespace MediaPlayer.ViewModel
 {
     class CurrentPlaylist
     {
+        private ObservableCollection<IMedia> _oc = new ObservableCollection<IMedia>();
         private Model.Playlist _playlist;
 
         public CurrentPlaylist()
@@ -76,10 +77,9 @@ namespace MediaPlayer.ViewModel
 
         public ObservableCollection<IMedia> getPlayList()
         {
-            ObservableCollection<IMedia> oc = new ObservableCollection<IMedia>();
             foreach (IMedia item in this._playlist.getPlayList())
-                oc.Add(item);
-            return oc;
+                _oc.Add(item);
+            return _oc;
         }
 
         public int Count()
@@ -89,13 +89,22 @@ namespace MediaPlayer.ViewModel
 
         public void shuffle()
         {
-            this._playlist.shuffle();
+            Random rnd = new Random();
+            List<IMedia> mediaList =  this._playlist.getPlayList().OrderBy(x => rnd.Next()).ToList();
+            foreach (IMedia item in this._playlist.getPlayList())
+                _oc.Add(item);
+        }
+
+        public IMedia getMediaByIndex(int index)
+        {
+            return this._oc[index];
         }
 
         private void addToPlaylist(List<IMedia> items)
         {
             foreach (IMedia item in items)
                 this._playlist.add(item);
+            this.getPlayList();
         }
     }
 }
