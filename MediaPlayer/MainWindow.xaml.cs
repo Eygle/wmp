@@ -376,8 +376,8 @@ namespace MediaPlayer
                     GridProgressBar.Visibility = System.Windows.Visibility.Visible;
                 else
                     GridProgressBar.Visibility = System.Windows.Visibility.Hidden;
-                IMedia currentMedia = this._playList.getMediaAtIndex(this._listIndex);
-                if (currentMedia.Type == Audio)
+                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                if (mediaElement.HasAudio && !mediaElement.HasVideo)
                 {
                     musicTitle.Content = "Title:\t" + currentMedia.Title;
                     musicSinger.Content = "Artist:\t" + currentMedia.Artist;
@@ -388,6 +388,7 @@ namespace MediaPlayer
             }
             catch
             {
+                System.Console.WriteLine("error");
             }
         }
 

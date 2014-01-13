@@ -74,10 +74,10 @@
                     <Rectangle Fill="#FF070303" Margin="0,0,-0.4,90" x:Name="mediaElementBackground" Stroke="Black" Drop="mediaElementBackground_Drop" />
                     <MediaElement LoadedBehavior="Manual" Margin="0,0,2.6,90" x:Name="mediaElement" MediaOpened="mediaElement_MediaOpened" MediaEnded="mediaElement_MediaEnded" MediaFailed="mediaElement_MediaFailed" />
                     <Grid x:Name="GridMusicInfos" Margin="0,0,0,70" Visibility="Hidden" >
-                        <Label x:Name="musicTitle" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="musicSinger" Content="" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="musicAlbum" Content="" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="musicYear" Content="" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="musicTitle" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" />
+                        <Label x:Name="musicSinger" Content="" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Foreground="White" />
+                        <Label x:Name="musicAlbum" Content="" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Foreground="White" />
+                        <Label x:Name="musicYear" Content="" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Foreground="White" />
                     </Grid>
                     <Grid x:Name="GridMediaControl" VerticalAlignment="Bottom" Margin="0,0,0,0">
                         <Grid.ColumnDefinitions>
