@@ -24,7 +24,6 @@ namespace MediaPlayer
     {
         private double _savedVolume = 5;
         private List<string> _pathList = new List<string>();
-        //private List<string> _savePlaylist = new List<string>();
         private int _listIndex = 0;
         private bool _isPause = false;
         private bool _isLoopAll = false;
@@ -35,6 +34,7 @@ namespace MediaPlayer
 
         private WebCam _webcam;
         private CurrentPlaylist _playList;
+        private CurrentPlaylist _savePlayList;
 
         private System.Windows.Threading.DispatcherTimer _timer = new System.Windows.Threading.DispatcherTimer();
 
@@ -142,6 +142,7 @@ namespace MediaPlayer
                     if (_listIndex >= this._playList.Count())
                         _listIndex = 0;
                     mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
+                    videoProgressBar.Value = 0;
                 }
                 catch
                 {
@@ -162,6 +163,7 @@ namespace MediaPlayer
                     if (_listIndex < 0)
                         _listIndex = this._playList.Count() - 1;
                     mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
+                    videoProgressBar.Value = 0;
                 }
                 catch
                 {
@@ -173,7 +175,6 @@ namespace MediaPlayer
         private void playMedia()
         {
             this._isPause = false;
-            videoProgressBar.Value = 0;
             mediaElement.Play();
             playButton.Background = this.loadImage("Images/PauseCommu.png");
         }
@@ -342,13 +343,13 @@ namespace MediaPlayer
             this._isShuffle = this._isShuffle ? false : true;
             if (this._isShuffle)
             {
-                //this._savePlaylist = this._playList;
+                //this._savePlaylist = new CurrentPlaylist(this._playList);
                 this._playList.shuffle();
                 Random.Background = this.loadImage("Images/shuffleActiveCommu.png");
             }
             else
             {
-                //this._playList = this._savePlaylist;
+                //this._playList =  new CurrentPlaylist(this._savePlaylist);
                 Random.Background = this.loadImage("Images/ShuffleCommu.png");
             }
         }
@@ -391,7 +392,7 @@ namespace MediaPlayer
 
         void synchronizeProgressBar(object sender, EventArgs e)
         {
-            if (mediaElement.HasVideo || mediaElement.HasAudio)
+            if ((mediaElement.HasVideo || mediaElement.HasAudio) && !_isPause)
             {
                 double pos = mediaElement.Position.TotalSeconds;
                 if (pos > videoProgressBar.Value)

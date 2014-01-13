@@ -19,6 +19,11 @@ namespace MediaPlayer.ViewModel
             this._playlist = new Model.Playlist();
         }
 
+        public CurrentPlaylist(CurrentPlaylist o)
+        {
+            this._playlist = o._playlist;
+        }
+
         public void save(string name)
         {
             using (FileStream fs = new FileStream(name, FileMode.Create))
