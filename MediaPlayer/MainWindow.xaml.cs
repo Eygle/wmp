@@ -219,19 +219,6 @@ namespace MediaPlayer
             }
         }
 
-        private string[] getFilesWithAllowedExt(string[] files)
-        {
-            var res = new List<string>(files);
-            for (int i = 0; i < files.Length; ++i)
-            {
-                if (!_allowedExt.Contains(System.IO.Path.GetExtension(files[i])))
-                {
-                    res.RemoveAt(i);
-                }
-            }
-            return res.ToArray();
-        }
-
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
 
@@ -241,11 +228,9 @@ namespace MediaPlayer
             {
                 try
                 {
-                    string[] str = this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath));
-                    this._playList.addFolder(this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath)));
-                    //SetPlayList("", str);
+                    this._playList.addFolder(Directory.GetFiles(openFolderDialog1.SelectedPath));
                     this.playList.ItemsSource = this._playList.getPlayList();
-                    mediaElement.Source = new Uri(str[0]);
+                    mediaElement.Source = new Uri(_playList.getMediaPath(0));
                     this.playMedia();
                 }
                 catch
@@ -482,7 +467,6 @@ namespace MediaPlayer
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
             _webcam.Start();
-            _webcam.Continue();
         }
 
         private void CamCaptureTab_LostFocus(object sender, RoutedEventArgs e)
