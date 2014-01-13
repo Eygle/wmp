@@ -210,6 +210,8 @@ namespace MediaPlayer
                         mediaElement.Source = new Uri(this._playList.getMediaPath(0));
                         this.playMedia();
                     }
+                    this._isShuffle = false;
+                    Random.Background = this.loadImage("../Images/ShuffleCommu.png");
                 }
                 catch
                 {
@@ -234,6 +236,8 @@ namespace MediaPlayer
                         mediaElement.Source = new Uri(this._playList.getMediaPath(0));
                         this.playMedia();
                     }
+                    this._isShuffle = false;
+                    Random.Background = this.loadImage("../Images/ShuffleCommu.png");
                 }
                 catch
                 {
@@ -340,7 +344,7 @@ namespace MediaPlayer
 
         private void Random_Click(object sender, RoutedEventArgs e)
         {
-            this._isShuffle = this._isShuffle ? false : true;
+            this._isShuffle = !this._isShuffle;
             if (this._isShuffle)
             {
                 this._playList.shuffle();
@@ -450,6 +454,7 @@ namespace MediaPlayer
             {
                 url = this.formatUrl(url);
                 YoutubeEmbededPlayer.Navigate(this.formatUrl(url));
+                this.YoutubeEmbededPlayer.Visibility = Visibility.Visible;
             }
             else
             {
@@ -469,6 +474,7 @@ namespace MediaPlayer
             if (YoutubeLink.Text == "")
                 YoutubeLink.Text = "Insert Youtube URL here";
             YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
+            this.YoutubeEmbededPlayer.Visibility = Visibility.Hidden;
         }
 
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
@@ -513,11 +519,13 @@ namespace MediaPlayer
             {
                 this.WindowStyle = WindowStyle.None;
                 this.WindowState = WindowState.Maximized;
+                this.FullScreen.Background = this.loadImage("../Images/fullScreenCommu.png");
             }
             else
             {
                 this.WindowStyle = WindowStyle.SingleBorderWindow;
                 this.WindowState = WindowState.Normal;
+                this.FullScreen.Background = this.loadImage("../Images/fullScreenCommu.png");
             }
             this._fullScreen = !this._fullScreen;
         }
