@@ -51,8 +51,12 @@ namespace MediaPlayer.ViewModel
             MediaFactory f = new MediaFactory();
             List<IMedia> medias = new List<IMedia>();
             foreach (string fullPath in fullPaths)
-                medias.Add(f.createMedia(fullPath));
-            this.addToPlaylist(medias);
+            {
+                IMedia m = f.createMedia(fullPath);
+                if (m != null)
+                    medias.Add(m);
+            }
+           this.addToPlaylist(medias);
         }
 
         public void addFolder(string[] pathNames)
@@ -60,7 +64,11 @@ namespace MediaPlayer.ViewModel
             MediaFactory f = new MediaFactory();
             List<IMedia> medias = new List<IMedia>();
             for (int i = 0; i < pathNames.Count(); ++i)
-                medias.Add(f.createMedia(pathNames[i]));
+            {
+                IMedia m = f.createMedia(pathNames[i]);
+                if (m != null)
+                    medias.Add(m);
+            }
             this.addToPlaylist(medias);
         }
 
