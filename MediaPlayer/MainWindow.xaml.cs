@@ -69,16 +69,6 @@ namespace MediaPlayer
             _timer.Start();
         }
 
-        private string getName(string path)
-        {
-            int lastSlash = path.LastIndexOf('/'), lastPoint = path.LastIndexOf('.');
-            if (lastPoint != -1 && lastPoint < path.Length)
-                path = path.Substring(0, lastPoint);
-            if (lastSlash != -1 && lastSlash + 1 < path.Length)
-                path = path.Substring(lastSlash + 1);
-            return path;
-        }
-
         private string formatTime(System.TimeSpan time)
         {
             string res = "";
@@ -140,6 +130,7 @@ namespace MediaPlayer
                     _listIndex++;
                     if (_listIndex >= this._playList.Count())
                         _listIndex = 0;
+                    GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                     mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
                     videoProgressBar.Value = 0;
                 }
@@ -161,6 +152,7 @@ namespace MediaPlayer
                     _listIndex--;
                     if (_listIndex < 0)
                         _listIndex = this._playList.Count() - 1;
+                    GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                     mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
                     videoProgressBar.Value = 0;
                 }
@@ -174,6 +166,7 @@ namespace MediaPlayer
         private void playMedia()
         {
             this._isPause = false;
+            GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
             mediaElement.Play();
             playButton.Background = this.loadImage("Images/PauseCommu.png");
         }
@@ -371,7 +364,6 @@ namespace MediaPlayer
                 this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
                 this._timeDurationSize = total.Hours > 0 ? 3 : 2;
                 mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);
-                GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                 if (mediaElement.HasAudio || mediaElement.HasVideo)
                     GridProgressBar.Visibility = System.Windows.Visibility.Visible;
                 else
@@ -433,7 +425,6 @@ namespace MediaPlayer
             _pathList.Clear();
             for (int i = 0; i < str.Length; ++i)
                 _pathList.Add(dir + str[i]);
-            //this.playList.ItemsSource = _pathList;
             this.playList.ItemsSource = this._playList.getPlayList();
         }
 
