@@ -316,22 +316,32 @@ namespace MediaPlayer
             }
         }
 
-        private void loopAllButton_Click(object sender, RoutedEventArgs e)
+        private void refreshLoopsButons()
         {
-            this._isLoopAll = this._isLoopAll ? false : true;
             if (this._isLoopAll)
                 loopAllButton.Background = this.loadImage("Images/loopActivCommu.png");
             else
                 loopAllButton.Background = this.loadImage("Images/LoopAllCommu.png");
+            if (this._isLoopSingle)
+                LoopSingleButton.Background = this.loadImage("Images/loopOneActiveCommu.png");
+            else
+                LoopSingleButton.Background = this.loadImage("Images/LoopOneCommu.png");
+        }
+
+        private void loopAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            this._isLoopAll = this._isLoopAll ? false : true;
+            if (this._isLoopAll)
+                this._isLoopSingle = false;
+            this.refreshLoopsButons();
         }
 
         private void LoopSingleButton_Click(object sender, RoutedEventArgs e)
         {
             this._isLoopSingle = this._isLoopSingle ? false : true;
             if (this._isLoopSingle)
-                LoopSingleButton.Background = this.loadImage("Images/loopOneActiveCommu.png");
-            else
-                LoopSingleButton.Background = this.loadImage("Images/LoopOneCommu.png");
+                this._isLoopAll = false;
+            this.refreshLoopsButons();
         }
 
         private void showPlaylistButton_Click(object sender, RoutedEventArgs e)
@@ -359,7 +369,7 @@ namespace MediaPlayer
 
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            mediaElement.Stop();
+            this.stopMedia();
             if (this._isLoopSingle)
                 this.playMedia();
             else
