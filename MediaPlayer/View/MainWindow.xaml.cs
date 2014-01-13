@@ -45,6 +45,10 @@ namespace MediaPlayer
             _webcam = new WebCam();
             _playList = new CurrentPlaylist();
             _webcam.InitializeWebCam(ref captureImage);
+            TreeViewItem it = new TreeViewItem();
+            it.Name = "currentPlaylist";
+            it.Header = "Current Playlist";
+            treeView1.Items.Add(it);
         }
 
         ~MainWindow()
@@ -374,6 +378,7 @@ namespace MediaPlayer
                     musicTitle.Content = "Title:\t" + currentMedia.Title;
                     musicSinger.Content = "Artist:\t" + currentMedia.Artist;
                     musicAlbum.Content = "Album:\t" + currentMedia.Album;
+                    musicGenre.Content = "Genre:\t" + currentMedia.Genre;
                     musicYear.Content = "Year:\t" + currentMedia.Year;
                     GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
                 }
@@ -389,12 +394,24 @@ namespace MediaPlayer
             MessageBox.Show(e.ErrorException.Message);
         }
 
+        private void mediaElementBackground_Drop(object sender, DragEventArgs e)
+        {
+            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+            this._playList.addFolder(files);
+            this.playList.ItemsSource = this._playList.getPlayList();
+            if (!this._isPause)
+            {
+                mediaElement.Source = new Uri(this._playList.getMediaPath(this._listIndex));
+                this.playMedia();
+            }
+        }
+
         void synchronizeProgressBar(object sender, EventArgs e)
         {
             if ((mediaElement.HasVideo || mediaElement.HasAudio) && !_isPause)
             {
                 double pos = mediaElement.Position.TotalSeconds;
-                if (pos > videoProgressBar.Value)
+                if (pos > videoProgressBar.Value || pos == 0)
                     videoProgressBar.Value = pos;
                 this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, (int)mediaElement.Position.TotalSeconds));
             }
@@ -422,9 +439,12 @@ namespace MediaPlayer
 
         private void SetPlayList(string dir, string[] str)
         {
+            System.Console.WriteLine("Set playlist");
             _pathList.Clear();
             for (int i = 0; i < str.Length; ++i)
+            {
                 _pathList.Add(dir + str[i]);
+            }
             this.playList.ItemsSource = this._playList.getPlayList();
         }
 
@@ -482,18 +502,6 @@ namespace MediaPlayer
         private void CamCaptureTab_LostFocus(object sender, RoutedEventArgs e)
         {
             _webcam.Stop();
-        }
-
-        private void mediaElementBackground_Drop(object sender, DragEventArgs e)
-        {
-            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
-            this._playList.addFolder(files);
-            this.playList.ItemsSource = this._playList.getPlayList();
-            if (!this._isPause)
-            {
-                mediaElement.Source = new Uri(this._playList.getMediaPath(this._listIndex));
-                this.playMedia();
-            }
         }
     }
 }

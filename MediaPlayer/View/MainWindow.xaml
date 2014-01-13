@@ -53,13 +53,13 @@
             <TextBlock TextAlignment="Left" Text="{Binding Path=Title}"/>
         </DataTemplate>
         <DataTemplate x:Key="fileSizeTemplate">
-            <TextBlock TextAlignment="Right" Text="{Binding Path=FileSize}"/>
+            <TextBlock TextAlignment="Center" Text="{Binding Path=FileSize}"/>
         </DataTemplate>
         <DataTemplate x:Key="lengthStringTemplate">
-            <TextBlock TextAlignment="Right" Text="{Binding Path=LengthString}"/>
+            <TextBlock TextAlignment="Center" Text="{Binding Path=LengthString}"/>
         </DataTemplate>
     </Window.Resources>
-    <Grid Background="#FFCECECE" x:Name="grid1">
+    <Grid Background="White" x:Name="grid1">
 
 
         <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="-1,-1,0,0" VerticalAlignment="Top" Width="693.6" Height="447.4">
@@ -77,7 +77,8 @@
                         <Label x:Name="musicTitle" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" />
                         <Label x:Name="musicSinger" Content="" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Foreground="White" />
                         <Label x:Name="musicAlbum" Content="" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Foreground="White" />
-                        <Label x:Name="musicYear" Content="" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Foreground="White" />
+                        <Label x:Name="musicGenre" Content="" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Foreground="White" />
+                        <Label x:Name="musicYear" Content="" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Foreground="White" />
                     </Grid>
                     <Grid x:Name="GridMediaControl" VerticalAlignment="Bottom" Margin="0,0,0,0">
                         <Grid.ColumnDefinitions>
