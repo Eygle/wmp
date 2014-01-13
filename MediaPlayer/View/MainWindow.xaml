@@ -53,16 +53,16 @@
             <TextBlock TextAlignment="Left" Text="{Binding Path=Title}"/>
         </DataTemplate>
         <DataTemplate x:Key="fileSizeTemplate">
-            <TextBlock TextAlignment="Right" Text="{Binding Path=FileSize}"/>
+            <TextBlock TextAlignment="Center" Text="{Binding Path=FileSize}"/>
         </DataTemplate>
         <DataTemplate x:Key="lengthStringTemplate">
-            <TextBlock TextAlignment="Right" Text="{Binding Path=LengthString}"/>
+            <TextBlock TextAlignment="Center" Text="{Binding Path=LengthString}"/>
         </DataTemplate>
         <DataTemplate x:Key="genreTemplate">
             <TextBlock TextAlignment="Right" Text="{Binding Path=Genre}"/>
         </DataTemplate>
     </Window.Resources>
-    <Grid Background="#FFCECECE" x:Name="grid1">
+    <Grid Background="White" x:Name="grid1">
 
 
         <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="-1,-1,0,0" VerticalAlignment="Top" Width="693.6" Height="447.4">
@@ -80,7 +80,8 @@
                         <Label x:Name="musicTitle" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" />
                         <Label x:Name="musicSinger" Content="" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Foreground="White" />
                         <Label x:Name="musicAlbum" Content="" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Foreground="White" />
-                        <Label x:Name="musicYear" Content="" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Foreground="White" />
+                        <Label x:Name="musicGenre" Content="" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Foreground="White" />
+                        <Label x:Name="musicYear" Content="" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Foreground="White" />
                     </Grid>
                     <Grid x:Name="GridMediaControl" VerticalAlignment="Bottom" Margin="0,0,0,0">
                         <Grid.ColumnDefinitions>
@@ -196,7 +197,7 @@
                             </Button.Background>
                         </Button>
 
-                        <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,9.2,0.2" VerticalAlignment="Bottom" Width="278" Height="36" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Grid.Column="1"/>
+                        <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,9.2,0.2" VerticalAlignment="Bottom" Width="394" Height="36" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Grid.Column="1"/>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="49,0,0,9.4" x:Name="openFileButton" VerticalAlignment="Bottom" Width="20" Click="OpenFile_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
                             <Button.BorderBrush>
                                 <RadialGradientBrush>
