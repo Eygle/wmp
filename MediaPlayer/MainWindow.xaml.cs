@@ -206,8 +206,11 @@ namespace MediaPlayer
                     string[] str = openFileDialog1.FileNames;
                     this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
                     this.playList.ItemsSource = this._playList.getPlayList();
-                    mediaElement.Source = new Uri(_playList.getMediaPath(0));
-                    this.playMedia();
+                    if (mediaElement.Source == null)
+                    {
+                        mediaElement.Source = new Uri(_playList.getMediaPath(0));
+                        this.playMedia();
+                    }
                 }
                 catch
                 {
