@@ -24,7 +24,7 @@ namespace MediaPlayer
     {
         private double _savedVolume = 5;
         private List<string> _pathList = new List<string>();
-        private List<string> _savePlaylist;
+        //private List<string> _savePlaylist = new List<string>();
         private int _listIndex = 0;
         private bool _isPause = false;
         private bool _isLoopAll = false;
@@ -112,12 +112,19 @@ namespace MediaPlayer
 
         private ImageBrush loadImage(string imagePath)
         {
-            Uri resourceUri = new Uri(imagePath, UriKind.Relative);
-            System.Windows.Resources.StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
-
-            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
             var brush = new ImageBrush();
-            brush.ImageSource = temp;
+            try
+            {
+                Uri resourceUri = new Uri(imagePath, UriKind.Relative);
+                System.Windows.Resources.StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+
+                BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+                brush.ImageSource = temp;
+            }
+            catch
+            {
+                MessageBox.Show("File '"+ imagePath +"' don't exist");
+            }
             return brush;
         }
 
@@ -168,13 +175,13 @@ namespace MediaPlayer
             this._isPause = false;
             videoProgressBar.Value = 0;
             mediaElement.Play();
-            playButton.Background = this.loadImage("Images/PlayCommu.png");
+            playButton.Background = this.loadImage("Images/PauseCommu.png");
         }
 
         private void pauseMedia()
         {
             this._isPause = true;
-            playButton.Background = this.loadImage("Images/PlauseCommu.png");
+            playButton.Background = this.loadImage("Images/PlayCommu.png");
             mediaElement.Pause();
         }
 
@@ -309,7 +316,7 @@ namespace MediaPlayer
         {
             this._isLoopAll = this._isLoopAll ? false : true;
             if (this._isLoopAll)
-                loopAllButton.Background = this.loadImage("Images/LoopOneCommu.png"); //TODO put here loopAllHover image
+                loopAllButton.Background = this.loadImage("Images/loopActivCommu.png");
             else
                 loopAllButton.Background = this.loadImage("Images/LoopAllCommu.png");
         }
@@ -318,7 +325,7 @@ namespace MediaPlayer
         {
             this._isLoopSingle = this._isLoopSingle ? false : true;
             if (this._isLoopSingle)
-                LoopSingleButton.Background = this.loadImage("Images/LoopAllCommu.png"); //TODO put here loopSingleHover image
+                LoopSingleButton.Background = this.loadImage("Images/loopOneActiveCommu.png");
             else
                 LoopSingleButton.Background = this.loadImage("Images/LoopOneCommu.png");
         }
@@ -335,13 +342,13 @@ namespace MediaPlayer
             this._isShuffle = this._isShuffle ? false : true;
             if (this._isShuffle)
             {
-                this._savePlaylist = this._playList;
+                //this._savePlaylist = this._playList;
                 this._playList.shuffle();
-                Random.Background = this.loadImage("Images/ShuffleCommu.png"); //TODO put here Shufflehover
+                Random.Background = this.loadImage("Images/shuffleActiveCommu.png");
             }
             else
             {
-                this._playList = this._savePlaylist;
+                //this._playList = this._savePlaylist;
                 Random.Background = this.loadImage("Images/ShuffleCommu.png");
             }
         }

@@ -131,9 +131,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="playCommu.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -141,24 +138,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="CameraCommu.png" />
-    <Resource Include="fullscreenCommu.png" />
     <Resource Include="Images\play.png" />
-    <Resource Include="LoopAllCommu.png" />
-    <Resource Include="LoopOneCommu.png" />
-    <Resource Include="nextCommu.png" />
-    <Resource Include="openFileCommu.png" />
-    <Resource Include="OpenFolderCommu.png" />
-    <Resource Include="OpenGlobalFileCommu.png" />
-    <Resource Include="openGlobalFolder.png" />
-    <Resource Include="play.png" />
-    <Resource Include="prevCommu.png" />
-    <Resource Include="ShowPlaylistCommu.png" />
-    <Resource Include="ShuffleCommu.png" />
-    <Resource Include="slowDownCommu.png" />
-    <Resource Include="speedUpCommu.png" />
-    <Resource Include="stopCommu.png" />
-    <Resource Include="volumeCommu.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\prev.png" />
@@ -241,6 +221,13 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\loopActivCommu.png" />
+    <Resource Include="Images\loopOneActiveCommu.png" />
+    <Resource Include="Images\muteCommu.png" />
+    <Resource Include="Images\pauseCommu.png" />
+    <Resource Include="Images\shuffleActiveCommu.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
