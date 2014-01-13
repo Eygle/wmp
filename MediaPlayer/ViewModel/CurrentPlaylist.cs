@@ -77,6 +77,7 @@ namespace MediaPlayer.ViewModel
 
         public ObservableCollection<IMedia> getPlayList()
         {
+            _oc.Clear();
             foreach (IMedia item in this._playlist.getPlayList())
                 _oc.Add(item);
             return _oc;
@@ -91,6 +92,7 @@ namespace MediaPlayer.ViewModel
         {
             Random rnd = new Random();
             List<IMedia> mediaList =  this._playlist.getPlayList().OrderBy(x => rnd.Next()).ToList();
+            _oc.Clear();
             foreach (IMedia item in this._playlist.getPlayList())
                 _oc.Add(item);
         }
@@ -104,6 +106,7 @@ namespace MediaPlayer.ViewModel
         {
             foreach (IMedia item in items)
                 this._playlist.add(item);
+            _oc.Clear();
             this.getPlayList();
         }
     }
