@@ -52,7 +52,11 @@ namespace MediaPlayer.Model
             }
 
             this.LengthString = fileProps[27].Value;
-            this._title = fileProps[0].Value;
+            this._title = fileProps[21].Value;
+            if (String.IsNullOrEmpty(this._title))
+                this._title = fileProps[0].Value;
+            this._genre = fileProps[16].Value;
+            this._fileSize = fileProps[1].Value;
             long[] multipliers = new long[] { 3600, 60, 1};
             int i = 0;
             this.LengthLong = this.LengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);

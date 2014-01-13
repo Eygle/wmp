@@ -50,7 +50,7 @@
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
         </Style>
         <DataTemplate x:Key="titleTemplate">
-            <TextBlock TextAlignment="Right" Text="{Binding Path=Title}"/>
+            <TextBlock TextAlignment="Left" Text="{Binding Path=Title}"/>
         </DataTemplate>
         <DataTemplate x:Key="fileSizeTemplate">
             <TextBlock TextAlignment="Right" Text="{Binding Path=FileSize}"/>
