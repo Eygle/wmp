@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace MediaPlayer.ViewModel
@@ -52,12 +53,12 @@ namespace MediaPlayer.ViewModel
             List<IMedia> medias = new List<IMedia>();
             foreach (string fullPath in fullPaths)
             {
-                IMedia m = f.createMedia(fullPath);
-                if (m != null)
-                {
-                    _oc.Add(m);
-                    medias.Add(m);
-                }
+                    IMedia m = f.createMedia(fullPath);
+                    if (m != null)
+                    {
+                        _oc.Add(m);
+                        medias.Add(m);
+                    }
             }
            this.addToPlaylist(medias);
         }
