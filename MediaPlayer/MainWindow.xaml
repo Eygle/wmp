@@ -20,36 +20,6 @@
             <GradientStop Color="#CDCDCD" Offset="1"/>
         </LinearGradientBrush>
         <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070"/>
-        <!--<Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
-            <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
-            <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Themes:ButtonChrome x:Name="Chrome" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}" RenderDefaulted="{TemplateBinding IsDefaulted}" SnapsToDevicePixels="true">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Themes:ButtonChrome>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsKeyboardFocused" Value="true">
-                                <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>
-                            </Trigger>
-                            <Trigger Property="ToggleButton.IsChecked" Value="true">
-                                <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="#ADADAD"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
 
         <Style TargetType="Button">
             <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"></Setter>
@@ -65,7 +35,6 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Foreground" Value="Blue" />
                                 <Setter Property="Cursor" Value="Hand" />
-                                <!-- If we don't tell the background to change on hover, it will remain the same -->
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -95,6 +64,12 @@
 
         <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="-1,-1,0,0" VerticalAlignment="Top" Width="693.6" Height="447.4">
             <TabItem Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True" Foreground="Black" RenderTransformOrigin="0,0.5">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid Background="White" Margin="0,2,0.2,-2.6">
                     <Rectangle Fill="#FF070303" Margin="0,0,-0.4,90" x:Name="mediaElementBackground" Stroke="Black" Drop="mediaElementBackground_Drop" />
                     <MediaElement LoadedBehavior="Manual" Margin="0,0,2.6,90" x:Name="mediaElement" MediaOpened="mediaElement_MediaOpened" MediaEnded="mediaElement_MediaEnded" MediaFailed="mediaElement_MediaFailed" />
