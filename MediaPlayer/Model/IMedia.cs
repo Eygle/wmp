@@ -23,5 +23,7 @@ namespace MediaPlayer.Model
         string Album { get; set; }
         string PathName { get; set; }
         string FileSize { get; set; }
+        string Year { get; set; }
+        string Artist { get; set; }
     }
 }
