@@ -9,8 +9,8 @@ namespace MediaPlayer.ViewModel
 {
     class MediaFactory
     {
-        private string[] _allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
-        private string[] _videoExt = { ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi"};
+        private string[] _allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png", ".wma", ".mov" };
+        private string[] _videoExt = { ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".mov", ".wma"};
         private string[] _imageExt = { ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
 
         public MediaFactory()

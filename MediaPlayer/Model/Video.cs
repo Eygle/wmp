@@ -45,12 +45,13 @@ namespace MediaPlayer.Model
             this.PathName = path;
 
             Dictionary<int, KeyValuePair<string, string>> fileProps = GetFileProps(path);
-            /*foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
+            foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
             {
                 Console.WriteLine(kv.ToString());
-            }*/
+            }
 
             this.LengthString = fileProps[27].Value;
+            this._title = fileProps[0].Value;
             long[] multipliers = new long[] { 3600, 60, 1};
             int i = 0;
             this.LengthLong = this.LengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
