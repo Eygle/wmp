@@ -79,6 +79,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\MediaUsers.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="View\Helper.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Video.cs" />
@@ -162,7 +164,10 @@
   <ItemGroup>
     <Resource Include="Images\snapshot.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\fullscreenActiveCommu.png" />
+    <Resource Include="Images\iconeCommu.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\CameraCommu.png" />
     <Resource Include="Images\cursorCommu.png" />

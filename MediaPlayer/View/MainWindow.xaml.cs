@@ -46,10 +46,6 @@ namespace MediaPlayer
             _webcam = new WebCam();
             _playList = new CurrentPlaylist();
             _webcam.InitializeWebCam(ref captureImage);
-            TreeViewItem it = new TreeViewItem();
-            it.Name = "currentPlaylist";
-            it.Header = "Current Playlist";
-            treeView1.Items.Add(it);
         }
 
         ~MainWindow()
@@ -519,7 +515,7 @@ namespace MediaPlayer
             {
                 this.WindowStyle = WindowStyle.None;
                 this.WindowState = WindowState.Maximized;
-                this.FullScreen.Background = this.loadImage("../Images/fullScreenCommu.png");
+                this.FullScreen.Background = this.loadImage("../Images/fullscreenActiveCommu.png");
             }
             else
             {
@@ -529,12 +525,39 @@ namespace MediaPlayer
             }
             this._fullScreen = !this._fullScreen;
         }
+private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
+            ContextMenu context;
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+            if (item == null)
+                return;
+            else if ((item.Tag as string) == "Playlist")
+                context = this.treeView1.FindResource("PlaylistContext") as ContextMenu;
+            else
+                context = this.treeView1.FindResource("RootContext") as ContextMenu;
+            context.PlacementTarget = this;
+            context.IsOpen = true;
+        }
+
+        private TreeViewItem SearchTreeViewItem(DependencyObject source)
+        {
+            while (source != null && !(source is TreeViewItem))
+                source = VisualTreeHelper.GetParent(source);
+
+            return source as TreeViewItem;
+        }
+
+        private void AddPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = this.treeView1.Items.GetItemAt(0) as TreeViewItem;
+            item.Items.Add(new TreeViewItem { Header = "new playlist" });
+        } private void Button_Click(object sender, RoutedEventArgs e)
         {
             using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
             {
-                string hash = GetMd5Hash(md5Hash, "test");
+                string hash = GetMd5Hash(md5Hash, passwordTbx.Text);
+
             }
         }
 
