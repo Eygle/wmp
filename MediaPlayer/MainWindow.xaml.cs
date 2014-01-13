@@ -24,10 +24,12 @@ namespace MediaPlayer
     {
         private double _savedVolume = 5;
         private List<string> _pathList = new List<string>();
+        private List<string> _savePlaylist;
         private int _listIndex = 0;
         private bool _isPause = false;
         private bool _isLoopAll = false;
         private bool _isLoopSingle = false;
+        private bool _isShuffle = false;
         private int _timeDurationSize = 2;
         private string[] _allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
 
@@ -161,22 +163,27 @@ namespace MediaPlayer
             }
         }
 
-        private void setPlayPauseButon(string state)
-        {
-        }
-
         private void playMedia()
         {
+            this._isPause = false;
             videoProgressBar.Value = 0;
             mediaElement.Play();
+            playButton.Background = this.loadImage("Images/PlayCommu.png");
         }
 
         private void pauseMedia()
         {
+            this._isPause = true;
+            playButton.Background = this.loadImage("Images/PlauseCommu.png");
+            mediaElement.Pause();
         }
 
         private void stopMedia()
         {
+            this._isPause = false;
+            playButton.Background = this.loadImage("Images/PlayCommu.png");
+            mediaElement.Stop();
+            videoProgressBar.Value = 0;
         }
 
         private void OpenFile_Click(object sender, RoutedEventArgs e)
@@ -190,7 +197,6 @@ namespace MediaPlayer
                 {
                     string[] str = openFileDialog1.FileNames;
                     this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
-                    //SetPlayList(openFileDialog1.InitialDirectory, str);
                     this.playList.ItemsSource = this._playList.getPlayList();
                     mediaElement.Source = new Uri(_playList.getMediaPath(0));
                     this.playMedia();
@@ -241,21 +247,14 @@ namespace MediaPlayer
         private void playButton_Click(object sender, RoutedEventArgs e)
         {
             if (!_isPause)
-            {
-                mediaElement.Pause();
-                _isPause = true;
-            }
+                this.pauseMedia();
             else
-            {
-                mediaElement.Play();
-                _isPause = false;
-            }
+                this.playMedia();
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.Stop();
-            videoProgressBar.Value = 0;
+            this.stopMedia();
         }
 
         private void prevButton_Click(object sender, RoutedEventArgs e)
@@ -274,13 +273,13 @@ namespace MediaPlayer
             {
                 _savedVolume = volumeBar.Value;
                 volumeBar.Value = 0;
-                //ImageSource iss = "/MediaPlayer;component/Images/speaker_mute.png";
-                //iss.
-                //ImageBrush ibbg = new ImageBrush();
-                //volumeButton.Background = ibbg;
+                volumeButton.Background = this.loadImage("Images/MuteCommu.png");
             }
             else
+            {
                 volumeBar.Value = _savedVolume;
+                volumeButton.Background = this.loadImage("Images/volumeCommu.png");
+            }
         }
 
         private void volumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -324,15 +323,6 @@ namespace MediaPlayer
                 LoopSingleButton.Background = this.loadImage("Images/LoopOneCommu.png");
         }
 
-        private void fullscreenButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = this.WindowState == System.Windows.WindowState.Maximized ? System.Windows.WindowState.Normal : System.Windows.WindowState.Maximized;
-            if (this.WindowState == System.Windows.WindowState.Maximized)
-                fullscreenButton.Background = this.loadImage("Images/fullscreenCommu.png"); //TODO put here minmized image
-            else
-                fullscreenButton.Background = this.loadImage("Images/fullscreenCommu.png");
-        }
-
         private void showPlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             TabPlaylists.Focus();
@@ -342,7 +332,18 @@ namespace MediaPlayer
 
         private void Random_Click(object sender, RoutedEventArgs e)
         {
-            this._playList.shuffle();
+            this._isShuffle = this._isShuffle ? false : true;
+            if (this._isShuffle)
+            {
+                this._savePlaylist = this._playList;
+                this._playList.shuffle();
+                Random.Background = this.loadImage("Images/ShuffleCommu.png"); //TODO put here Shufflehover
+            }
+            else
+            {
+                this._playList = this._savePlaylist;
+                Random.Background = this.loadImage("Images/ShuffleCommu.png");
+            }
         }
 
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
