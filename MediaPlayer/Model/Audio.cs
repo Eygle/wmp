@@ -55,7 +55,8 @@ namespace MediaPlayer.Model
             this._fileSize = fileProps[1].Value;
             this._artist = fileProps[20].Value;
             this._year = fileProps[15].Value;
-            this._genre = null;
+            this._genre = fileProps[16].Value;
+            this._album = fileProps[14].Value;
             long[] multipliers = new long[] { 3600, 60, 1 };
             int i = 0;
             this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
