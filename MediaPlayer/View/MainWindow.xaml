@@ -325,7 +325,7 @@
                     <Label x:Name="passwordLbl" Content="Password:" HorizontalAlignment="Left" Margin="64,101,0,0" VerticalAlignment="Top"/>
                     <TextBox HorizontalAlignment="Left" Height="23" Margin="141,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                     <Label x:Name="LoginLbl" Content="Login" HorizontalAlignment="Left" Margin="177,28,0,0" VerticalAlignment="Top"/>
-                    <Button Content="" HorizontalAlignment="Left" Margin="162,142,0,0" VerticalAlignment="Top" Width="75" IsCancel="True"/>
+                    <Button x:Name="LoginBtn" Content="" HorizontalAlignment="Left" Margin="162,142,0,0" VerticalAlignment="Top" Width="75" IsCancel="True" Click="Button_Click"/>
 
                 </Grid>
             </TabItem>
