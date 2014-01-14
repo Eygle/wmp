@@ -26,6 +26,7 @@ namespace MediaPlayer.ViewModel
         {
             if (this._tree.ContainsKey(name) || !_regexName.Match(name).Success)
                 return false;
+            Directory.CreateDirectory(PlaylistPath + "toto" + "/" + name); // TODO: don't hardcode the username
             this._tree.Add(name, new List<string>());
             return true;
         }
@@ -34,12 +35,26 @@ namespace MediaPlayer.ViewModel
         {
             if (this._tree[folder].Contains(name) || !_regexName.Match(name).Success)
                 return false;
+            File.Create(PlaylistPath + "toto" + "/" + folder + "/" + name); // TODO: don't hardcode the username
             this._tree[folder].Add(name);
             return true;
         }
 
-        public void AddFiles(string playlist, string[] path)
+        public Dictionary<string, List<string>> reload(string username)
         {
+            this._tree.Clear();
+            if (username == "")
+                return null;
+            string[] dirs = Directory.GetDirectories(PlaylistPath + username);
+            foreach (string dir in dirs)
+            {
+                string[] files = Directory.GetFiles(dir);
+                string folder = Path.GetFileName(dir);
+                this._tree.Add(folder, new List<string>());
+                foreach (string pls in files)
+                    this._tree[folder].Add(Path.GetFileName(pls));
+            }
+            return this._tree;
         }
     }
 }

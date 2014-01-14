@@ -297,7 +297,7 @@
                                         <Image Source="../Images/addFolder.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Reload all">
+                                <MenuItem Header="Reload all" Click="ReloadTreeView_Click">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/LoopAllCommu.png" />
                                     </MenuItem.Icon>

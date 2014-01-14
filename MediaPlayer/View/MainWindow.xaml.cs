@@ -601,6 +601,27 @@ namespace MediaPlayer
                 MessageBox.Show("Folder's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
         } 
 
+        private void ReloadTreeView_Click(object sender, RoutedEventArgs e)
+        {
+            Dictionary<string, List<string>> tree = this._playlistManager.reload("toto"); // TODO: don't hardcode the username
+
+            TreeViewItem root = treeView1.Items[0] as TreeViewItem;
+
+            root.Items.Clear();
+            root.Items.Add(new TreeViewItem { Header = "default playlist", Tag = "Playlist" });
+            foreach (KeyValuePair<string, List<string>> entry in tree)
+            {
+                TreeViewItem folder = new TreeViewItem { Header = entry.Key, Tag = "PlaylistFolder" };
+                
+                root.Items.Add(folder);
+                foreach (string pls in entry.Value)
+                {
+                    folder.Items.Add(new TreeViewItem { Header = pls, Tag = "Playlist" });
+                }
+            }
+            MessageBox.Show("Reload done", "Playlist info", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+        }
+
         //
         // Other
         //
