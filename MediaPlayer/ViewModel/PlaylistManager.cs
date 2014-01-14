@@ -10,15 +10,20 @@ namespace MediaPlayer.ViewModel
 {
     public class PlaylistManager
     {
+        public static string PlaylistPath = "Playlists/";
+
         private List<string> _playlists;
 
         public PlaylistManager() 
         { 
             this._playlists = new List<string>();
+            if (!Directory.Exists(PlaylistPath))
+                Directory.CreateDirectory(PlaylistPath);
         }
 
-        public void AddFolder(string name)
+        public bool AddFolder(string name)
         {
+            return false;
         }
 
         public bool AddPlaylist(string name)
@@ -26,9 +31,9 @@ namespace MediaPlayer.ViewModel
             Regex r = new Regex("^[a-z|0-9|\\s]+$", RegexOptions.IgnoreCase);
 
             if (this._playlists.Contains(name) || !r.Match(name).Success)
-                return (false);
+                return false;
             this._playlists.Add(name); // TODO: think about the path
-            return (true);
+            return true;
         }
 
         public void AddFiles(string playlist, string[] path)

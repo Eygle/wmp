@@ -81,8 +81,8 @@ namespace MediaPlayer.ViewModel
                 User user = new User(userName, hash);
                 this._users.add(user);
 
-                if (!Directory.Exists(userName))
-                    Directory.CreateDirectory(userName);
+                if (!Directory.Exists(PlaylistManager.PlaylistPath + userName))
+                    Directory.CreateDirectory(PlaylistManager.PlaylistPath + userName);
             }
         }
 

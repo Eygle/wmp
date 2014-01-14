@@ -334,9 +334,10 @@
                             </ContextMenu>
                         </TreeView.Resources>
                         <TreeViewItem x:Name="playlists" Header="Playlists" Tag="PlaylistRoot">
-                            <TreeViewItem Header="Common" Tag="PlaylistFolder">
-                                <TreeViewItem Header="default playlist" Tag="Playlist"></TreeViewItem>
+                            <TreeViewItem Header="przyby_m" Tag="PlaylistFolder">
+                                <TreeViewItem Header="my_playlist" Tag="Playlist"></TreeViewItem>
                             </TreeViewItem>
+                            <TreeViewItem Header="default playlist" Tag="Playlist"></TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem x:Name="Library" Header="Library" Tag="LibraryFolder">
                             <TreeViewItem Header="Audio" Tag="LibraryItem"></TreeViewItem>

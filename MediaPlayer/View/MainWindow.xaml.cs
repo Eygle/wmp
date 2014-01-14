@@ -538,6 +538,10 @@ namespace MediaPlayer
             this._fullScreen = !this._fullScreen;
         }
 
+        //
+        // TreeView
+        //
+
         private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
@@ -546,6 +550,7 @@ namespace MediaPlayer
             {
                 ContextMenu context = null;
 
+                item.IsSelected = true;
                 if ((item.Tag as string) == "Playlist")
                     context = this.treeView1.FindResource("PlaylistMenu") as ContextMenu;
                 else if ((item.Tag as string) == "PlaylistFolder")
@@ -570,13 +575,33 @@ namespace MediaPlayer
 
         private void AddPlaylist_Click(object sender, RoutedEventArgs e)
         {
-            TreeViewItem item = this.treeView1.Items.GetItemAt(0) as TreeViewItem;
-            string name = Microsoft.VisualBasic.Interaction.InputBox("Prompt", "Title", "new playlist", 0, 0);
+            TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
+            string name = Microsoft.VisualBasic.Interaction.InputBox("Enter playlist's name below :", "Playlist Creation", "new playlist", 0, 0);
+            
+            if (name == "")
+                return;
             if (this._playlistManager.AddPlaylist(name))
-                item.Items.Add(new TreeViewItem { Header = name });
+                item.Items.Add(new TreeViewItem { Header = name, Tag = "Playlist" });
             else
-                MessageBox.Show("Error: playlist's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
+                MessageBox.Show("playlist's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
+        }
+
+        private void AddFolder_Click(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
+            string name = Microsoft.VisualBasic.Interaction.InputBox("Enter folder's name below :", "Folder Creation", "new folder", 0, 0);
+            
+            if (name == "")
+                return;
+            if (this._playlistManager.AddFolder(name))
+                item.Items.Add(new TreeViewItem { Header = name, Tag = "PlaylistFolder" });
+            else
+                MessageBox.Show("Folder's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
         } 
+
+        //
+        // Other
+        //
 
         private void CreateUserBtn_Copy_Click(object sender, RoutedEventArgs e)
         {
