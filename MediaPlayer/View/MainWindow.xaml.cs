@@ -399,13 +399,13 @@ namespace MediaPlayer
         private void mediaElementBackground_Drop(object sender, DragEventArgs e)
         {
             string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
-            this._playList.addFolder(files);
             this.playList.ItemsSource = this._playList.getPlayList();
-            if (!this._isPause)
+            if (mediaElement.Source == null && this._playList.getPlayList().Count() > 0)
             {
-                mediaElement.Source = new Uri(this._playList.getMediaPath(this._listIndex));
+                mediaElement.Source = new Uri(this._playList.getMediaPath(0));
                 this.playMedia();
             }
+            this._isShuffle = false;
         }
 
         void synchronizeProgressBar(object sender, EventArgs e)
