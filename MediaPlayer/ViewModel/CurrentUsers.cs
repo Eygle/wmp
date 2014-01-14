@@ -20,12 +20,14 @@ namespace MediaPlayer.ViewModel
         public CurrentUsers()
         {
             this._users = new MediaUsers();
+            save();
             load();
         }
 
         public CurrentUsers(CurrentUsers o)
         {
             this._users = o._users;
+            save();
             load();
         }
 
