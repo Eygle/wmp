@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace MediaPlayer.Model
 {
@@ -25,5 +27,6 @@ namespace MediaPlayer.Model
         string FileSize { get; set; }
         string Year { get; set; }
         string Artist { get; set; }
+        BitmapImage Icon { get; set; }
     }
 }

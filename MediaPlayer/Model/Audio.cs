@@ -1,11 +1,14 @@
 ﻿using Shell32;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace MediaPlayer.Model
 {
@@ -22,6 +25,7 @@ namespace MediaPlayer.Model
         private string _artist;
         private string _year;
         private mediaType _type;
+        private BitmapImage _icon;
 
         public Audio() { }
 
@@ -62,7 +66,8 @@ namespace MediaPlayer.Model
             long[] multipliers = new long[] { 3600, 60, 1 };
             int i = 0;
             this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
-            _type = mediaType.AUDIO;
+            this._type = mediaType.AUDIO;
+            this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/audio.ico"));
         }
 
         public string LengthString
@@ -122,6 +127,12 @@ namespace MediaPlayer.Model
         {
             get { return this._album; }
             set { this._album = value;  }
+        }
+
+        public BitmapImage Icon
+        {
+            get { return this._icon; }
+            set { this._icon = value; }
         }
     }
 }
