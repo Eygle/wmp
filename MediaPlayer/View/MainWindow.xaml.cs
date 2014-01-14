@@ -542,14 +542,17 @@ namespace MediaPlayer
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
             ContextMenu context;
 
-            if (item != null && (item.Tag as string) == "Playlist")
+            if ((item.Tag as string) == "Playlist")
                 context = this.treeView1.FindResource("PlaylistMenu") as ContextMenu;
-            else if (item != null && (item.Tag as string) == "Folder")
+            else if ((item.Tag as string) == "Folder")
                 context = this.treeView1.FindResource("FolderMenu") as ContextMenu;
             else
                 context = this.treeView1.FindResource("RootMenu") as ContextMenu;
-            context.PlacementTarget = this;
-            context.IsOpen = true;
+            if (item != null && (item.Tag as string) != "PlaylistRoot")
+            {
+                context.PlacementTarget = this;
+                context.IsOpen = true;
+            }
         }
 
         private TreeViewItem SearchTreeViewItem(DependencyObject source)

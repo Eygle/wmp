@@ -294,7 +294,7 @@
                             <ContextMenu x:Key ="RootMenu">
                                 <MenuItem Header="Add folder">
                                     <MenuItem.Icon>
-                                        <Image Source="../Images/LoopAllCommu.png" />
+                                        <Image Source="../Images/addFolder.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="Reload all">
@@ -306,7 +306,7 @@
                             <ContextMenu x:Key ="FolderMenu">
                                 <MenuItem Header="Add playlist" Click="AddPlaylist_Click">
                                     <MenuItem.Icon>
-                                        <Image Source="../Images/LoopAllCommu.png" />
+                                        <Image Source="../Images/AddPlaylistCommu.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="Reload playlists">
@@ -318,23 +318,25 @@
                             <ContextMenu x:Key ="PlaylistMenu">
                                 <MenuItem Header="Select">
                                     <MenuItem.Icon>
-                                        <Image Source="../Images/LoopAllCommu.png" />
+                                        <Image Source="../Images/fullscreenCommu.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="Rename">
                                     <MenuItem.Icon>
-                                        <Image Source="../Images/LoopAllCommu.png" />
+                                        <Image Source="../Images/RenamePlaylistCommu.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="Delete">
                                     <MenuItem.Icon>
-                                        <Image Source="../Images/LoopAllCommu.png" />
+                                        <Image Source="../Images/DelPlaylistCommu.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
                         </TreeView.Resources>
-                        <TreeViewItem x:Name="playlists" Header="Playlists" Tag="Folder">
-                            <TreeViewItem Header="default" Tag="Playlist"></TreeViewItem>
+                        <TreeViewItem x:Name="playlists" Header="Playlists" Tag="PlaylistRoot">
+                            <TreeViewItem Header="Common" Tag="PlaylistFolder">
+                                <TreeViewItem Header="default playlist" Tag="Playlist"></TreeViewItem>
+                            </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem x:Name="Library" Header="Library" Tag="LibraryFolder">
                             <TreeViewItem Header="Audio" Tag="LibraryItem"></TreeViewItem>

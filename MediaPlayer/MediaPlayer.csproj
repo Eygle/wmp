@@ -237,6 +237,11 @@
     <Resource Include="Images\mediaplayer.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\addFolder.png" />
+    <Resource Include="Images\AddPlaylistCommu.png" />
+    <Resource Include="Images\DelPlaylistCommu.png" />
+    <Resource Include="Images\RenamePlaylistCommu.png" />
+    <Resource Include="Images\SavePlaylistCommu.png" />
     <Resource Include="Images\imageFileCommu.ico" />
     <Resource Include="Images\videoFileCommu.ico" />
   </ItemGroup>
