@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace MediaPlayer.ViewModel
 {
@@ -27,35 +28,44 @@ namespace MediaPlayer.ViewModel
                 Directory.CreateDirectory(LibraryPath);
         }
 
-        public bool AddFolder(string username, string name)
+        public bool AddFolder(User user, string name)
         {
-            if (this._tree.ContainsKey(name) || !_regexName.Match(name).Success)
+            if (user == null)
+            {
+                MessageBox.Show("You must be logged to create folders", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                 return false;
-            Directory.CreateDirectory(PlaylistPath + username + "/" + name);
+            }            
+            else if (name == "" || this._tree.ContainsKey(name) || !_regexName.Match(name).Success)
+            {
+                MessageBox.Show("Folder's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
+                return false;
+            }
+            Directory.CreateDirectory(PlaylistPath + user.UserName + "/" + name);
             this._tree.Add(name, new List<string>());
             return true;
         }
 
-        public bool removeFolder(string username, string name)
+        public bool removeFolder(User user, string name)
         {
             try
             {
-                Directory.Delete(PlaylistPath + username + "/" + name, true);
+                Directory.Delete(PlaylistPath + user.UserName + "/" + name, true);
                 this._tree.Remove(name);
                 return true;
             }
             catch
             {
+                MessageBox.Show("Can't delete folder", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                 return false;
             }
         }
-        public bool removePlaylistFromFolder(string username, string name, string folder)
+        public bool removePlaylistFromFolder(User user, string name, string folder)
         {
             try
             {
                 if (MessageBox.Show("Do you really want to delete this playlist ?", "Playlist Change", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     return false;
-                File.Delete(PlaylistPath + username + "/" + folder + "/" + name);
+                File.Delete(PlaylistPath + user.UserName + "/" + folder + "/" + name);
                 this._tree[folder].Remove(name);
                 return true;
             }
@@ -66,30 +76,45 @@ namespace MediaPlayer.ViewModel
             }
         }
 
-        public bool AddPlaylistToFolder(string username, string name, string folder)
+        public bool AddPlaylistToFolder(User user, string name, string folder)
         {
-            if (this._tree[folder].Contains(name) || !_regexName.Match(name).Success)
+            if (name == "" || this._tree[folder].Contains(name) || !_regexName.Match(name).Success)
+            {
+                MessageBox.Show("playlist's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                 return false;
-            File.Create(PlaylistPath + username + "/" + folder + "/" + name);
+            }
+            File.Create(PlaylistPath + user.UserName + "/" + folder + "/" + name);
             this._tree[folder].Add(name);
             return true;
         }
 
-        public Dictionary<string, List<string>> reload(string username)
+        public List<TreeViewItem> reload(User user)
         {
+            List<TreeViewItem> res = new List<TreeViewItem>();
+
             this._tree.Clear();
-            if (username == "")
-                return null;
-            string[] dirs = Directory.GetDirectories(PlaylistPath + username);
-            foreach (string dir in dirs)
+            res.Add(new TreeViewItem { Header = "default playlist", Tag = "LibraryItem" });
+            if (user.UserName != "")
             {
-                string[] files = Directory.GetFiles(dir);
-                string folder = Path.GetFileName(dir);
-                this._tree.Add(folder, new List<string>());
-                foreach (string pls in files)
-                    this._tree[folder].Add(Path.GetFileName(pls));
+                string[] dirs = Directory.GetDirectories(PlaylistPath + user.UserName);
+
+                foreach (string dir in dirs)
+                {
+                    string[] files = Directory.GetFiles(dir);
+                    string folder = Path.GetFileName(dir);
+                    TreeViewItem item = new TreeViewItem { Header = folder, Tag = "PlaylistFolder" };
+
+                    this._tree.Add(folder, new List<string>());
+                    res.Add(item);
+                    foreach (string file in files)
+                    {
+                        string pls = Path.GetFileName(file);
+                        this._tree[folder].Add(pls);
+                        item.Items.Add(new TreeViewItem { Header = pls, Tag = "Playlist" });
+                    }
+                }
             }
-            return this._tree;
+            return res;
         }
 
         public void fillLibrary(List<Playlist> list)

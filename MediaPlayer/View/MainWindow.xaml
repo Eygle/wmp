@@ -321,11 +321,6 @@
                                         <Image Source="../Images/selectCommu.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Rename">
-                                    <MenuItem.Icon>
-                                        <Image Source="../Images/RenamePlaylistCommu.png" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
                                 <MenuItem Header="Delete" Click="DeletePlaylist_Click">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/DelPlaylistCommu.png" />
@@ -341,7 +336,7 @@
                             </ContextMenu>
                         </TreeView.Resources>
                         <TreeViewItem x:Name="playlists" Header="Playlists" Tag="PlaylistRoot">
-                            <TreeViewItem Header="default playlist" Tag="Playlist"></TreeViewItem>
+                            <TreeViewItem Header="default playlist" Tag="LibraryItem"></TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem x:Name="Library" Header="Library" Tag="LibraryFolder">
                             <TreeViewItem Header="Audio" Tag="LibraryItem"></TreeViewItem>
