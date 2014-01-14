@@ -333,6 +333,11 @@
                         <TreeViewItem x:Name="playlists" Header="Playlists" Tag="Folder">
                             <TreeViewItem Header="default" Tag="Playlist"></TreeViewItem>
                         </TreeViewItem>
+                        <TreeViewItem x:Name="Library" Header="Library" Tag="Folder">
+                            <TreeViewItem Header="Audio" Tag="LibraryItem"></TreeViewItem>
+                            <TreeViewItem Header="Video" Tag="LibraryItem"></TreeViewItem>
+                            <TreeViewItem Header="Image" Tag="LibraryItem"></TreeViewItem>
+                        </TreeViewItem>
                     </TreeView>
                 </Grid>
             </TabItem>

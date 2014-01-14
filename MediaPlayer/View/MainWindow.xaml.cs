@@ -446,9 +446,7 @@ namespace MediaPlayer
             }
         }
 
-
         //PLAYLISTS
-
 
         private void SetPlayList(string dir, string[] str)
         {
@@ -462,7 +460,6 @@ namespace MediaPlayer
         }
 
         //Youtube
-
 
         private void YoutubeButton_Click(object sender, RoutedEventArgs e)
         {
@@ -501,8 +498,7 @@ namespace MediaPlayer
                 YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
         }
 
-        // CAMERA CAPTURE
-
+        // CAMERA 
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -536,6 +532,7 @@ namespace MediaPlayer
             }
             this._fullScreen = !this._fullScreen;
         }
+
         private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
