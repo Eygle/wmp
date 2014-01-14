@@ -122,6 +122,13 @@ namespace MediaPlayer
 
         // MEDIA PLAYER
 
+        private void loadAndPlayMedia()
+        {
+            this.hideAudioElements();
+            mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
+            videoProgressBar.Value = 0;
+        }
+        
         private void goNextMedia()
         {
             if (_listIndex >= 0 && _listIndex < this._playList.Count())
@@ -133,9 +140,7 @@ namespace MediaPlayer
                     _listIndex++;
                     if (_listIndex >= this._playList.Count())
                         _listIndex = 0;
-                    this.hideAudioElements();
-                    mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
-                    videoProgressBar.Value = 0;
+                    this.loadAndPlayMedia();
                 }
                 catch
                 {
@@ -155,9 +160,7 @@ namespace MediaPlayer
                     _listIndex--;
                     if (_listIndex < 0)
                         _listIndex = this._playList.Count() - 1;
-                    hideAudioElements();
-                    mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
-                    videoProgressBar.Value = 0;
+                    this.loadAndPlayMedia();
                 }
                 catch
                 {
@@ -447,9 +450,7 @@ namespace MediaPlayer
             }
         }
 
-
         //PLAYLISTS
-
 
         private void SetPlayList(string dir, string[] str)
         {
@@ -463,7 +464,6 @@ namespace MediaPlayer
         }
 
         //Youtube
-
 
         private void YoutubeButton_Click(object sender, RoutedEventArgs e)
         {
@@ -502,8 +502,7 @@ namespace MediaPlayer
                 YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
         }
 
-        // CAMERA CAPTURE
-
+        // CAMERA 
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -512,6 +511,7 @@ namespace MediaPlayer
 
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
+            _webcam.InitializeWebCam(ref captureImage);
             _webcam.Start();
             _webcam.Continue();
         }
@@ -537,19 +537,23 @@ namespace MediaPlayer
             }
             this._fullScreen = !this._fullScreen;
         }
+
         private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
             ContextMenu context;
 
-            if (item != null && (item.Tag as string) == "Playlist")
+            if ((item.Tag as string) == "Playlist")
                 context = this.treeView1.FindResource("PlaylistMenu") as ContextMenu;
-            else if (item != null && (item.Tag as string) == "Folder")
+            else if ((item.Tag as string) == "Folder")
                 context = this.treeView1.FindResource("FolderMenu") as ContextMenu;
             else
                 context = this.treeView1.FindResource("RootMenu") as ContextMenu;
-            context.PlacementTarget = this;
-            context.IsOpen = true;
+            if (item != null && (item.Tag as string) != "PlaylistRoot")
+            {
+                context.PlacementTarget = this;
+                context.IsOpen = true;
+            }
         }
 
         private TreeViewItem SearchTreeViewItem(DependencyObject source)
@@ -583,8 +587,6 @@ namespace MediaPlayer
                 this.LoginBtn.Visibility = Visibility.Hidden;
                 this.LogoutBtn.Visibility = Visibility.Visible;
             }
-            else
-                MessageBox.Show("Failed to Login!");
         }
 
         private void LogoutBtn_Click(object sender, RoutedEventArgs e)
@@ -609,6 +611,40 @@ namespace MediaPlayer
                     string header = headerClicked.Column.Header as string;
                     _playList.sortPlaylist(header);
                 }
+            }
+        }
+
+        private void searchPlaylist_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchPlaylist.Text == "Search in playlist")
+                searchPlaylist.Text = "";
+            searchPlaylist.Foreground = new SolidColorBrush(Colors.Black);
+        }
+
+        private void searchPlaylist_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchPlaylist.Text == "")
+                searchPlaylist.Text = "Search in playlist";
+            searchPlaylist.Foreground = new SolidColorBrush(Colors.Gray);
+        }
+
+        private void searchPlaylist_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (searchPlaylist.Text != "Search in playlist")
+                this._playList.searchInPlaylist(searchPlaylist.Text);
+        }
+
+        private void playList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                ListViewItem Item = (ListViewItem)sender;
+                IMedia media = (IMedia)Item.Content;
+
+                this._listIndex = this._playList.findMediaIndex(media);
+                this.loadAndPlayMedia();
+                e.Handled = true;
+                mediaTab.Focus();
             }
         }
     }

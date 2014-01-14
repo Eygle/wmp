@@ -77,7 +77,7 @@ namespace MediaPlayer.Model
             int i = 0;
             this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
             this._type = mediaType.AUDIO;
-            this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/audio.ico"));
+            this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/openFileCommu.ico"));
             if (this._fileSize != null && this._fileSize != "")
                 this._size = getSizeFromString(this._fileSize);
         }

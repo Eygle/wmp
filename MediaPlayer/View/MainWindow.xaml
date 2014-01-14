@@ -45,6 +45,7 @@
 
         <Style TargetType="ListViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <EventSetter Event="MouseDoubleClick" Handler="playList_MouseDoubleClick" />
         </Style>
         <Style TargetType="GridViewColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -70,7 +71,7 @@
 
 
         <TabControl x:Name="Tabulations" Margin="0,0,0,0">
-            <TabItem Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True" Foreground="Black" RenderTransformOrigin="0,0.5">
+            <TabItem x:Name="mediaTab" Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True" Foreground="Black" RenderTransformOrigin="0,0.5">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="White" Offset="0"/>
@@ -276,7 +277,8 @@
                     </Grid.ColumnDefinitions>
                     <Rectangle Margin="0,0,-0.8,-0.6" x:Name="rectangle1" Stroke="#FFB5B1B1" Fill="#FFE3E3E3" Grid.ColumnSpan="4" />
                     <GridSplitter HorizontalAlignment="Left" Margin="7,6,0,0" x:Name="gridSplitter1" VerticalAlignment="Top"/>
-                    <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="3" Margin="0,6,10.2,6.4" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler">
+                    <TextBox x:Name="searchPlaylist" Height="20" Margin="0,6,10,0" TextWrapping="Wrap" Grid.Column="3" Text="Search in playlist" VerticalAlignment="Top" GotFocus="searchPlaylist_GotFocus" LostFocus="searchPlaylist_LostFocus" Foreground="Gray" Padding="2,0,0,0" TextChanged="searchPlaylist_TextChanged"/>
+                    <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="3" Margin="0,31,10.2,3.4" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="PlaylistTytleColumn" Width="32" Header="Type" CellTemplate="{StaticResource iconTemplate}" />
@@ -331,8 +333,15 @@
                                 </MenuItem>
                             </ContextMenu>
                         </TreeView.Resources>
-                        <TreeViewItem x:Name="playlists" Header="Playlists" Tag="Folder">
-                            <TreeViewItem Header="default" Tag="Playlist"></TreeViewItem>
+                        <TreeViewItem x:Name="playlists" Header="Playlists" Tag="PlaylistRoot">
+                            <TreeViewItem Header="Common" Tag="PlaylistFolder">
+                                <TreeViewItem Header="default playlist" Tag="Playlist"></TreeViewItem>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        <TreeViewItem x:Name="Library" Header="Library" Tag="Folder">
+                            <TreeViewItem Header="Audio" Tag="LibraryItem"></TreeViewItem>
+                            <TreeViewItem Header="Video" Tag="LibraryItem"></TreeViewItem>
+                            <TreeViewItem Header="Image" Tag="LibraryItem"></TreeViewItem>
                         </TreeViewItem>
                     </TreeView>
                 </Grid>
