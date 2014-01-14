@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shell32;
+using System.Drawing;
+using System.Windows.Media.Imaging;
 
 namespace MediaPlayer.Model
 {
@@ -21,6 +23,7 @@ namespace MediaPlayer.Model
         private string _artist;
         private string _year;
         private mediaType _type;
+        private BitmapImage _icon;
 
         public Video() { }
 
@@ -51,7 +54,7 @@ namespace MediaPlayer.Model
                 Console.WriteLine(kv.ToString());
             }
 
-            this.LengthString = fileProps[27].Value;
+            this._lengthString = fileProps[27].Value;
             //this._title = fileProps[21].Value;
             if (String.IsNullOrEmpty(this._title))
                 this._title = fileProps[0].Value;
@@ -59,7 +62,8 @@ namespace MediaPlayer.Model
             this._fileSize = fileProps[1].Value;
             long[] multipliers = new long[] { 3600, 60, 1};
             int i = 0;
-            this.LengthLong = this.LengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
+            this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
+            this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/photo.ico"));
         }
 
         public string LengthString
@@ -119,6 +123,12 @@ namespace MediaPlayer.Model
         {
             get { return this._album; }
             set { this._album = value; }
+        }
+
+        public BitmapImage Icon
+        {
+            get { return this._icon; }
+            set { this._icon = value; }
         }
     }
 }
