@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shell32;
+using System.Drawing;
+using System.Windows.Media.Imaging;
 
 namespace MediaPlayer.Model
 {
@@ -21,6 +23,7 @@ namespace MediaPlayer.Model
         private string _artist;
         private string _year;
         private mediaType _type;
+        private BitmapImage _icon;
 
         public Image() { }
 
@@ -50,12 +53,13 @@ namespace MediaPlayer.Model
             {
                 Console.WriteLine(kv.ToString());
             }
-            this.LengthString = null;
-            this.LengthLong = 0;
-            this.Title = fileProps[0].Value;
-            this.FileSize = fileProps[1].Value;
-            this.Genre = null;
-            Type = mediaType.IMAGE;
+            this._lengthString = null;
+            this._lengthLong = 0;
+            this._title = fileProps[0].Value;
+            this._fileSize = fileProps[1].Value;
+            this._genre = null;
+            this._type = mediaType.IMAGE;
+            this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/photo.ico"));
         }
 
 
@@ -116,6 +120,12 @@ namespace MediaPlayer.Model
         {
             get { return this._album; }
             set { this._album = value; }
+        }
+
+        public BitmapImage Icon
+        {
+            get { return this._icon; }
+            set { this._icon = value; }
         }
     }
 }

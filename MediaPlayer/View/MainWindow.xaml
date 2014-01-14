@@ -49,6 +49,9 @@
         <Style TargetType="GridViewColumnHeader">
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
         </Style>
+        <DataTemplate x:Key="iconTemplate">
+            <Image Source="{Binding Path=Icon}" Width="32" Height="16"/>
+        </DataTemplate>
         <DataTemplate x:Key="titleTemplate">
             <TextBlock TextAlignment="Left" Text="{Binding Path=Title}"/>
         </DataTemplate>
@@ -276,6 +279,7 @@
                     <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="3" Margin="0,6,10.2,6.4">
                         <ListView.View>
                             <GridView>
+                                <GridViewColumn Width="32" Header="Type" CellTemplate="{StaticResource iconTemplate}" />
                                 <GridViewColumn Width="100" Header="Title" CellTemplate="{StaticResource titleTemplate}" />
                                 <GridViewColumn Width="100" Header="File Size" CellTemplate="{StaticResource fileSizeTemplate}" />
                                 <GridViewColumn Width="100" Header="Time" CellTemplate="{StaticResource lengthStringTemplate}" />
