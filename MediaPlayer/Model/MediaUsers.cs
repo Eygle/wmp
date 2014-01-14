@@ -11,7 +11,7 @@ namespace MediaPlayer.Model
     public class MediaUsers
     {
         [XmlElement(ElementName = "Content")]
-        private List<User> _content;
+        public List<User> _content;
 
         public MediaUsers()
         {

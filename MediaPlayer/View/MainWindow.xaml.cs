@@ -543,6 +543,9 @@ namespace MediaPlayer
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
             ContextMenu context;
 
+            //ResourceDictionary tmp = this.treeView1.Resources;
+            //foreach (KeyValuePair<string, int> kv in tmp)
+                //MessageBox.Show(kv.Value.ToString());
             if (item == null)
                 context = this.treeView1.FindResource("RootMenu") as ContextMenu;
             else if ((item.Tag as string) == "Playlist")
@@ -567,15 +570,6 @@ namespace MediaPlayer
             string name = Microsoft.VisualBasic.Interaction.InputBox("Prompt", "Title", "new playlist", 0, 0);
             item.Items.Add(new TreeViewItem { Header = name });
         } 
-        
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
-            {
-                //string hash = GetMd5Hash(md5Hash, passwordTbx.Text);
-                // TODO: wtf ?
-            }
-        }
 
         private void CreateUserBtn_Copy_Click(object sender, RoutedEventArgs e)
         {

@@ -57,7 +57,7 @@ namespace MediaPlayer.ViewModel
             using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
             {
                 string hash = GetMd5Hash(md5Hash, password);
-                User user = new User(userName, password);
+                User user = new User(userName, hash);
                 this._users.add(user);
             }
         }
