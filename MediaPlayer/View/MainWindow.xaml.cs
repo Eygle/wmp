@@ -34,6 +34,7 @@ namespace MediaPlayer
 
         private WebCam _webcam;
         private CurrentPlaylist _playList;
+        private CurrentUsers _users;
 
         private System.Windows.Threading.DispatcherTimer _timer = new System.Windows.Threading.DispatcherTimer();
 
@@ -44,6 +45,7 @@ namespace MediaPlayer
             initTimer();
             _webcam = new WebCam();
             _playList = new CurrentPlaylist();
+            _users = new CurrentUsers();
             _webcam.InitializeWebCam(ref captureImage);
         }
 
@@ -525,6 +527,10 @@ namespace MediaPlayer
             }
             this._fullScreen = !this._fullScreen;
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> d3128a7acb462879c964e18a2a5460683249a1c7
         private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
@@ -551,6 +557,7 @@ namespace MediaPlayer
         private void AddPlaylist_Click(object sender, RoutedEventArgs e)
         {
             TreeViewItem item = this.treeView1.Items.GetItemAt(0) as TreeViewItem;
+<<<<<<< HEAD
             string name = Microsoft.VisualBasic.Interaction.InputBox("Prompt", "Title", "new playlist", 0, 0);
             item.Items.Add(new TreeViewItem { Header = name });
         } 
@@ -562,28 +569,33 @@ namespace MediaPlayer
                 string hash = GetMd5Hash(md5Hash, passwordTbx.Text);
 
             }
+=======
+            item.Items.Add(new TreeViewItem { Header = "new playlist" });
+>>>>>>> d3128a7acb462879c964e18a2a5460683249a1c7
         }
 
-        static string GetMd5Hash(System.Security.Cryptography.MD5 md5Hash, string input)
+        private void CreateUserBtn_Copy_Click(object sender, RoutedEventArgs e)
         {
-
-            // Convert the input string to a byte array and compute the hash.
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-            // Create a new Stringbuilder to collect the bytes
-            // and create a string.
-            StringBuilder sBuilder = new StringBuilder();
-
-            // Loop through each byte of the hashed data 
-            // and format each one as a hexadecimal string.
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-
-            // Return the hexadecimal string.
-            return sBuilder.ToString();
+            this._users.addUser(this.userNameTbx.Text, this.passwordPbx.Password);
+            this._users.save();
         }
 
+        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (this._users.checkUser(this.userNameTbx.Text, this.passwordPbx.Password))
+            {
+                this.LoginBtn.Visibility = Visibility.Hidden;
+                this.LogoutBtn.Visibility = Visibility.Visible;
+            }
+            else
+                MessageBox.Show("Failed to Login!");
+        }
+
+        private void LogoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this._users.logoutUser();
+            this.LogoutBtn.Visibility = Visibility.Hidden;
+            this.LoginBtn.Visibility = Visibility.Visible;
+        }
     }
 }

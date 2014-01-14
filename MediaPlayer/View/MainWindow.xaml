@@ -375,9 +375,11 @@
                     <Label x:Name="userNameLbl" Content="User Name:" HorizontalAlignment="Left" Margin="64,70,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="userNameTbx" HorizontalAlignment="Left" Height="23" Margin="141,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                     <Label x:Name="passwordLbl" Content="Password:" HorizontalAlignment="Left" Margin="64,101,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="passwordTbx" HorizontalAlignment="Left" Height="23" Margin="141,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                     <Label x:Name="LoginLbl" Content="Login" HorizontalAlignment="Left" Margin="177,28,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="LoginBtn" Content="" HorizontalAlignment="Left" Margin="162,142,0,0" VerticalAlignment="Top" Width="75" IsCancel="True" Click="Button_Click"/>
+                    <Button x:Name="LoginBtn" Content="Login" HorizontalAlignment="Left" Margin="117,142,0,0" VerticalAlignment="Top" Width="75" IsCancel="True" Click="LoginBtn_Click"/>
+                    <Button x:Name="CreateUserBtn_Copy" Content="Create" HorizontalAlignment="Left" Margin="211,142,0,0" VerticalAlignment="Top" Width="75" IsCancel="True" Click="CreateUserBtn_Copy_Click"/>
+                    <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Left" Margin="117,142,0,0" VerticalAlignment="Top" Width="75" IsCancel="True" Visibility="Hidden" Click="LogoutBtn_Click"/>
+                    <PasswordBox x:Name="passwordPbx" HorizontalAlignment="Left" Margin="141,101,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
 
                 </Grid>
             </TabItem>
