@@ -182,6 +182,11 @@ namespace MediaPlayer.ViewModel
                 MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
                 return;
             }
+            if (this._users.getUsers().Any(u => u.UserName == newUserName))
+            {
+                MessageBox.Show("Error: UserName already exists.", "Name Change Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
+                return;
+            }
             User user = this._users.getUsers().Select(u => u).Where(u => u.UserName == this._loggedInUser.UserName).First();
             this._users.getUsers().Remove(user);
             if (MessageBox.Show("Would you like to keep your playlists?", "Name Change", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
