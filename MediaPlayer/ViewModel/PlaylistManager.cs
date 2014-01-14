@@ -31,6 +31,20 @@ namespace MediaPlayer.ViewModel
             return true;
         }
 
+        public bool removeFolder(string name)
+        {
+            try
+            {
+                Directory.Delete(PlaylistPath + "toto" + "/" + name, true); // TODO: don't hardcode the username
+                this._tree.Remove(name);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public bool AddPlaylistToFolder(string name, string folder)
         {
             if (this._tree[folder].Contains(name) || !_regexName.Match(name).Success)
