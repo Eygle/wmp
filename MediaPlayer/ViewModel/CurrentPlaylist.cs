@@ -233,5 +233,10 @@ namespace MediaPlayer.ViewModel
             foreach (IMedia item in mediaList)
                 _oc.Add(item);
         }
+
+        public int findMediaIndex(IMedia media)
+        {
+            return this._playlist.getPlayList().FindIndex(i => i == media);
+        }
     }
 }

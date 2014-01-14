@@ -122,6 +122,13 @@ namespace MediaPlayer
 
         // MEDIA PLAYER
 
+        private void loadAndPlayMedia()
+        {
+            this.hideAudioElements();
+            mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
+            videoProgressBar.Value = 0;
+        }
+        
         private void goNextMedia()
         {
             if (_listIndex >= 0 && _listIndex < this._playList.Count())
@@ -133,9 +140,7 @@ namespace MediaPlayer
                     _listIndex++;
                     if (_listIndex >= this._playList.Count())
                         _listIndex = 0;
-                    this.hideAudioElements();
-                    mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
-                    videoProgressBar.Value = 0;
+                    this.loadAndPlayMedia();
                 }
                 catch
                 {
@@ -155,9 +160,7 @@ namespace MediaPlayer
                     _listIndex--;
                     if (_listIndex < 0)
                         _listIndex = this._playList.Count() - 1;
-                    hideAudioElements();
-                    mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
-                    videoProgressBar.Value = 0;
+                    this.loadAndPlayMedia();
                 }
                 catch
                 {
@@ -630,6 +633,20 @@ namespace MediaPlayer
         {
             if (searchPlaylist.Text != "Search in playlist")
                 this._playList.searchInPlaylist(searchPlaylist.Text);
+        }
+
+        private void playList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                ListViewItem Item = (ListViewItem)sender;
+                IMedia media = (IMedia)Item.Content;
+
+                this._listIndex = this._playList.findMediaIndex(media);
+                this.loadAndPlayMedia();
+                e.Handled = true;
+                mediaTab.Focus();
+            }
         }
     }
 }
