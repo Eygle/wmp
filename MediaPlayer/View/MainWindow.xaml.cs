@@ -651,13 +651,14 @@ namespace MediaPlayer
 
         private void ChangeUserName_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("If you change your UserName all of your playlists will be lost!\nDo you want to continue?", "Changing User Name Warning", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
+            if (MessageBox.Show("If you change your UserName all of your playlists will be lost!\nAre you sure you want to change your UserName?", "Changing User Name Warning", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
                 this._users.changeUserName(this.ProfileUserNameTBx.Text);
         }
 
         private void ChangeUserName_Copy_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MessageBox.Show("Are you sure you want to change your password?", "Changing User Name Warning", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
+                this._users.changePassword(this.ProfileOldPassword1TBx.Password, this.ProfileOldPassword2TBx.Password, this.ProfileNewPasswordTBx.Password);
         }
     }
 }

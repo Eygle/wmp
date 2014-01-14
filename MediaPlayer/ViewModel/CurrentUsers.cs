@@ -154,6 +154,26 @@ namespace MediaPlayer.ViewModel
             MessageBox.Show("Your UserName as been successfully changed.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
         }
 
+        public void changePassword(string passwordOne, string passwordTwo, string newPassword)
+        {
+            using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
+            {
+                string hashOne = GetMd5Hash(md5Hash, passwordOne);
+                string hashTwo = GetMd5Hash(md5Hash, passwordTwo);
+                string hashNew = GetMd5Hash(md5Hash, newPassword);
+                if (hashOne != hashTwo)
+                {
+                    MessageBox.Show("Password missmatch!", "Password Change", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.None);
+                    return;
+                }
+                User user = this._users.getUsers().Select(u => u).Where(u => u.UserName == this._loggedInUser.UserName).First();
+                this._users.getUsers().Remove(user);
+                user.Password = hashNew;
+                this.addUser(user);
+                MessageBox.Show("Your Password as been successfully changed.", "Password Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+            }
+        }
+
         private static string GetMd5Hash(System.Security.Cryptography.MD5 md5Hash, string input)
         {
 

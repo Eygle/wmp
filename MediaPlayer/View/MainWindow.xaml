@@ -394,13 +394,13 @@
                     <Grid x:Name="Profile" Visibility="Hidden" Background="#FFFFFF" Margin="0,3,0,-2.6">
                         <Label x:Name="ProfilLbl" Content="Profile" HorizontalAlignment="Left" Margin="285,23,0,0" VerticalAlignment="Top"/>
                         <Label x:Name="ProfileUserNameLbl" Content="UserName:" HorizontalAlignment="Left" Margin="174,98,0,0" VerticalAlignment="Top" Height="25"/>
-                        <Label x:Name="ProfileOldPassword1" Content="Old Password:" HorizontalAlignment="Left" Margin="158,148,0,0" VerticalAlignment="Top" Height="25"/>
-                        <Label x:Name="ProfileOldPassword2" Content="Old Password:" HorizontalAlignment="Left" Margin="158,178,0,0" VerticalAlignment="Top" Height="25"/>
-                        <Label x:Name="ProfileNewPassword" Content="New Password:" HorizontalAlignment="Left" Margin="153,208,0,0" VerticalAlignment="Top" Height="25"/>
+                        <Label x:Name="ProfileOldPassword1Lbl" Content="Old Password:" HorizontalAlignment="Left" Margin="158,148,0,0" VerticalAlignment="Top" Height="25"/>
+                        <Label x:Name="ProfileOldPassword2Lbl" Content="Old Password:" HorizontalAlignment="Left" Margin="158,178,0,0" VerticalAlignment="Top" Height="25"/>
+                        <Label x:Name="ProfileNewPasswordLbl" Content="New Password:" HorizontalAlignment="Left" Margin="153,208,0,0" VerticalAlignment="Top" Height="25"/>
                         <TextBox  x:Name="ProfileUserNameTBx" HorizontalAlignment="Left" Height="25" Margin="248,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <PasswordBox HorizontalAlignment="Left" Margin="248,148,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
-                        <PasswordBox HorizontalAlignment="Left" Margin="248,178,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
-                        <PasswordBox HorizontalAlignment="Left" Margin="248,208,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
+                        <PasswordBox x:Name="ProfileOldPassword1TBx" HorizontalAlignment="Left" Margin="248,148,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
+                        <PasswordBox x:Name="ProfileOldPassword2TBx" HorizontalAlignment="Left" Margin="248,178,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
+                        <PasswordBox x:Name="ProfileNewPasswordTBx" HorizontalAlignment="Left" Margin="248,208,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
                         <Button x:Name="ChangeUserName" Content="Change" HorizontalAlignment="Left" Margin="411,98,0,0" VerticalAlignment="Top" Width="75" Height="25" Click="ChangeUserName_Click"/>
                         <Button x:Name="ChangeUserName_Copy" Content="Change" HorizontalAlignment="Left" Margin="411,208,0,0" VerticalAlignment="Top" Width="75" Height="25" Click="ChangeUserName_Copy_Click"/>
                         <Button x:Name="LogoutBtn" Content="Logout" HorizontalAlignment="Left" Margin="272,318,0,0" VerticalAlignment="Top" Width="75" IsCancel="True" Click="LogoutBtn_Click"/>
