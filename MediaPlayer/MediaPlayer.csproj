@@ -236,6 +236,13 @@
   <ItemGroup>
     <Resource Include="Images\mediaplayer.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\addFolder.png" />
+    <Resource Include="Images\AddPlaylistCommu.png" />
+    <Resource Include="Images\DelPlaylistCommu.png" />
+    <Resource Include="Images\RenamePlaylistCommu.png" />
+    <Resource Include="Images\SavePlaylistCommu.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
