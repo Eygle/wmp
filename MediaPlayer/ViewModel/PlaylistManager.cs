@@ -22,20 +22,20 @@ namespace MediaPlayer.ViewModel
                 Directory.CreateDirectory(PlaylistPath);
         }
 
-        public bool AddFolder(string name)
+        public bool AddFolder(string username, string name)
         {
             if (this._tree.ContainsKey(name) || !_regexName.Match(name).Success)
                 return false;
-            Directory.CreateDirectory(PlaylistPath + "toto" + "/" + name); // TODO: don't hardcode the username
+            Directory.CreateDirectory(PlaylistPath + username + "/" + name);
             this._tree.Add(name, new List<string>());
             return true;
         }
 
-        public bool removeFolder(string name)
+        public bool removeFolder(string username, string name)
         {
             try
             {
-                Directory.Delete(PlaylistPath + "toto" + "/" + name, true); // TODO: don't hardcode the username
+                Directory.Delete(PlaylistPath + username + "/" + name, true);
                 this._tree.Remove(name);
                 return true;
             }
@@ -45,11 +45,11 @@ namespace MediaPlayer.ViewModel
             }
         }
 
-        public bool AddPlaylistToFolder(string name, string folder)
+        public bool AddPlaylistToFolder(string username, string name, string folder)
         {
             if (this._tree[folder].Contains(name) || !_regexName.Match(name).Success)
                 return false;
-            File.Create(PlaylistPath + "toto" + "/" + folder + "/" + name); // TODO: don't hardcode the username
+            File.Create(PlaylistPath + username + "/" + folder + "/" + name);
             this._tree[folder].Add(name);
             return true;
         }
