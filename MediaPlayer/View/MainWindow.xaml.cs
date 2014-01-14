@@ -31,7 +31,6 @@ namespace MediaPlayer
         private bool _isShuffle = false;
         private bool _fullScreen = false;
         private int _timeDurationSize = 2;
-        private string[] _allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
 
         private WebCam _webcam;
         private CurrentPlaylist _playList;
@@ -399,6 +398,7 @@ namespace MediaPlayer
         private void mediaElementBackground_Drop(object sender, DragEventArgs e)
         {
             string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+            this._playList.addFolder(files);
             this.playList.ItemsSource = this._playList.getPlayList();
             if (mediaElement.Source == null && this._playList.getPlayList().Count() > 0)
             {
