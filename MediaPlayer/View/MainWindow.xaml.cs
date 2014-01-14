@@ -45,6 +45,9 @@ namespace MediaPlayer
             _webcam = new WebCam();
             _playList = new CurrentPlaylist();
             _webcam.InitializeWebCam(ref captureImage);
+
+            audioAnimationMediaElement.Source = new Uri("/Animations/animation1.mp4");
+            this.hideAudioElements();
         }
 
         ~MainWindow()
@@ -130,7 +133,7 @@ namespace MediaPlayer
                     _listIndex++;
                     if (_listIndex >= this._playList.Count())
                         _listIndex = 0;
-                    GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
+                    this.hideAudioElements();
                     mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
                     videoProgressBar.Value = 0;
                 }
@@ -152,7 +155,7 @@ namespace MediaPlayer
                     _listIndex--;
                     if (_listIndex < 0)
                         _listIndex = this._playList.Count() - 1;
-                    GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
+                    hideAudioElements();
                     mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
                     videoProgressBar.Value = 0;
                 }
@@ -166,7 +169,7 @@ namespace MediaPlayer
         private void playMedia()
         {
             this._isPause = false;
-            GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
+            hideAudioElements();
             mediaElement.Play();
             playButton.Background = this.loadImage("../Images/PauseCommu.png");
         }
@@ -184,6 +187,23 @@ namespace MediaPlayer
             playButton.Background = this.loadImage("../Images/PlayCommu.png");
             mediaElement.Stop();
             videoProgressBar.Value = 0;
+        }
+
+        private void displayAudioElements(IMedia currentMedia)
+        {
+            audioAnimationMediaElement.Play();
+            musicTitle.Content = "Title:\t" + currentMedia.Title;
+            musicSinger.Content = "Artist:\t" + currentMedia.Artist;
+            musicAlbum.Content = "Album:\t" + currentMedia.Album;
+            musicGenre.Content = "Genre:\t" + currentMedia.Genre;
+            musicYear.Content = "Year:\t" + currentMedia.Year;
+            GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void hideAudioElements()
+        {
+            audioAnimationMediaElement.Stop();
+            GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void OpenFile_Click(object sender, RoutedEventArgs e)
@@ -375,14 +395,7 @@ namespace MediaPlayer
                     GridProgressBar.Visibility = System.Windows.Visibility.Hidden;
                 IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
                 if (currentMedia.Type == mediaType.AUDIO)
-                {
-                    musicTitle.Content = "Title:\t" + currentMedia.Title;
-                    musicSinger.Content = "Artist:\t" + currentMedia.Artist;
-                    musicAlbum.Content = "Album:\t" + currentMedia.Album;
-                    musicGenre.Content = "Genre:\t" + currentMedia.Genre;
-                    musicYear.Content = "Year:\t" + currentMedia.Year;
-                    GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
-                }
+                    this.displayAudioElements(currentMedia);
             }
             catch
             {
@@ -525,7 +538,8 @@ namespace MediaPlayer
             }
             this._fullScreen = !this._fullScreen;
         }
-private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+
+    private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
             ContextMenu context;

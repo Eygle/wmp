@@ -81,6 +81,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\MediaUsers.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="ViewModel\Events.cs" />
     <Compile Include="View\Helper.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Video.cs" />
@@ -224,6 +225,9 @@
     <Resource Include="Images\muteCommu.png" />
     <Resource Include="Images\pauseCommu.png" />
     <Resource Include="Images\shuffleActiveCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Animations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

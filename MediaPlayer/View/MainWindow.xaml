@@ -65,7 +65,7 @@
     <Grid Background="White" x:Name="grid1">
 
 
-        <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="-1,-1,0,0" VerticalAlignment="Top" Width="693.6" Height="447.4">
+        <TabControl x:Name="Tabulations" Margin="0,0,0,0">
             <TabItem Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True" Foreground="Black" RenderTransformOrigin="0,0.5">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -73,10 +73,11 @@
                         <GradientStop Color="White" Offset="1"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid Background="White" Margin="0,2,0.2,-2.6">
+                <Grid Background="White" Margin="0,2,0.2,2.6">
                     <Rectangle Fill="#FF070303" Margin="0,0,-0.4,90" x:Name="mediaElementBackground" Stroke="Black" Drop="mediaElementBackground_Drop" />
                     <MediaElement LoadedBehavior="Manual" Margin="0,0,2.6,90" x:Name="mediaElement" MediaOpened="mediaElement_MediaOpened" MediaEnded="mediaElement_MediaEnded" MediaFailed="mediaElement_MediaFailed" />
-                    <Grid x:Name="GridMusicInfos" Margin="0,0,0,70" Visibility="Hidden" >
+                    <Grid x:Name="GridMusicInfos" Margin="0,0,0,90" Visibility="Visible" >
+                        <MediaElement x:Name="audioAnimationMediaElement" Margin="0,0,0,0"/>
                         <Label x:Name="musicTitle" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" />
                         <Label x:Name="musicSinger" Content="" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Foreground="White" />
                         <Label x:Name="musicAlbum" Content="" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Foreground="White" />
