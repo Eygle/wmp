@@ -534,18 +534,20 @@ namespace MediaPlayer
             }
             this._fullScreen = !this._fullScreen;
         }
-
         private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
             ContextMenu context;
 
+            //ResourceDictionary tmp = this.treeView1.Resources;
+            //foreach (KeyValuePair<string, int> kv in tmp)
+                //MessageBox.Show(kv.Value.ToString());
             if (item == null)
-                return;
+                context = this.treeView1.FindResource("RootMenu") as ContextMenu;
             else if ((item.Tag as string) == "Playlist")
-                context = this.treeView1.FindResource("PlaylistContext") as ContextMenu;
+                context = this.treeView1.FindResource("PlaylistMenu") as ContextMenu;
             else
-                context = this.treeView1.FindResource("RootContext") as ContextMenu;
+                context = this.treeView1.FindResource("FolderMenu") as ContextMenu;
             context.PlacementTarget = this;
             context.IsOpen = true;
         }
@@ -561,8 +563,9 @@ namespace MediaPlayer
         private void AddPlaylist_Click(object sender, RoutedEventArgs e)
         {
             TreeViewItem item = this.treeView1.Items.GetItemAt(0) as TreeViewItem;
-            item.Items.Add(new TreeViewItem { Header = "new playlist" });
-        }
+            string name = Microsoft.VisualBasic.Interaction.InputBox("Prompt", "Title", "new playlist", 0, 0);
+            item.Items.Add(new TreeViewItem { Header = name });
+        } 
 
         private void CreateUserBtn_Copy_Click(object sender, RoutedEventArgs e)
         {
