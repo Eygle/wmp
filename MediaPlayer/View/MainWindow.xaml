@@ -53,13 +53,16 @@
             <TextBlock TextAlignment="Left" Text="{Binding Path=Title}"/>
         </DataTemplate>
         <DataTemplate x:Key="fileSizeTemplate">
-            <TextBlock TextAlignment="Right" Text="{Binding Path=FileSize}"/>
+            <TextBlock TextAlignment="Center" Text="{Binding Path=FileSize}"/>
         </DataTemplate>
         <DataTemplate x:Key="lengthStringTemplate">
-            <TextBlock TextAlignment="Right" Text="{Binding Path=LengthString}"/>
+            <TextBlock TextAlignment="Center" Text="{Binding Path=LengthString}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="genreTemplate">
+            <TextBlock TextAlignment="Right" Text="{Binding Path=Genre}"/>
         </DataTemplate>
     </Window.Resources>
-    <Grid Background="#FFCECECE" x:Name="grid1">
+    <Grid Background="White" x:Name="grid1">
 
 
         <TabControl x:Name="Tabulations" HorizontalAlignment="Left" Margin="-1,-1,0,0" VerticalAlignment="Top" Width="693.6" Height="447.4">
@@ -77,7 +80,8 @@
                         <Label x:Name="musicTitle" Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" />
                         <Label x:Name="musicSinger" Content="" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Foreground="White" />
                         <Label x:Name="musicAlbum" Content="" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Foreground="White" />
-                        <Label x:Name="musicYear" Content="" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Foreground="White" />
+                        <Label x:Name="musicGenre" Content="" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Foreground="White" />
+                        <Label x:Name="musicYear" Content="" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Foreground="White" />
                     </Grid>
                     <Grid x:Name="GridMediaControl" VerticalAlignment="Bottom" Margin="0,0,0,0">
                         <Grid.ColumnDefinitions>
@@ -99,7 +103,7 @@
 
                         <Grid x:Name="GridProgressBar" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Height="30" Margin="0,0,0,57" Visibility="Hidden">
                             <Label x:Name="currentTimeLabel" Content="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="50"/>
-                            <Slider Height="20" LargeChange="1" Margin="50,5,50,0" Maximum="100" x:Name="videoProgressBar" VerticalAlignment="Top" ValueChanged="videoProgressBar_ValueChanged" Grid.ColumnSpan="2" />
+                            <Slider Height="20" LargeChange="1" Margin="50,5,50,-5" Maximum="100" x:Name="videoProgressBar" VerticalAlignment="Top" ValueChanged="videoProgressBar_ValueChanged" Grid.ColumnSpan="2" />
                             <Label x:Name="totalTimeLabel" Content="" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Top" Width="50" HorizontalContentAlignment="Right"/>
                         </Grid>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="91,0,0,35.8" x:Name="Prev" VerticalAlignment="Bottom" Width="20" Click="prevButton_Click">
@@ -193,7 +197,7 @@
                             </Button.Background>
                         </Button>
 
-                        <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,9.2,0.2" VerticalAlignment="Bottom" Width="278" Height="36" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Grid.Column="1"/>
+                        <Label x:Name="mediaTitle" Content="" HorizontalAlignment="Right" Margin="0,0,9.2,0.2" VerticalAlignment="Bottom" Width="394" Height="36" FontSize="14" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" Grid.Column="1"/>
                         <Button Focusable="False" Height="20" HorizontalAlignment="Left" IsHitTestVisible="True" Margin="49,0,0,9.4" x:Name="openFileButton" VerticalAlignment="Bottom" Width="20" Click="OpenFile_Click" Grid.Column="1" RenderTransformOrigin="0.56,2.19">
                             <Button.BorderBrush>
                                 <RadialGradientBrush>
@@ -274,6 +278,7 @@
                                 <GridViewColumn Width="100" Header="Title" CellTemplate="{StaticResource titleTemplate}" />
                                 <GridViewColumn Width="100" Header="File Size" CellTemplate="{StaticResource fileSizeTemplate}" />
                                 <GridViewColumn Width="100" Header="Time" CellTemplate="{StaticResource lengthStringTemplate}" />
+                                <GridViewColumn Width="100" Header="Time" CellTemplate="{StaticResource genreTemplate}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -326,7 +331,8 @@
                     <TextBox Width="0" Height="0" TabIndex="0"/>
                     <TextBox x:Name="YoutubeLink" Height="22" Margin="10,10,90,0" TextWrapping="Wrap" Text="Insert Youtube URL here" VerticalAlignment="Top" GotFocus="YoutubeLink_GotFocus" LostFocus="YoutubeLink_LostFocus"/>
                     <Button x:Name="YoutubePlayButton" Content="Play" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="72" Height="22" Click="YoutubeButton_Click"/>
-                    <WebBrowser x:Name="YoutubeEmbededPlayer" HorizontalAlignment="Left" Margin="5,42,5,5" VerticalAlignment="Top"/>
+                    <Rectangle Fill="#FF070303" Margin="5,42,5.2,6" x:Name="youtubeBackground" Stroke="Black" />
+                    <WebBrowser x:Name="YoutubeEmbededPlayer" HorizontalAlignment="Left" Margin="5,42,5,5" VerticalAlignment="Top" Visibility="Hidden"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="CamCaptureTab" Header="Camera Capture" GotFocus="CamCaptureTab_GotFocus" LostFocus="CamCaptureTab_LostFocus">
@@ -339,6 +345,23 @@
                 <Grid Background="#FFFFFF" Margin="0,0,0,0">
                     <Image x:Name="captureImage" Margin="10,10,10,40" VerticalAlignment="Bottom" />
                     <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Center" Margin="0,0,0,5" Width="85" Height="30" VerticalAlignment="Bottom" Click="saveButton_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="SettingsTab" Header="Settings" >
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="#FFFFFF" Margin="0,0,0,0">
+                    <Label x:Name="userNameLbl" Content="User Name:" HorizontalAlignment="Left" Margin="64,70,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="userNameTbx" HorizontalAlignment="Left" Height="23" Margin="141,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Label x:Name="passwordLbl" Content="Password:" HorizontalAlignment="Left" Margin="64,101,0,0" VerticalAlignment="Top"/>
+                    <TextBox HorizontalAlignment="Left" Height="23" Margin="141,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Label x:Name="LoginLbl" Content="Login" HorizontalAlignment="Left" Margin="177,28,0,0" VerticalAlignment="Top"/>
+                    <Button Content="" HorizontalAlignment="Left" Margin="162,142,0,0" VerticalAlignment="Top" Width="75" IsCancel="True"/>
+
                 </Grid>
             </TabItem>
         </TabControl>

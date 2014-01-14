@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Serialization;
+using MediaPlayer;
 
 namespace MediaPlayer.ViewModel
 {
@@ -124,7 +125,9 @@ namespace MediaPlayer.ViewModel
         private void addToPlaylist(List<IMedia> items)
         {
             foreach (IMedia item in items)
+            {
                 this._playlist.add(item);
+            }
             this.resetPlayList();
         }
     }

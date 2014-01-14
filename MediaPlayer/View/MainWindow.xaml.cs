@@ -46,6 +46,10 @@ namespace MediaPlayer
             _webcam = new WebCam();
             _playList = new CurrentPlaylist();
             _webcam.InitializeWebCam(ref captureImage);
+            TreeViewItem it = new TreeViewItem();
+            it.Name = "currentPlaylist";
+            it.Header = "Current Playlist";
+            treeView1.Items.Add(it);
         }
 
         ~MainWindow()
@@ -68,16 +72,6 @@ namespace MediaPlayer
             _timer.Interval = TimeSpan.FromMilliseconds(1000);
             _timer.Tick += new EventHandler(synchronizeProgressBar);
             _timer.Start();
-        }
-
-        private string getName(string path)
-        {
-            int lastSlash = path.LastIndexOf('/'), lastPoint = path.LastIndexOf('.');
-            if (lastPoint != -1 && lastPoint < path.Length)
-                path = path.Substring(0, lastPoint);
-            if (lastSlash != -1 && lastSlash + 1 < path.Length)
-                path = path.Substring(lastSlash + 1);
-            return path;
         }
 
         private string formatTime(System.TimeSpan time)
@@ -141,6 +135,7 @@ namespace MediaPlayer
                     _listIndex++;
                     if (_listIndex >= this._playList.Count())
                         _listIndex = 0;
+                    GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                     mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
                     videoProgressBar.Value = 0;
                 }
@@ -162,6 +157,7 @@ namespace MediaPlayer
                     _listIndex--;
                     if (_listIndex < 0)
                         _listIndex = this._playList.Count() - 1;
+                    GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                     mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
                     videoProgressBar.Value = 0;
                 }
@@ -175,6 +171,7 @@ namespace MediaPlayer
         private void playMedia()
         {
             this._isPause = false;
+            GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
             mediaElement.Play();
             playButton.Background = this.loadImage("../Images/PauseCommu.png");
         }
@@ -210,6 +207,8 @@ namespace MediaPlayer
                         mediaElement.Source = new Uri(this._playList.getMediaPath(0));
                         this.playMedia();
                     }
+                    this._isShuffle = false;
+                    Random.Background = this.loadImage("../Images/ShuffleCommu.png");
                 }
                 catch
                 {
@@ -234,6 +233,8 @@ namespace MediaPlayer
                         mediaElement.Source = new Uri(this._playList.getMediaPath(0));
                         this.playMedia();
                     }
+                    this._isShuffle = false;
+                    Random.Background = this.loadImage("../Images/ShuffleCommu.png");
                 }
                 catch
                 {
@@ -340,7 +341,7 @@ namespace MediaPlayer
 
         private void Random_Click(object sender, RoutedEventArgs e)
         {
-            this._isShuffle = this._isShuffle ? false : true;
+            this._isShuffle = !this._isShuffle;
             if (this._isShuffle)
             {
                 this._playList.shuffle();
@@ -373,7 +374,6 @@ namespace MediaPlayer
                 this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
                 this._timeDurationSize = total.Hours > 0 ? 3 : 2;
                 mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);
-                GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                 if (mediaElement.HasAudio || mediaElement.HasVideo)
                     GridProgressBar.Visibility = System.Windows.Visibility.Visible;
                 else
@@ -384,6 +384,7 @@ namespace MediaPlayer
                     musicTitle.Content = "Title:\t" + currentMedia.Title;
                     musicSinger.Content = "Artist:\t" + currentMedia.Artist;
                     musicAlbum.Content = "Album:\t" + currentMedia.Album;
+                    musicGenre.Content = "Genre:\t" + currentMedia.Genre;
                     musicYear.Content = "Year:\t" + currentMedia.Year;
                     GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
                 }
@@ -399,12 +400,24 @@ namespace MediaPlayer
             MessageBox.Show(e.ErrorException.Message);
         }
 
+        private void mediaElementBackground_Drop(object sender, DragEventArgs e)
+        {
+            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+            this._playList.addFolder(files);
+            this.playList.ItemsSource = this._playList.getPlayList();
+            if (!this._isPause)
+            {
+                mediaElement.Source = new Uri(this._playList.getMediaPath(this._listIndex));
+                this.playMedia();
+            }
+        }
+
         void synchronizeProgressBar(object sender, EventArgs e)
         {
             if ((mediaElement.HasVideo || mediaElement.HasAudio) && !_isPause)
             {
                 double pos = mediaElement.Position.TotalSeconds;
-                if (pos > videoProgressBar.Value)
+                if (pos > videoProgressBar.Value || pos == 0)
                     videoProgressBar.Value = pos;
                 this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, (int)mediaElement.Position.TotalSeconds));
             }
@@ -432,10 +445,12 @@ namespace MediaPlayer
 
         private void SetPlayList(string dir, string[] str)
         {
+            System.Console.WriteLine("Set playlist");
             _pathList.Clear();
             for (int i = 0; i < str.Length; ++i)
+            {
                 _pathList.Add(dir + str[i]);
-            //this.playList.ItemsSource = _pathList;
+            }
             this.playList.ItemsSource = this._playList.getPlayList();
         }
 
@@ -450,6 +465,7 @@ namespace MediaPlayer
             {
                 url = this.formatUrl(url);
                 YoutubeEmbededPlayer.Navigate(this.formatUrl(url));
+                this.YoutubeEmbededPlayer.Visibility = Visibility.Visible;
             }
             else
             {
@@ -469,6 +485,7 @@ namespace MediaPlayer
             if (YoutubeLink.Text == "")
                 YoutubeLink.Text = "Insert Youtube URL here";
             YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
+            this.YoutubeEmbededPlayer.Visibility = Visibility.Hidden;
         }
 
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
@@ -495,29 +512,19 @@ namespace MediaPlayer
             _webcam.Stop();
         }
 
-        private void mediaElementBackground_Drop(object sender, DragEventArgs e)
-        {
-            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
-            this._playList.addFolder(files);
-            this.playList.ItemsSource = this._playList.getPlayList();
-            if (!this._isPause)
-            {
-                mediaElement.Source = new Uri(this._playList.getMediaPath(this._listIndex));
-                this.playMedia();
-            }
-        }
-
         private void FullScreen_Click(object sender, RoutedEventArgs e)
         {
             if (!this._fullScreen)
             {
                 this.WindowStyle = WindowStyle.None;
                 this.WindowState = WindowState.Maximized;
+                this.FullScreen.Background = this.loadImage("../Images/fullScreenCommu.png");
             }
             else
             {
                 this.WindowStyle = WindowStyle.SingleBorderWindow;
                 this.WindowState = WindowState.Normal;
+                this.FullScreen.Background = this.loadImage("../Images/fullScreenCommu.png");
             }
             this._fullScreen = !this._fullScreen;
         }
