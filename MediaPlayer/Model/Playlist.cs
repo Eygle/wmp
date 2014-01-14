@@ -18,7 +18,8 @@ namespace MediaPlayer.Model
         public long _totalLength;
         [XmlElement(ElementName = "NumberElements")]
         public int _size;
-        [XmlElement(ElementName = "Content")]
+        //[XmlElement(ElementName = "Content")]
+        [XmlIgnore()]
         public List<IMedia> _content;
         [XmlIgnore()]
         public string path;
