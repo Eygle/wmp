@@ -90,7 +90,7 @@ namespace MediaPlayer.ViewModel
                 }
                 User user = new User(userName, hash);
                 this._users.add(user);
-
+                this.save();
                 if (!Directory.Exists(PlaylistManager.PlaylistPath + userName))
                     Directory.CreateDirectory(PlaylistManager.PlaylistPath + userName);
                 MessageBox.Show("Your account has been saved, please login.", "Login", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
@@ -110,6 +110,7 @@ namespace MediaPlayer.ViewModel
                 return;
             }
             this._users.add(user);
+            this.save();
             if (!Directory.Exists(PlaylistManager.PlaylistPath + user.UserName))
                 Directory.CreateDirectory(PlaylistManager.PlaylistPath + user.UserName);
         }
