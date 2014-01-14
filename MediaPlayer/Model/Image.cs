@@ -79,9 +79,14 @@ namespace MediaPlayer.Model
             int mult = 0;
             long res = 0;
             string[] tmp = str.Split(' ');
+            if (tmp.Length < 2)
+                tmp = str.Split(' ');
+            if (tmp.Length < 2)
+                return 0;
             string sizeScale = tmp[1];
             float nbr = Single.Parse(tmp[0]);
-            mult = this._sizesRefs[sizeScale.ToLower()];
+            if (this._sizesRefs.ContainsKey(sizeScale.ToLower()))
+                mult = this._sizesRefs[sizeScale.ToLower()];
             res += (long)(mult * nbr);
             return res;
         }
