@@ -94,7 +94,7 @@ namespace MediaPlayer.ViewModel
 
             this._tree.Clear();
             res.Add(new TreeViewItem { Header = "default playlist", Tag = "LibraryItem" });
-            if (user.UserName != "")
+            if (user != null)
             {
                 string[] dirs = Directory.GetDirectories(PlaylistPath + user.UserName);
 
