@@ -15,7 +15,7 @@ namespace MediaPlayer.ViewModel
     class CurrentUsers
     {
         private MediaUsers _users;
-        private User _loggedInUser;
+        private User _loggedInUser = null;
 
         public CurrentUsers()
         {
