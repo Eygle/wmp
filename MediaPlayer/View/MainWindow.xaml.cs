@@ -541,18 +541,22 @@ namespace MediaPlayer
         private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
-            ContextMenu context;
 
-            if ((item.Tag as string) == "Playlist")
-                context = this.treeView1.FindResource("PlaylistMenu") as ContextMenu;
-            else if ((item.Tag as string) == "Folder")
-                context = this.treeView1.FindResource("FolderMenu") as ContextMenu;
-            else
-                context = this.treeView1.FindResource("RootMenu") as ContextMenu;
-            if (item != null && (item.Tag as string) != "PlaylistRoot")
+            if (item != null)
             {
-                context.PlacementTarget = this;
-                context.IsOpen = true;
+                ContextMenu context = null;
+
+                if ((item.Tag as string) == "Playlist")
+                    context = this.treeView1.FindResource("PlaylistMenu") as ContextMenu;
+                else if ((item.Tag as string) == "PlaylistFolder")
+                    context = this.treeView1.FindResource("FolderMenu") as ContextMenu;
+                else if ((item.Tag as string) == "PlaylistRoot")
+                    context = this.treeView1.FindResource("RootMenu") as ContextMenu;
+                if (context != null)
+                {
+                    context.PlacementTarget = this;
+                    context.IsOpen = true;
+                }
             }
         }
 
