@@ -292,7 +292,7 @@
                     <TreeView Margin="7,5,5,5.4" x:Name="treeView1" Grid.ColumnSpan="3" MouseRightButtonUp="treeView1_MouseRightButtonUp" >
                         <TreeView.Resources>
                             <ContextMenu x:Key ="RootMenu">
-                                <MenuItem Header="Add folder">
+                                <MenuItem Header="Add folder" Click="AddFolder_Click">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/addFolder.png" />
                                     </MenuItem.Icon>
@@ -309,16 +309,16 @@
                                         <Image Source="../Images/AddPlaylistCommu.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Reload playlists">
+                                <MenuItem Header="Remove folder">
                                     <MenuItem.Icon>
-                                        <Image Source="../Images/LoopAllCommu.png" />
+                                        <Image Source="../Images/removeFolder.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
                             <ContextMenu x:Key ="PlaylistMenu">
                                 <MenuItem Header="Select">
                                     <MenuItem.Icon>
-                                        <Image Source="../Images/fullscreenCommu.png" />
+                                        <Image Source="../Images/selectCommu.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="Rename">
@@ -334,9 +334,7 @@
                             </ContextMenu>
                         </TreeView.Resources>
                         <TreeViewItem x:Name="playlists" Header="Playlists" Tag="PlaylistRoot">
-                            <TreeViewItem Header="Common" Tag="PlaylistFolder">
-                                <TreeViewItem Header="default playlist" Tag="Playlist"></TreeViewItem>
-                            </TreeViewItem>
+                            <TreeViewItem Header="default playlist" Tag="Playlist"></TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem x:Name="Library" Header="Library" Tag="LibraryFolder">
                             <TreeViewItem Header="Audio" Tag="LibraryItem"></TreeViewItem>

@@ -245,6 +245,12 @@
     <Resource Include="Images\imageFileCommu.ico" />
     <Resource Include="Images\videoFileCommu.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\selectCommu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\removeFolder.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
