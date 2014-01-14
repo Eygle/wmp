@@ -22,8 +22,19 @@ namespace MediaPlayer.Model
         private string _fileSize;
         private string _artist;
         private string _year;
+        private long    _size;
+
         private mediaType _type;
         private BitmapImage _icon;
+
+        private Dictionary<string, int> _sizesRefs = new Dictionary<string, int>() { 
+            {"ko", 1000},
+            {"mo", 1000000},
+            {"go", 1000000000},
+            {"kb", 1000},
+            {"mb", 1000000},
+            {"gb", 1000000000}
+        };
 
         public Video() { }
 
@@ -64,6 +75,25 @@ namespace MediaPlayer.Model
             int i = 0;
             this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
             this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/video.ico"));
+            if (this._fileSize != null && this._fileSize != "")
+                this._size = getSizeFromString(this._fileSize);
+        }
+
+        public long getSizeFromString(string str)
+        {
+            int mult = 0;
+            long res = 0;
+            string[] tmp = str.Split(' ');
+            if (tmp.Length < 2)
+                tmp = str.Split(' ');
+            if (tmp.Length < 2)
+                return 0;
+            string sizeScale = tmp[1];
+            float nbr = Single.Parse(tmp[0]);
+            if (this._sizesRefs.ContainsKey(sizeScale.ToLower()))
+                mult = this._sizesRefs[sizeScale.ToLower()];
+            res += (long)(mult * nbr);
+            return res;
         }
 
         public string LengthString
@@ -99,6 +129,12 @@ namespace MediaPlayer.Model
         {
             get { return this._fileSize; }
             set { this._fileSize = value; }
+        }
+
+        public long Size
+        {
+            get { return this._size; }
+            set { this._size = value; }
         }
 
         public string Artist

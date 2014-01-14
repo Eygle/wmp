@@ -598,5 +598,18 @@ namespace MediaPlayer
         {
             MessageBox.Show("fail to open animation");
         }
+
+        void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader headerClicked = e.OriginalSource as GridViewColumnHeader;
+            if (headerClicked != null)
+            {
+                if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
+                {
+                    string header = headerClicked.Column.Header as string;
+                    _playList.sortPlaylist(header);
+                }
+            }
+        }
     }
 }
