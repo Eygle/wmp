@@ -46,10 +46,6 @@ namespace MediaPlayer
             _webcam = new WebCam();
             _playList = new CurrentPlaylist();
             _webcam.InitializeWebCam(ref captureImage);
-            TreeViewItem it = new TreeViewItem();
-            it.Name = "currentPlaylist";
-            it.Header = "Current Playlist";
-            treeView1.Items.Add(it);
         }
 
         ~MainWindow()
