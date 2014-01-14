@@ -20,11 +20,13 @@ namespace MediaPlayer.ViewModel
         public CurrentUsers()
         {
             this._users = new MediaUsers();
+            load();
         }
 
         public CurrentUsers(CurrentUsers o)
         {
             this._users = o._users;
+            load();
         }
 
         public void save()
@@ -39,7 +41,7 @@ namespace MediaPlayer.ViewModel
             }
             catch
             {
-                MessageBox.Show("Failed to save User!");
+                MessageBox.Show("Failed to save User!", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
             }
         }
 
@@ -64,6 +66,9 @@ namespace MediaPlayer.ViewModel
                 }
                 User user = new User(userName, hash);
                 this._users.add(user);
+
+                if (!Directory.Exists(userName))
+                    Directory.CreateDirectory(userName);
             }
         }
 
@@ -93,12 +98,12 @@ namespace MediaPlayer.ViewModel
             using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
             {
                 string hash = GetMd5Hash(md5Hash, password);
-                if (!this._users.getUsers().Any(u => u.UserName ==  userName && u.Password == password))
+                if (!this._users.getUsers().Any(u => u.UserName ==  userName && u.Password == hash))
                 {
                     MessageBox.Show("Error: UserName or password is incorrect.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                     return false;
                 }
-                User user = this._users.getUsers().Select(u => u).Where(u => u.UserName == userName && u.Password == password).First();
+                User user = this._users.getUsers().Select(u => u).Where(u => u.UserName == userName && u.Password == hash).First();
                 this._loggedInUser = user;
                 return true;
             }
