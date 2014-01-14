@@ -70,6 +70,16 @@ namespace MediaPlayer.ViewModel
 
         public void addUser(string userName, string password)
         {
+            if (userName.Count() < 6)
+            {
+                MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                return;
+            }
+            if (password.Count() < 6)
+            {
+                MessageBox.Show("Your Password must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                return;
+            }
             using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
             {
                 string hash = GetMd5Hash(md5Hash, password);
@@ -89,6 +99,11 @@ namespace MediaPlayer.ViewModel
 
         public void addUser(User user)
         {
+            if (user.UserName.Count() < 6)
+            {
+                MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                return;
+            }
             if (this._users.getUsers().Any(u => u.UserName == user.UserName))
             {
                 MessageBox.Show("Error: UserName already exists.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
@@ -112,6 +127,16 @@ namespace MediaPlayer.ViewModel
 
         public bool checkUser(string userName, string password)
         {
+            if (userName.Count() < 6)
+            {
+                MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                return false;
+            }
+            if (password.Count() < 6)
+            {
+                MessageBox.Show("Your Password must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                return false;
+            }
             using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
             {
                 string hash = GetMd5Hash(md5Hash, password);
@@ -128,6 +153,11 @@ namespace MediaPlayer.ViewModel
 
         public bool checkUser(User user)
         {
+            if (user.UserName.Count() < 6)
+            {
+                MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                return false;
+            }
             if (!this._users.getUsers().Contains(user))
                 return false;
             this._loggedInUser = user;
@@ -147,6 +177,11 @@ namespace MediaPlayer.ViewModel
 
         public void changeUserName(string newUserName)
         {
+            if (newUserName.Count() < 6)
+            {
+                MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                return;
+            }
             User user = this._users.getUsers().Select(u => u).Where(u => u.UserName == this._loggedInUser.UserName).First();
             this._users.getUsers().Remove(user);
             if (MessageBox.Show("Would you like to keep your playlists?", "Name Change", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -158,6 +193,11 @@ namespace MediaPlayer.ViewModel
 
         public void changePassword(string passwordOne, string passwordTwo, string newPassword)
         {
+            if (passwordOne.Count() < 6 || passwordTwo.Count() < 6 || newPassword.Count() < 6)
+            {
+                MessageBox.Show("Your password must be of at least 6 characters.", "Password Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                return;
+            }
             using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
             {
                 string hashOne = GetMd5Hash(md5Hash, passwordOne);
