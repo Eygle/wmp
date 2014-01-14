@@ -81,14 +81,14 @@
     </ApplicationDefinition>
     <Compile Include="Model\MediaUsers.cs" />
     <Compile Include="Model\User.cs" />
-    <Compile Include="ViewModel\Events.cs" />
+    <Compile Include="ViewModel\CurrentPlaylist.cs" />
     <Compile Include="View\Helper.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Video.cs" />
     <Compile Include="Model\Audio.cs" />
     <Compile Include="Model\IMedia.cs" />
     <Compile Include="Model\Playlist.cs" />
-    <Compile Include="ViewModel\CurrentPlaylist.cs" />
+    <Compile Include="ViewModel\CurrentUsers.cs" />
     <Compile Include="ViewModel\MediaFactory.cs" />
     <Compile Include="ViewModel\WebCam.cs" />
     <Page Include="View\MainWindow.xaml">
@@ -228,6 +228,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Animations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\mediaplayer.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
