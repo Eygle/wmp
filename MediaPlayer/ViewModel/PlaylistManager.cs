@@ -56,6 +56,7 @@ namespace MediaPlayer.ViewModel
         private void    loadPlaylist(string path)
         {
             Playlist pls;
+            path = path.Replace("\\", "/");
             try
             {
                 pls = PlaylistManager.load(path);
@@ -148,6 +149,7 @@ namespace MediaPlayer.ViewModel
             List<TreeViewItem> res = new List<TreeViewItem>();
 
             this._tree.Clear();
+            this._playlists.Clear();
             res.Add(new TreeViewItem { Header = "default playlist", Tag = "LibraryItem" });
             if (user != null)
             {
@@ -165,6 +167,7 @@ namespace MediaPlayer.ViewModel
                     {
                         string pls = Path.GetFileName(file);
                         this._tree[folder].Add(pls);
+                        this.loadPlaylist(file);
                         item.Items.Add(new TreeViewItem { Header = pls, Tag = "Playlist" });
                     }
                 }

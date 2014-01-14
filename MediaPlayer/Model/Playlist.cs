@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaPlayer.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,15 +18,14 @@ namespace MediaPlayer.Model
         public long _totalLength;
         [XmlElement(ElementName = "NumberElements")]
         public int _size;
-        //[XmlElement(ElementName = "Content")]
-        [XmlIgnore()]
+        [XmlElement(ElementName = "Content")]
         public List<IMedia> _content;
         [XmlIgnore()]
         public string path;
 
         public Playlist()
         {
-            string path = "Playlist/default";
+            string path = PlaylistManager.PlaylistPath + "default";
             this.path = path;
             this._content = new List<IMedia>();
         }
