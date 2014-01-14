@@ -584,16 +584,17 @@ namespace MediaPlayer
         {
             if (this._users.checkUser(this.userNameTbx.Text, this.passwordPbx.Password))
             {
-                this.LoginBtn.Visibility = Visibility.Hidden;
-                this.LogoutBtn.Visibility = Visibility.Visible;
+                this.ProfileUserNameTBx.Text = this._users.getLoggedUser().UserName;
+                this.Login.Visibility = Visibility.Hidden;
+                this.Profile.Visibility = Visibility.Visible;
             }
         }
 
         private void LogoutBtn_Click(object sender, RoutedEventArgs e)
         {
             this._users.logoutUser();
-            this.LogoutBtn.Visibility = Visibility.Hidden;
-            this.LoginBtn.Visibility = Visibility.Visible;
+            this.Profile.Visibility = Visibility.Hidden;
+            this.Login.Visibility = Visibility.Visible;
         }
 
         private void audioAnimationMediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
@@ -646,6 +647,17 @@ namespace MediaPlayer
                 e.Handled = true;
                 mediaTab.Focus();
             }
+        }
+
+        private void ChangeUserName_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("If you change your UserName all of your playlists will be lost!\nDo you want to continue?", "Changing User Name Warning", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
+                this._users.changeUserName(this.ProfileUserNameTBx.Text);
+        }
+
+        private void ChangeUserName_Copy_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

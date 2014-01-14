@@ -83,6 +83,7 @@ namespace MediaPlayer.ViewModel
 
                 if (!Directory.Exists(userName))
                     Directory.CreateDirectory(userName);
+                MessageBox.Show("Your account has been saved, please login.", "Login", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
             }
         }
 
@@ -94,6 +95,8 @@ namespace MediaPlayer.ViewModel
                 return;
             }
             this._users.add(user);
+            if (!Directory.Exists(user.UserName))
+                Directory.CreateDirectory(user.UserName);
         }
 
         public void removeUser(string userName, string password)
@@ -128,6 +131,7 @@ namespace MediaPlayer.ViewModel
             if (!this._users.getUsers().Contains(user))
                 return false;
             this._loggedInUser = user;
+            MessageBox.Show("Your have successfully logged in.", "Login", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
             return true;
         }
 
@@ -139,6 +143,15 @@ namespace MediaPlayer.ViewModel
         public void logoutUser()
         {
             this._loggedInUser = null;
+        }
+
+        public void changeUserName(string newUserName)
+        {
+            User user = this._users.getUsers().Select(u => u).Where(u => u.UserName == this._loggedInUser.UserName).First();
+            this._users.getUsers().Remove(user);
+            user.UserName = newUserName;
+            this.addUser(user);
+            MessageBox.Show("Your UserName as been successfully changed.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
         }
 
         private static string GetMd5Hash(System.Security.Cryptography.MD5 md5Hash, string input)
