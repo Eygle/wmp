@@ -57,6 +57,11 @@ namespace MediaPlayer.ViewModel
             using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
             {
                 string hash = GetMd5Hash(md5Hash, password);
+                if (this._users.getUsers().Any(u => u.UserName == userName))
+                {
+                    MessageBox.Show("Error: UserName already exists.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
+                    return;
+                }
                 User user = new User(userName, hash);
                 this._users.add(user);
             }
@@ -64,6 +69,11 @@ namespace MediaPlayer.ViewModel
 
         public void addUser(User user)
         {
+            if (this._users.getUsers().Any(u => u.UserName == user.UserName))
+            {
+                MessageBox.Show("Error: UserName already exists.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
+                return;
+            }
             this._users.add(user);
         }
 
@@ -83,9 +93,12 @@ namespace MediaPlayer.ViewModel
             using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
             {
                 string hash = GetMd5Hash(md5Hash, password);
-                User user = new User(userName, password);
-                if (!this._users.getUsers().Contains(user))
+                if (!this._users.getUsers().Any(u => u.UserName ==  userName && u.Password == password))
+                {
+                    MessageBox.Show("Error: UserName or password is incorrect.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                     return false;
+                }
+                User user = this._users.getUsers().Select(u => u).Where(u => u.UserName == userName && u.Password == password).First();
                 this._loggedInUser = user;
                 return true;
             }

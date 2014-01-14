@@ -74,7 +74,7 @@ namespace MediaPlayer.Model
             long[] multipliers = new long[] { 3600, 60, 1};
             int i = 0;
             this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
-            this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/video.ico"));
+            this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/videoFileCommu.ico"));
             if (this._fileSize != null && this._fileSize != "")
                 this._size = getSizeFromString(this._fileSize);
         }

@@ -507,6 +507,7 @@ namespace MediaPlayer
 
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
+            _webcam.InitializeWebCam(ref captureImage);
             _webcam.Start();
             _webcam.Continue();
         }
@@ -576,8 +577,6 @@ namespace MediaPlayer
                 this.LoginBtn.Visibility = Visibility.Hidden;
                 this.LogoutBtn.Visibility = Visibility.Visible;
             }
-            else
-                MessageBox.Show("Failed to Login!");
         }
 
         private void LogoutBtn_Click(object sender, RoutedEventArgs e)

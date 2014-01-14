@@ -69,7 +69,7 @@ namespace MediaPlayer.Model
             this._fileSize = fileProps[1].Value;
             this._genre = null;
             this._type = mediaType.IMAGE;
-            this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/photo.ico"));
+            this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/imageFileCommu.ico"));
             if (this._fileSize != null && this._fileSize != "")
                 this._size = getSizeFromString(this._fileSize);
         }
