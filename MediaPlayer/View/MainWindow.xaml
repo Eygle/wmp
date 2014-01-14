@@ -284,7 +284,19 @@
                     </ListView>
                     <TreeView Margin="7,5,5,5.4" x:Name="treeView1" Grid.ColumnSpan="3" MouseRightButtonUp="treeView1_MouseRightButtonUp" >
                         <TreeView.Resources>
-                            <ContextMenu x:Key ="RootContext" Name="rootMenu">
+                            <ContextMenu x:Key ="RootMenu" Name="rootMenu">
+                                <MenuItem Header="Add folder">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Images/LoopAllCommu.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Reload all">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Images/LoopAllCommu.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                            <ContextMenu x:Key ="FolderMenu" Name="folderMenu">
                                 <MenuItem Header="Add playlist" Click="AddPlaylist_Click">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/LoopAllCommu.png" />
@@ -296,7 +308,12 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
-                            <ContextMenu x:Key ="PlaylistContext" Name="PlaylistMenu">
+                            <ContextMenu x:Key ="PlaylistMenu" Name="playlistMenu">
+                                <MenuItem Header="Select">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Images/LoopAllCommu.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Header="Add file(s)">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/LoopAllCommu.png" />

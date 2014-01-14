@@ -44,6 +44,7 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PresentationFramework.Aero">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -81,6 +82,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\MediaUsers.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="ViewModel\PlaylistManager.cs" />
     <Compile Include="View\Helper.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Video.cs" />
