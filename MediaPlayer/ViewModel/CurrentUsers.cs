@@ -83,6 +83,7 @@ namespace MediaPlayer.ViewModel
 
                 if (!Directory.Exists(PlaylistManager.PlaylistPath + userName))
                     Directory.CreateDirectory(PlaylistManager.PlaylistPath + userName);
+                MessageBox.Show("Your account has been saved, please login.", "Login", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
             }
         }
 
@@ -94,6 +95,8 @@ namespace MediaPlayer.ViewModel
                 return;
             }
             this._users.add(user);
+            if (!Directory.Exists(PlaylistManager.PlaylistPath + user.UserName))
+                Directory.CreateDirectory(PlaylistManager.PlaylistPath + user.UserName);
         }
 
         public void removeUser(string userName, string password)
@@ -128,6 +131,7 @@ namespace MediaPlayer.ViewModel
             if (!this._users.getUsers().Contains(user))
                 return false;
             this._loggedInUser = user;
+            MessageBox.Show("Your have successfully logged in.", "Login", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
             return true;
         }
 
@@ -139,6 +143,37 @@ namespace MediaPlayer.ViewModel
         public void logoutUser()
         {
             this._loggedInUser = null;
+        }
+
+        public void changeUserName(string newUserName)
+        {
+            User user = this._users.getUsers().Select(u => u).Where(u => u.UserName == this._loggedInUser.UserName).First();
+            this._users.getUsers().Remove(user);
+            if (MessageBox.Show("Would you like to keep your playlists?", "Name Change", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                Directory.Move(user.UserName, newUserName);
+            user.UserName = newUserName;
+            this.addUser(user);
+            MessageBox.Show("Your UserName as been successfully changed.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+        }
+
+        public void changePassword(string passwordOne, string passwordTwo, string newPassword)
+        {
+            using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
+            {
+                string hashOne = GetMd5Hash(md5Hash, passwordOne);
+                string hashTwo = GetMd5Hash(md5Hash, passwordTwo);
+                string hashNew = GetMd5Hash(md5Hash, newPassword);
+                if (hashOne != hashTwo)
+                {
+                    MessageBox.Show("Password missmatch!", "Password Change", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.None);
+                    return;
+                }
+                User user = this._users.getUsers().Select(u => u).Where(u => u.UserName == this._loggedInUser.UserName).First();
+                this._users.getUsers().Remove(user);
+                user.Password = hashNew;
+                this.addUser(user);
+                MessageBox.Show("Your Password as been successfully changed.", "Password Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+            }
         }
 
         private static string GetMd5Hash(System.Security.Cryptography.MD5 md5Hash, string input)
