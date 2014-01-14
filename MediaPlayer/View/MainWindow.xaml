@@ -332,6 +332,13 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
+                            <ContextMenu x:Key ="LibraryItemMenu">
+                                <MenuItem Header="Select">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Images/selectCommu.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
                         </TreeView.Resources>
                         <TreeViewItem x:Name="playlists" Header="Playlists" Tag="PlaylistRoot">
                             <TreeViewItem Header="default playlist" Tag="Playlist"></TreeViewItem>

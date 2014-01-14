@@ -551,7 +551,9 @@ namespace MediaPlayer
                 ContextMenu context = null;
 
                 item.IsSelected = true;
-                if ((item.Tag as string) == "Playlist")
+                if ((item.Tag as string) == "LibraryItem")
+                    context = this.treeView1.FindResource("LibraryItemMenu") as ContextMenu;
+                else if ((item.Tag as string) == "Playlist")
                     context = this.treeView1.FindResource("PlaylistMenu") as ContextMenu;
                 else if ((item.Tag as string) == "PlaylistFolder")
                     context = this.treeView1.FindResource("FolderMenu") as ContextMenu;
