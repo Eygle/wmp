@@ -319,11 +319,6 @@
                                         <Image Source="../Images/LoopAllCommu.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Add file(s)">
-                                    <MenuItem.Icon>
-                                        <Image Source="../Images/LoopAllCommu.png" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
                                 <MenuItem Header="Rename">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/LoopAllCommu.png" />
@@ -336,7 +331,7 @@
                                 </MenuItem>
                             </ContextMenu>
                         </TreeView.Resources>
-                        <TreeViewItem x:Name="playlists" Header="Playlists" Tag="Root">
+                        <TreeViewItem x:Name="playlists" Header="Playlists" Tag="Folder">
                             <TreeViewItem Header="default" Tag="Playlist"></TreeViewItem>
                         </TreeViewItem>
                     </TreeView>

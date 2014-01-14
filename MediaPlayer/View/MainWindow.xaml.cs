@@ -35,6 +35,7 @@ namespace MediaPlayer
         private WebCam _webcam;
         private CurrentPlaylist _playList;
         private CurrentUsers _users;
+        private PlaylistManager _playlistManager;
 
         private System.Windows.Threading.DispatcherTimer _timer = new System.Windows.Threading.DispatcherTimer();
 
@@ -419,6 +420,7 @@ namespace MediaPlayer
                 this.playMedia();
             }
             this._isShuffle = false;
+            Random.Background = this.loadImage("../Images/ShuffleCommu.png");
         }
 
         void synchronizeProgressBar(object sender, EventArgs e)
@@ -543,15 +545,12 @@ namespace MediaPlayer
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
             ContextMenu context;
 
-            //ResourceDictionary tmp = this.treeView1.Resources;
-            //foreach (KeyValuePair<string, int> kv in tmp)
-                //MessageBox.Show(kv.Value.ToString());
-            if (item == null)
-                context = this.treeView1.FindResource("RootMenu") as ContextMenu;
-            else if ((item.Tag as string) == "Playlist")
+            if (item != null && (item.Tag as string) == "Playlist")
                 context = this.treeView1.FindResource("PlaylistMenu") as ContextMenu;
-            else
+            else if (item != null && (item.Tag as string) == "Folder")
                 context = this.treeView1.FindResource("FolderMenu") as ContextMenu;
+            else
+                context = this.treeView1.FindResource("RootMenu") as ContextMenu;
             context.PlacementTarget = this;
             context.IsOpen = true;
         }
