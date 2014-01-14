@@ -49,6 +49,7 @@ namespace MediaPlayer
             _users = new CurrentUsers();
             _webcam.InitializeWebCam(ref captureImage);
             this.hideAudioElements();
+            this._playlistManager = new PlaylistManager();
         }
 
         ~MainWindow()
@@ -121,6 +122,13 @@ namespace MediaPlayer
 
         // MEDIA PLAYER
 
+        private void loadAndPlayMedia()
+        {
+            this.hideAudioElements();
+            mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
+            videoProgressBar.Value = 0;
+        }
+        
         private void goNextMedia()
         {
             if (_listIndex >= 0 && _listIndex < this._playList.Count())
@@ -132,9 +140,7 @@ namespace MediaPlayer
                     _listIndex++;
                     if (_listIndex >= this._playList.Count())
                         _listIndex = 0;
-                    this.hideAudioElements();
-                    mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
-                    videoProgressBar.Value = 0;
+                    this.loadAndPlayMedia();
                 }
                 catch
                 {
@@ -154,9 +160,7 @@ namespace MediaPlayer
                     _listIndex--;
                     if (_listIndex < 0)
                         _listIndex = this._playList.Count() - 1;
-                    hideAudioElements();
-                    mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
-                    videoProgressBar.Value = 0;
+                    this.loadAndPlayMedia();
                 }
                 catch
                 {
@@ -561,8 +565,11 @@ namespace MediaPlayer
         {
             TreeViewItem item = this.treeView1.Items.GetItemAt(0) as TreeViewItem;
             string name = Microsoft.VisualBasic.Interaction.InputBox("Prompt", "Title", "new playlist", 0, 0);
-            item.Items.Add(new TreeViewItem { Header = name });
-        }
+            if (this._playlistManager.AddPlaylist(name))
+                item.Items.Add(new TreeViewItem { Header = name });
+            else
+                MessageBox.Show("Error: playlist's name invalid");
+        } 
 
         private void CreateUserBtn_Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -601,6 +608,40 @@ namespace MediaPlayer
                     string header = headerClicked.Column.Header as string;
                     _playList.sortPlaylist(header);
                 }
+            }
+        }
+
+        private void searchPlaylist_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchPlaylist.Text == "Search in playlist")
+                searchPlaylist.Text = "";
+            searchPlaylist.Foreground = new SolidColorBrush(Colors.Black);
+        }
+
+        private void searchPlaylist_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchPlaylist.Text == "")
+                searchPlaylist.Text = "Search in playlist";
+            searchPlaylist.Foreground = new SolidColorBrush(Colors.Gray);
+        }
+
+        private void searchPlaylist_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (searchPlaylist.Text != "Search in playlist")
+                this._playList.searchInPlaylist(searchPlaylist.Text);
+        }
+
+        private void playList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                ListViewItem Item = (ListViewItem)sender;
+                IMedia media = (IMedia)Item.Content;
+
+                this._listIndex = this._playList.findMediaIndex(media);
+                this.loadAndPlayMedia();
+                e.Handled = true;
+                mediaTab.Focus();
             }
         }
     }

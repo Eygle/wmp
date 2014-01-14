@@ -52,12 +52,12 @@ namespace MediaPlayer.ViewModel
             {
                 if (this._allowedExt.ContainsKey(Path.GetExtension(pathName)))
                     return this._allowedExt[Path.GetExtension(pathName)](pathName);
-                MessageBox.Show("File '" + Path.GetFileName(pathName) + "' could not be loaded!");
+                //MessageBox.Show("File '" + Path.GetFileName(pathName) + "' could not be loaded!");
                 return null;
             }
             catch
             {
-                MessageBox.Show("File '" + Path.GetFileName(pathName) + "' could not be loaded!");
+                //MessageBox.Show("File '" + Path.GetFileName(pathName) + "' could not be loaded!");
                 return null;
             }
         }
