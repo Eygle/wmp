@@ -115,7 +115,7 @@ namespace MediaPlayer
             }
             catch
             {
-                MessageBox.Show("File '" + imagePath + "' don't exist");
+                MessageBox.Show("File '" + imagePath + "' don't exist", "Path Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
             }
             return brush;
         }
@@ -144,7 +144,7 @@ namespace MediaPlayer
                 }
                 catch
                 {
-                    MessageBox.Show("File could not be loaded!");
+                    MessageBox.Show("File could not be loaded!", "Load Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                 }
             }
         }
@@ -164,7 +164,7 @@ namespace MediaPlayer
                 }
                 catch
                 {
-                    MessageBox.Show("File could not be loaded!");
+                    MessageBox.Show("File could not be loaded!", "Load Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                 }
             }
         }
@@ -228,7 +228,7 @@ namespace MediaPlayer
                 }
                 catch
                 {
-                    MessageBox.Show("File could not be loaded!");
+                    MessageBox.Show("File could not be loaded!", "Load Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                 }
             }
         }
@@ -254,7 +254,7 @@ namespace MediaPlayer
                 }
                 catch
                 {
-                    MessageBox.Show("File could not be loaded!");
+                    MessageBox.Show("File could not be loaded!", "Load Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                 }
             }
         }
@@ -406,7 +406,7 @@ namespace MediaPlayer
 
         private void mediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            MessageBox.Show(e.ErrorException.Message);
+            MessageBox.Show(e.ErrorException.Message, "Media Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
         }
 
         private void mediaElementBackground_Drop(object sender, DragEventArgs e)
@@ -477,7 +477,7 @@ namespace MediaPlayer
             }
             else
             {
-                MessageBox.Show("Le lien n'est pas valide !");
+                MessageBox.Show("Le lien n'est pas valide !", "Url Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
             }
         }
 
@@ -511,7 +511,6 @@ namespace MediaPlayer
 
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
-            _webcam.InitializeWebCam(ref captureImage);
             _webcam.Start();
             _webcam.Continue();
         }
@@ -568,7 +567,7 @@ namespace MediaPlayer
             if (this._playlistManager.AddPlaylist(name))
                 item.Items.Add(new TreeViewItem { Header = name });
             else
-                MessageBox.Show("Error: playlist's name invalid");
+                MessageBox.Show("Error: playlist's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
         } 
 
         private void CreateUserBtn_Copy_Click(object sender, RoutedEventArgs e)
@@ -595,7 +594,7 @@ namespace MediaPlayer
 
         private void audioAnimationMediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            MessageBox.Show("fail to open animation");
+            MessageBox.Show("fail to open animation", "Animation Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
         }
 
         void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)

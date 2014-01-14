@@ -336,7 +336,7 @@
                         <TreeViewItem x:Name="playlists" Header="Playlists" Tag="Folder">
                             <TreeViewItem Header="default" Tag="Playlist"></TreeViewItem>
                         </TreeViewItem>
-                        <TreeViewItem x:Name="Library" Header="Library" Tag="Folder">
+                        <TreeViewItem x:Name="Library" Header="Library" Tag="LibraryFolder">
                             <TreeViewItem Header="Audio" Tag="LibraryItem"></TreeViewItem>
                             <TreeViewItem Header="Video" Tag="LibraryItem"></TreeViewItem>
                             <TreeViewItem Header="Image" Tag="LibraryItem"></TreeViewItem>
