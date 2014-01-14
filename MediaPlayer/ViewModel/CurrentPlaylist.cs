@@ -47,22 +47,25 @@ namespace MediaPlayer.ViewModel
             // TODO: call save method
         }
 
-        public void save(string name)
+        public static void save(string name, Playlist toSave)
         {
             using (FileStream fs = new FileStream(name, FileMode.Create))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(Model.Playlist));
-                serializer.Serialize(fs, this._playlist);
+                serializer.Serialize(fs, toSave);
             }
         }
 
-        public void load(string pathname)
+        public static Playlist load(string pathname)
         {
+            Playlist pls;
+
             using (FileStream fs = new FileStream(pathname, FileMode.Open))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(Model.Playlist));
-                this._playlist = serializer.Deserialize(fs) as Model.Playlist;
+                pls = serializer.Deserialize(fs) as Model.Playlist;
             }
+            return pls;
         }
 
         public void addFiles(string pathName, string[] names)

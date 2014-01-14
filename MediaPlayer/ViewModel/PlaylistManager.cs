@@ -16,7 +16,9 @@ namespace MediaPlayer.ViewModel
         public static string PlaylistPath = "Playlists/";
         public static string LibraryPath = "Libbrary/";
 
-        private Dictionary<string, List<string>> _tree;
+        private Dictionary<string, Playlist>         _playlists;
+        private Dictionary<string, List<string>>    _tree;
+
         static private Regex _regexName = new Regex("^[a-z|0-9|\\s]+$", RegexOptions.IgnoreCase);
 
         public PlaylistManager() 
@@ -28,9 +30,17 @@ namespace MediaPlayer.ViewModel
                 Directory.CreateDirectory(LibraryPath);
         }
 
+        private void    loadPlaylist(string path)
+        {
+            Playlist pls = (File.Exists(path) ? CurrentPlaylist.load(path) : new Playlist(Path.GetFileName(path)));
+            this._playlists.Add(path , pls);
+        }
+
         public bool AddFolder(User user, string name)
         {
-            if (user == null)
+            if (name == "")
+                return false;
+            else if (user == null)
             {
                 MessageBox.Show("You must be logged to create folders", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                 return false;
@@ -65,8 +75,10 @@ namespace MediaPlayer.ViewModel
             {
                 if (MessageBox.Show("Do you really want to delete this playlist ?", "Playlist Change", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
                     return false;
-                File.Delete(PlaylistPath + user.UserName + "/" + folder + "/" + name);
+                string pls = PlaylistPath + user.UserName + "/" + folder + "/" + name;
+                File.Delete(pls);
                 this._tree[folder].Remove(name);
+                this._playlists.Remove(pls);
                 return true;
             }
             catch
@@ -78,13 +90,17 @@ namespace MediaPlayer.ViewModel
 
         public bool AddPlaylistToFolder(User user, string name, string folder)
         {
-            if (name == "" || this._tree[folder].Contains(name) || !_regexName.Match(name).Success)
+            if (name == "")
+                return false;
+            else if (this._tree[folder].Contains(name) || !_regexName.Match(name).Success)
             {
                 MessageBox.Show("playlist's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                 return false;
             }
-            File.Create(PlaylistPath + user.UserName + "/" + folder + "/" + name);
+            string pls = PlaylistPath + user.UserName + "/" + folder + "/" + name;
+            File.Create(pls);
             this._tree[folder].Add(name);
+            this.loadPlaylist(pls);
             return true;
         }
 
@@ -122,6 +138,7 @@ namespace MediaPlayer.ViewModel
             Playlist audio = new Playlist();
             Playlist video = new Playlist();
             Playlist image = new Playlist();
+
             foreach (Playlist pl in list)
             {
                 foreach (IMedia m in pl.getPlayList())

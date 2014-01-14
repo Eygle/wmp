@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,16 +20,10 @@ namespace MediaPlayer.Model
         [XmlElement(ElementName = "Content")]
         private List<IMedia> _content;
 
-        public Playlist()
+        public Playlist(string name = "default")
         {
-            this._name = "default";
+            this._name = name;
             this._content = new List<IMedia>();
-        }
-
-        public Playlist(string playlistName, List<IMedia> content)
-        {
-            this._name = playlistName;
-            this._content = content;
         }
 
         public void clear()
