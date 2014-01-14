@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ using System.Threading;
 using MediaPlayer.ViewModel;
 using MediaPlayer.Model;
 using System.Collections.ObjectModel;
+using MediaPlayer.View;
 
 namespace MediaPlayer
 {
@@ -354,7 +356,21 @@ namespace MediaPlayer
             TabPlaylists.Focus();
         }
 
-
+        private void videoProgressBar_ValueChanged(object sender, DragCompletedEventArgs e)
+        {
+            try
+            {
+                double prog = videoProgressBar.Value;
+                if (Math.Abs(prog - mediaElement.Position.TotalSeconds) > 2)
+                {
+                    TimeSpan ts = new TimeSpan(0, 0, 0, (int)prog);
+                    mediaElement.Position = ts;
+                }
+            }
+            catch
+            {
+            }
+        }
 
         private void Random_Click(object sender, RoutedEventArgs e)
         {
@@ -432,22 +448,6 @@ namespace MediaPlayer
                 if (pos > videoProgressBar.Value || pos == 0)
                     videoProgressBar.Value = pos;
                 this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, (int)mediaElement.Position.TotalSeconds));
-            }
-        }
-
-        private void videoProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            try
-            {
-                double prog = videoProgressBar.Value;
-                if (Math.Abs(prog - mediaElement.Position.TotalSeconds) > 2)
-                {
-                    TimeSpan ts = new TimeSpan(0, 0, 0, (int)prog);
-                    mediaElement.Position = ts;
-                }
-            }
-            catch
-            {
             }
         }
 
