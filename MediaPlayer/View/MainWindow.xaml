@@ -284,7 +284,7 @@
                     </ListView>
                     <TreeView Margin="7,5,5,5.4" x:Name="treeView1" Grid.ColumnSpan="3" MouseRightButtonUp="treeView1_MouseRightButtonUp" >
                         <TreeView.Resources>
-                            <ContextMenu x:Key ="RootMenu" Name="rootMenu">
+                            <ContextMenu x:Key ="RootMenu">
                                 <MenuItem Header="Add folder">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/LoopAllCommu.png" />
@@ -296,7 +296,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
-                            <ContextMenu x:Key ="FolderMenu" Name="folderMenu">
+                            <ContextMenu x:Key ="FolderMenu">
                                 <MenuItem Header="Add playlist" Click="AddPlaylist_Click">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/LoopAllCommu.png" />
@@ -308,7 +308,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
-                            <ContextMenu x:Key ="PlaylistMenu" Name="playlistMenu">
+                            <ContextMenu x:Key ="PlaylistMenu">
                                 <MenuItem Header="Select">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/LoopAllCommu.png" />

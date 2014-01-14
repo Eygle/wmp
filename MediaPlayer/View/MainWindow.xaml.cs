@@ -527,10 +527,6 @@ namespace MediaPlayer
             }
             this._fullScreen = !this._fullScreen;
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> d3128a7acb462879c964e18a2a5460683249a1c7
         private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
@@ -557,7 +553,6 @@ namespace MediaPlayer
         private void AddPlaylist_Click(object sender, RoutedEventArgs e)
         {
             TreeViewItem item = this.treeView1.Items.GetItemAt(0) as TreeViewItem;
-<<<<<<< HEAD
             string name = Microsoft.VisualBasic.Interaction.InputBox("Prompt", "Title", "new playlist", 0, 0);
             item.Items.Add(new TreeViewItem { Header = name });
         } 
@@ -566,12 +561,9 @@ namespace MediaPlayer
         {
             using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
             {
-                string hash = GetMd5Hash(md5Hash, passwordTbx.Text);
-
+                //string hash = GetMd5Hash(md5Hash, passwordTbx.Text);
+                // TODO: wtf ?
             }
-=======
-            item.Items.Add(new TreeViewItem { Header = "new playlist" });
->>>>>>> d3128a7acb462879c964e18a2a5460683249a1c7
         }
 
         private void CreateUserBtn_Copy_Click(object sender, RoutedEventArgs e)
