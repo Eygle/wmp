@@ -501,6 +501,7 @@ namespace MediaPlayer
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
             _webcam.Start();
+            _webcam.Continue();
         }
 
         private void CamCaptureTab_LostFocus(object sender, RoutedEventArgs e)
