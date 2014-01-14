@@ -101,6 +101,15 @@ namespace MediaPlayer.ViewModel
             return this._playlist.getMediaAtIndex(index).Title;
         }
 
+        public int resetPlayList(int index)
+        {
+            IMedia currentMedia = this._playlist.getPlayList().ElementAt(index);
+            _oc.Clear();
+            foreach (IMedia item in this._playlist.getPlayList())
+                _oc.Add(item);
+            return this._playlist.getPlayList().FindIndex(m => m == currentMedia);
+        }
+
         public void resetPlayList()
         {
             _oc.Clear();
@@ -118,13 +127,15 @@ namespace MediaPlayer.ViewModel
             return this._playlist.count();
         }
 
-        public void shuffle()
+        public int shuffle(int index)
         {
+            IMedia currentMedia = this._playlist.getPlayList().ElementAt(index);
             Random rnd = new Random();
             List<IMedia> mediaList =  this._playlist.getPlayList().OrderBy(x => rnd.Next()).ToList();
             _oc.Clear();
             foreach (IMedia item in mediaList)
                 _oc.Add(item);
+            return mediaList.FindIndex(m => m == currentMedia);
         }
 
         private bool sortByTitle()

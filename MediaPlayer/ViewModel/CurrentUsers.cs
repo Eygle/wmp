@@ -192,6 +192,8 @@ namespace MediaPlayer.ViewModel
             this._users.getUsers().Remove(user);
             if (MessageBox.Show("Would you like to keep your playlists?", "Name Change", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 Directory.Move(PlaylistManager.PlaylistPath + user.UserName, PlaylistManager.PlaylistPath + newUserName);
+            else
+                Directory.Delete(PlaylistManager.PlaylistPath + user.UserName);
             user.UserName = newUserName;
             this.addUser(user);
             MessageBox.Show("Your UserName as been successfully changed.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);

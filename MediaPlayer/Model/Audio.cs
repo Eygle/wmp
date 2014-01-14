@@ -60,10 +60,10 @@ namespace MediaPlayer.Model
         {
             this._pathName = path;
             Dictionary<int, KeyValuePair<string, string>> fileProps = GetFileProps(path);
-            foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
+            /*foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
             {
                 Console.WriteLine(kv.ToString());
-            }
+            }*/
             this._lengthString = fileProps[27].Value;
             this._title = fileProps[21].Value;
             if (String.IsNullOrEmpty(this._title))

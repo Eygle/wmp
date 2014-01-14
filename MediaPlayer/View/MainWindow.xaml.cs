@@ -377,12 +377,13 @@ namespace MediaPlayer
             this._isShuffle = !this._isShuffle;
             if (this._isShuffle)
             {
-                this._playList.shuffle();
+                this._listIndex = this._playList.shuffle(this._listIndex);
                 Random.Background = this.loadImage("../Images/shuffleActiveCommu.png");
+                
             }
             else
             {
-                this._playList.resetPlayList();
+                this._listIndex = this._playList.resetPlayList(this._listIndex);
                 Random.Background = this.loadImage("../Images/ShuffleCommu.png");
             }
         }
@@ -391,7 +392,12 @@ namespace MediaPlayer
         {
             this.stopMedia();
             if (this._isLoopSingle)
+            {
                 this.playMedia();
+                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                if (currentMedia.Type == mediaType.AUDIO)
+                    this.displayAudioElements(currentMedia);
+            }
             else
                 this.goNextMedia();
         }
@@ -400,18 +406,20 @@ namespace MediaPlayer
         {
             try
             {
-                System.TimeSpan total = this.mediaElement.NaturalDuration.TimeSpan;
-                this._timeDurationSize = 2;
-                this.videoProgressBar.Maximum = total.TotalSeconds;
-                this.totalTimeLabel.Content = this.formatTime(total);
-                this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
-                this._timeDurationSize = total.Hours > 0 ? 3 : 2;
-                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);
-                if (mediaElement.HasAudio || mediaElement.HasVideo)
+                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                if ((mediaElement.HasAudio || mediaElement.HasVideo) && currentMedia.Type != mediaType.IMAGE)
+                {
+                    System.TimeSpan total = this.mediaElement.NaturalDuration.TimeSpan;
+                    this._timeDurationSize = 2;
+                    this.videoProgressBar.Maximum = total.TotalSeconds;
+                    this.totalTimeLabel.Content = this.formatTime(total);
+                    this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
                     GridProgressBar.Visibility = System.Windows.Visibility.Visible;
+                    this._timeDurationSize = total.Hours > 0 ? 3 : 2;
+                }
                 else
                     GridProgressBar.Visibility = System.Windows.Visibility.Hidden;
-                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);
                 if (currentMedia.Type == mediaType.AUDIO)
                     this.displayAudioElements(currentMedia);
             }
@@ -730,6 +738,20 @@ namespace MediaPlayer
                 this.ProfileNewPassword1TBx.Password = "";
                 this.ProfileNewPassword2TBx.Password = "";
             }
+        }
+
+        private void playList_Drop(object sender, DragEventArgs e)
+        {
+            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+            this._playList.addFolder(files);
+            this.playList.ItemsSource = this._playList.getPlayList();
+            if (mediaElement.Source == null && this._playList.getPlayList().Count() > 0)
+            {
+                mediaElement.Source = new Uri(this._playList.getMediaPath(0));
+                this.playMedia();
+            }
+            this._isShuffle = false;
+            Random.Background = this.loadImage("../Images/ShuffleCommu.png");
         }
     }
 }

@@ -59,10 +59,10 @@ namespace MediaPlayer.Model
             this.PathName = path;
 
             Dictionary<int, KeyValuePair<string, string>> fileProps = GetFileProps(path);
-            foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
+            /*foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
             {
                 Console.WriteLine(kv.ToString());
-            }
+            }*/
             this._lengthString = null;
             this._lengthLong = 0;
             this._title = fileProps[0].Value;
