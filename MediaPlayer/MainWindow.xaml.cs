@@ -28,11 +28,13 @@ namespace MediaPlayer
         private bool _isPause = false;
         private bool _isLoopAll = false;
         private bool _isLoopSingle = false;
+        private bool _isShuffle = false;
         private int _timeDurationSize = 2;
         private string[] _allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
 
         private WebCam _webcam;
         private CurrentPlaylist _playList;
+        private CurrentPlaylist _savePlayList;
 
         private System.Windows.Threading.DispatcherTimer _timer = new System.Windows.Threading.DispatcherTimer();
 
@@ -110,12 +112,19 @@ namespace MediaPlayer
 
         private ImageBrush loadImage(string imagePath)
         {
-            Uri resourceUri = new Uri(imagePath, UriKind.Relative);
-            System.Windows.Resources.StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
-
-            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
             var brush = new ImageBrush();
-            brush.ImageSource = temp;
+            try
+            {
+                Uri resourceUri = new Uri(imagePath, UriKind.Relative);
+                System.Windows.Resources.StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+
+                BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+                brush.ImageSource = temp;
+            }
+            catch
+            {
+                MessageBox.Show("File '" + imagePath + "' don't exist");
+            }
             return brush;
         }
 
@@ -133,6 +142,7 @@ namespace MediaPlayer
                     if (_listIndex >= this._playList.Count())
                         _listIndex = 0;
                     mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
+                    videoProgressBar.Value = 0;
                 }
                 catch
                 {
@@ -153,6 +163,7 @@ namespace MediaPlayer
                     if (_listIndex < 0)
                         _listIndex = this._playList.Count() - 1;
                     mediaElement.Source = new Uri(_playList.getMediaPath(_listIndex));
+                    videoProgressBar.Value = 0;
                 }
                 catch
                 {
@@ -161,22 +172,26 @@ namespace MediaPlayer
             }
         }
 
-        private void setPlayPauseButon(string state)
-        {
-        }
-
         private void playMedia()
         {
-            videoProgressBar.Value = 0;
+            this._isPause = false;
             mediaElement.Play();
+            playButton.Background = this.loadImage("Images/PauseCommu.png");
         }
 
         private void pauseMedia()
         {
+            this._isPause = true;
+            playButton.Background = this.loadImage("Images/PlayCommu.png");
+            mediaElement.Pause();
         }
 
         private void stopMedia()
         {
+            this._isPause = false;
+            playButton.Background = this.loadImage("Images/PlayCommu.png");
+            mediaElement.Stop();
+            videoProgressBar.Value = 0;
         }
 
         private void OpenFile_Click(object sender, RoutedEventArgs e)
@@ -190,10 +205,13 @@ namespace MediaPlayer
                 {
                     string[] str = openFileDialog1.FileNames;
                     this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
-                    //SetPlayList(openFileDialog1.InitialDirectory, str);
                     this.playList.ItemsSource = this._playList.getPlayList();
-                    mediaElement.Source = new Uri(this._playList.getMediaPath(this._listIndex));
-                    this.playMedia();
+
+                    if (mediaElement.Source == null)
+                    {
+                        mediaElement.Source = new Uri(this._playList.getMediaPath(0));
+                        this.playMedia();
+                    }
                 }
                 catch
                 {
@@ -228,8 +246,11 @@ namespace MediaPlayer
                     this._playList.addFolder(str); // this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath))
                     //SetPlayList("", str);
                     this.playList.ItemsSource = this._playList.getPlayList();
-                    mediaElement.Source = new Uri(this._playList.getMediaPath(this._listIndex));
-                    this.playMedia();
+                    if (mediaElement.Source == null)
+                    {
+                        mediaElement.Source = new Uri(this._playList.getMediaPath(0));
+                        this.playMedia();
+                    }
                 }
                 catch
                 {
@@ -241,21 +262,14 @@ namespace MediaPlayer
         private void playButton_Click(object sender, RoutedEventArgs e)
         {
             if (!_isPause)
-            {
-                mediaElement.Pause();
-                _isPause = true;
-            }
+                this.pauseMedia();
             else
-            {
-                mediaElement.Play();
-                _isPause = false;
-            }
+                this.playMedia();
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.Stop();
-            videoProgressBar.Value = 0;
+            this.stopMedia();
         }
 
         private void prevButton_Click(object sender, RoutedEventArgs e)
@@ -274,13 +288,13 @@ namespace MediaPlayer
             {
                 _savedVolume = volumeBar.Value;
                 volumeBar.Value = 0;
-                //ImageSource iss = "/MediaPlayer;component/Images/speaker_mute.png";
-                //iss.
-                //ImageBrush ibbg = new ImageBrush();
-                //volumeButton.Background = ibbg;
+                volumeButton.Background = this.loadImage("Images/MuteCommu.png");
             }
             else
+            {
                 volumeBar.Value = _savedVolume;
+                volumeButton.Background = this.loadImage("Images/volumeCommu.png");
+            }
         }
 
         private void volumeBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -310,7 +324,7 @@ namespace MediaPlayer
         {
             this._isLoopAll = this._isLoopAll ? false : true;
             if (this._isLoopAll)
-                loopAllButton.Background = this.loadImage("Images/LoopOneCommu.png"); //TODO put here loopAllHover image
+                loopAllButton.Background = this.loadImage("Images/loopActivCommu.png");
             else
                 loopAllButton.Background = this.loadImage("Images/LoopAllCommu.png");
         }
@@ -319,18 +333,9 @@ namespace MediaPlayer
         {
             this._isLoopSingle = this._isLoopSingle ? false : true;
             if (this._isLoopSingle)
-                LoopSingleButton.Background = this.loadImage("Images/LoopAllCommu.png"); //TODO put here loopSingleHover image
+                LoopSingleButton.Background = this.loadImage("Images/loopOneActiveCommu.png");
             else
                 LoopSingleButton.Background = this.loadImage("Images/LoopOneCommu.png");
-        }
-
-        private void fullscreenButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = this.WindowState == System.Windows.WindowState.Maximized ? System.Windows.WindowState.Normal : System.Windows.WindowState.Maximized;
-            if (this.WindowState == System.Windows.WindowState.Maximized)
-                fullscreenButton.Background = this.loadImage("Images/fullscreenCommu.png"); //TODO put here minmized image
-            else
-                fullscreenButton.Background = this.loadImage("Images/fullscreenCommu.png");
         }
 
         private void showPlaylistButton_Click(object sender, RoutedEventArgs e)
@@ -342,7 +347,18 @@ namespace MediaPlayer
 
         private void Random_Click(object sender, RoutedEventArgs e)
         {
-            this._playList.shuffle();
+            this._isShuffle = this._isShuffle ? false : true;
+            if (this._isShuffle)
+            {
+                //this._savePlaylist = new CurrentPlaylist(this._playList);
+                this._playList.shuffle();
+                Random.Background = this.loadImage("Images/shuffleActiveCommu.png");
+            }
+            else
+            {
+                //this._playList =  new CurrentPlaylist(this._savePlaylist);
+                Random.Background = this.loadImage("Images/ShuffleCommu.png");
+            }
         }
 
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
@@ -383,7 +399,7 @@ namespace MediaPlayer
 
         void synchronizeProgressBar(object sender, EventArgs e)
         {
-            if (mediaElement.HasVideo || mediaElement.HasAudio)
+            if ((mediaElement.HasVideo || mediaElement.HasAudio) && !_isPause)
             {
                 double pos = mediaElement.Position.TotalSeconds;
                 if (pos > videoProgressBar.Value)
@@ -456,7 +472,7 @@ namespace MediaPlayer
         private void TabItem_GotFocus(object sender, RoutedEventArgs e)
         {
             if (YoutubeLink.Text == "Insert Youtube URL here")
-             YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
+                YoutubeLink.Foreground = new SolidColorBrush(Colors.Gray);
         }
 
         // CAMERA CAPTURE
