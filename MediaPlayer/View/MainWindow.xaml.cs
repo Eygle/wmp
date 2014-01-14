@@ -48,8 +48,6 @@ namespace MediaPlayer
             _playList = new CurrentPlaylist();
             _users = new CurrentUsers();
             _webcam.InitializeWebCam(ref captureImage);
-
-            audioAnimationMediaElement.Source = new Uri("/Animations/animation1.mp4", UriKind.Relative);
             this.hideAudioElements();
         }
 
@@ -192,7 +190,6 @@ namespace MediaPlayer
 
         private void displayAudioElements(IMedia currentMedia)
         {
-            audioAnimationMediaElement.Play();
             musicTitle.Content = "Title:\t" + currentMedia.Title;
             musicSinger.Content = "Artist:\t" + currentMedia.Artist;
             musicAlbum.Content = "Album:\t" + currentMedia.Album;
@@ -203,7 +200,6 @@ namespace MediaPlayer
 
         private void hideAudioElements()
         {
-            audioAnimationMediaElement.Stop();
             GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
         }
 
@@ -592,6 +588,11 @@ namespace MediaPlayer
             this._users.logoutUser();
             this.LogoutBtn.Visibility = Visibility.Hidden;
             this.LoginBtn.Visibility = Visibility.Visible;
+        }
+
+        private void audioAnimationMediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            MessageBox.Show("fail to open animation");
         }
     }
 }
