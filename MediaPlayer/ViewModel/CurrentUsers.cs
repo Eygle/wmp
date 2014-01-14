@@ -20,13 +20,27 @@ namespace MediaPlayer.ViewModel
         public CurrentUsers()
         {
             this._users = new MediaUsers();
-            load();
+            try
+            {
+                load();
+            }
+            catch
+            {
+                save();
+            }
         }
 
         public CurrentUsers(CurrentUsers o)
         {
             this._users = o._users;
-            load();
+            try
+            {
+                load();
+            }
+            catch
+            {
+                save();
+            }
         }
 
         public void save()
@@ -47,7 +61,7 @@ namespace MediaPlayer.ViewModel
 
         public void load()
         {
-            using (FileStream fs = new FileStream("Users.xml", FileMode.Open))
+            using (FileStream fs = new FileStream("Users.xml", FileMode.OpenOrCreate))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(MediaUsers));
                 this._users = serializer.Deserialize(fs) as MediaUsers;

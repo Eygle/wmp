@@ -186,9 +186,10 @@ namespace MediaPlayer
 
         private void stopMedia()
         {
-            this._isPause = false;
+            this._isPause = true;
             playButton.Background = this.loadImage("../Images/PlayCommu.png");
             mediaElement.Stop();
+            currentTimeLabel.Content = "0:00";
             videoProgressBar.Value = 0;
         }
 
