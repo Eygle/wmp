@@ -28,9 +28,12 @@ namespace MediaPlayer.Model
         private BitmapImage _icon;
 
         private Dictionary<string, int> _sizesRefs = new Dictionary<string, int>() { 
-            {"Ko", 1000},
-            {"Mo", 1000000},
-            {"Go", 1000000000}
+            {"ko", 1000},
+            {"mo", 1000000},
+            {"go", 1000000000},
+            {"kb", 1000},
+            {"mb", 1000000},
+            {"gb", 1000000000}
         };
 
         public Video() { }
@@ -83,7 +86,7 @@ namespace MediaPlayer.Model
             string[] tmp = str.Split(' ');
             string sizeScale = tmp[1];
             float nbr = Single.Parse(tmp[0]);
-            mult = this._sizesRefs[sizeScale];
+            mult = this._sizesRefs[sizeScale.ToLower()];
             res += (long)(mult * nbr);
             return res;
         }
