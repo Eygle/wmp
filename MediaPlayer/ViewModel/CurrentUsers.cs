@@ -26,7 +26,7 @@ namespace MediaPlayer.ViewModel
         public CurrentUsers(CurrentUsers o)
         {
             this._users = o._users;
-            load()
+            load();
         }
 
         public void save()
