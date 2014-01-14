@@ -276,7 +276,8 @@
                     </Grid.ColumnDefinitions>
                     <Rectangle Margin="0,0,-0.8,-0.6" x:Name="rectangle1" Stroke="#FFB5B1B1" Fill="#FFE3E3E3" Grid.ColumnSpan="4" />
                     <GridSplitter HorizontalAlignment="Left" Margin="7,6,0,0" x:Name="gridSplitter1" VerticalAlignment="Top"/>
-                    <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="3" Margin="0,6,10.2,6.4" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler">
+                    <TextBox x:Name="searchPlaylist" Height="20" Margin="0,6,10,0" TextWrapping="Wrap" Grid.Column="3" Text="Search in playlist" VerticalAlignment="Top" GotFocus="searchPlaylist_GotFocus" LostFocus="searchPlaylist_LostFocus" Foreground="Gray" Padding="2,0,0,0" TextChanged="searchPlaylist_TextChanged"/>
+                    <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="3" Margin="0,28,10.2,6.4" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="PlaylistTytleColumn" Width="32" Header="Type" CellTemplate="{StaticResource iconTemplate}" />

@@ -225,5 +225,13 @@ namespace MediaPlayer.ViewModel
             this._lastSortHeader = header;
             _sortPlaylistsFuncs[header]();
         }
+
+        public void searchInPlaylist(string text)
+        {
+            List<IMedia> mediaList = this._playlist.getPlayList().Where(m => m.Title.ToLower().Contains(text.ToLower())).ToList();
+            _oc.Clear();
+            foreach (IMedia item in mediaList)
+                _oc.Add(item);
+        }
     }
 }

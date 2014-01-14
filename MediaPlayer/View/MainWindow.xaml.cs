@@ -607,5 +607,25 @@ namespace MediaPlayer
                 }
             }
         }
+
+        private void searchPlaylist_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchPlaylist.Text == "Search in playlist")
+                searchPlaylist.Text = "";
+            searchPlaylist.Foreground = new SolidColorBrush(Colors.Black);
+        }
+
+        private void searchPlaylist_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (searchPlaylist.Text == "")
+                searchPlaylist.Text = "Search in playlist";
+            searchPlaylist.Foreground = new SolidColorBrush(Colors.Gray);
+        }
+
+        private void searchPlaylist_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (searchPlaylist.Text != "Search in playlist")
+                this._playList.searchInPlaylist(searchPlaylist.Text);
+        }
     }
 }
