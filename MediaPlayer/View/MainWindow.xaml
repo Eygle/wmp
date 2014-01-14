@@ -277,17 +277,41 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TreeView Margin="7,5,5,5.4" x:Name="treeView1" Grid.ColumnSpan="3" >
-                        <TreeView.ContextMenu>
-                            <ContextMenu Name="defaultMenu">
+                    <TreeView Margin="7,5,5,5.4" x:Name="treeView1" Grid.ColumnSpan="3" MouseRightButtonUp="treeView1_MouseRightButtonUp" >
+                        <TreeView.Resources>
+                            <ContextMenu x:Key ="RootContext" Name="rootMenu">
+                                <MenuItem Header="Add playlist" Click="AddPlaylist_Click">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Images/LoopAllCommu.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Header="Reload playlists">
                                     <MenuItem.Icon>
-                                        <Image Source="Images/LoopAllCommu.png" />
+                                        <Image Source="../Images/LoopAllCommu.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
-                        </TreeView.ContextMenu>
-                        <TreeViewItem x:Name="playlists" Header="playlists"/>
+                            <ContextMenu x:Key ="PlaylistContext" Name="PlaylistMenu">
+                                <MenuItem Header="Add file(s)">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Images/LoopAllCommu.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Rename">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Images/LoopAllCommu.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="Delete">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Images/LoopAllCommu.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </TreeView.Resources>
+                        <TreeViewItem x:Name="playlists" Header="Playlists" Tag="Root">
+                            <TreeViewItem Header="default" Tag="Playlist"></TreeViewItem>
+                        </TreeViewItem>
                     </TreeView>
                 </Grid>
             </TabItem>

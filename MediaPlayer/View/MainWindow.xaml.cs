@@ -521,5 +521,34 @@ namespace MediaPlayer
             }
             this._fullScreen = !this._fullScreen;
         }
+
+        private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
+            ContextMenu context;
+
+            if (item == null)
+                return;
+            else if ((item.Tag as string) == "Playlist")
+                context = this.treeView1.FindResource("PlaylistContext") as ContextMenu;
+            else
+                context = this.treeView1.FindResource("RootContext") as ContextMenu;
+            context.PlacementTarget = this;
+            context.IsOpen = true;
+        }
+
+        private TreeViewItem SearchTreeViewItem(DependencyObject source)
+        {
+            while (source != null && !(source is TreeViewItem))
+                source = VisualTreeHelper.GetParent(source);
+
+            return source as TreeViewItem;
+        }
+
+        private void AddPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = this.treeView1.Items.GetItemAt(0) as TreeViewItem;
+            item.Items.Add(new TreeViewItem { Header = "new playlist" });
+        }
     }
 }
