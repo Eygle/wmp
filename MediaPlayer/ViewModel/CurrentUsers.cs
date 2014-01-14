@@ -15,7 +15,7 @@ namespace MediaPlayer.ViewModel
     class CurrentUsers
     {
         private MediaUsers _users;
-        private User _loggedInUser;
+        private User _loggedInUser = null;
 
         public CurrentUsers()
         {
@@ -70,9 +70,9 @@ namespace MediaPlayer.ViewModel
 
         public void addUser(string userName, string password)
         {
-            if (userName.Count() < 6)
+            if (userName.Count() < 4)
             {
-                MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                MessageBox.Show("Your UserName must be of at least 4 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
                 return;
             }
             if (password.Count() < 6)
@@ -99,9 +99,9 @@ namespace MediaPlayer.ViewModel
 
         public void addUser(User user)
         {
-            if (user.UserName.Count() < 6)
+            if (user.UserName.Count() < 4)
             {
-                MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                MessageBox.Show("Your UserName must be of at least 4 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
                 return;
             }
             if (this._users.getUsers().Any(u => u.UserName == user.UserName))
@@ -127,9 +127,9 @@ namespace MediaPlayer.ViewModel
 
         public bool checkUser(string userName, string password)
         {
-            if (userName.Count() < 6)
+            if (userName.Count() < 4)
             {
-                MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                MessageBox.Show("Your UserName must be of at least 4 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
                 return false;
             }
             if (password.Count() < 6)
@@ -153,9 +153,9 @@ namespace MediaPlayer.ViewModel
 
         public bool checkUser(User user)
         {
-            if (user.UserName.Count() < 6)
+            if (user.UserName.Count() < 4)
             {
-                MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                MessageBox.Show("Your UserName must be of at least 4 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
                 return false;
             }
             if (!this._users.getUsers().Contains(user))
@@ -177,9 +177,9 @@ namespace MediaPlayer.ViewModel
 
         public void changeUserName(string newUserName)
         {
-            if (newUserName.Count() < 6)
+            if (newUserName.Count() < 4)
             {
-                MessageBox.Show("Your UserName must be of at least 6 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
+                MessageBox.Show("Your UserName must be of at least 4 characters.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
                 return;
             }
             if (this._users.getUsers().Any(u => u.UserName == newUserName))
