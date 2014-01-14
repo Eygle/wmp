@@ -515,7 +515,7 @@ namespace MediaPlayer
             {
                 this.WindowStyle = WindowStyle.None;
                 this.WindowState = WindowState.Maximized;
-                this.FullScreen.Background = this.loadImage("../Images/fullScreenCommu.png");
+                this.FullScreen.Background = this.loadImage("../Images/fullscreenActiveCommu.png");
             }
             else
             {
@@ -525,8 +525,7 @@ namespace MediaPlayer
             }
             this._fullScreen = !this._fullScreen;
         }
-
-        private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+private void treeView1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             TreeViewItem item = SearchTreeViewItem(e.OriginalSource as DependencyObject);
             ContextMenu context;
@@ -553,6 +552,35 @@ namespace MediaPlayer
         {
             TreeViewItem item = this.treeView1.Items.GetItemAt(0) as TreeViewItem;
             item.Items.Add(new TreeViewItem { Header = "new playlist" });
+        } private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
+            {
+                string hash = GetMd5Hash(md5Hash, passwordTbx.Text);
+
+            }
         }
+
+        static string GetMd5Hash(System.Security.Cryptography.MD5 md5Hash, string input)
+        {
+
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data 
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
+        }
+
     }
 }

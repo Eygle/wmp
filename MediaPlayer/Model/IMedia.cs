@@ -12,7 +12,7 @@ namespace MediaPlayer.Model
         IMAGE,
         AUDIO
     };
-    //[Serializable]
+
     public interface IMedia
     {
         string Title { get; set; }
