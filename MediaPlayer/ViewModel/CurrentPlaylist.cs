@@ -44,28 +44,15 @@ namespace MediaPlayer.ViewModel
 
         ~CurrentPlaylist()
         {
-            // TODO: call save method
+            if (this._playlist != null)
+                PlaylistManager.save(this._playlist);
         }
 
-        public static void save(string name, Playlist toSave)
+        public void selectPlaylist(Playlist pls)
         {
-            using (FileStream fs = new FileStream(name, FileMode.Create))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(Model.Playlist));
-                serializer.Serialize(fs, toSave);
-            }
-        }
-
-        public static Playlist load(string pathname)
-        {
-            Playlist pls;
-
-            using (FileStream fs = new FileStream(pathname, FileMode.Open))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(Model.Playlist));
-                pls = serializer.Deserialize(fs) as Model.Playlist;
-            }
-            return pls;
+            PlaylistManager.save(pls);
+            this._playlist = pls;
+            this.resetPlayList();
         }
 
         public void addFiles(string pathName, string[] names)

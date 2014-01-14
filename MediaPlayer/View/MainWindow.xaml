@@ -316,7 +316,7 @@
                                 </MenuItem>
                             </ContextMenu>
                             <ContextMenu x:Key ="PlaylistMenu">
-                                <MenuItem Header="Select">
+                                <MenuItem Header="Select" Click="SelectPlaylist_Click">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/selectCommu.png" />
                                     </MenuItem.Icon>

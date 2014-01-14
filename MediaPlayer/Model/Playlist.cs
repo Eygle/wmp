@@ -12,17 +12,28 @@ namespace MediaPlayer.Model
     public class Playlist
     {
         [XmlElement(ElementName = "PlaylistName")]
-        private string _name;
+        public string _name;
         [XmlElement(ElementName = "TotalLength")]
-        private long _totalLength;
+        public long _totalLength;
         [XmlElement(ElementName = "NumberElements")]
-        private int _size;
-        [XmlElement(ElementName = "Content")]
-        private List<IMedia> _content;
+        public int _size;
+        //[XmlElement(ElementName = "Content")]
+        [XmlIgnore()]
+        public List<IMedia> _content;
+        [XmlIgnore()]
+        public string path;
 
-        public Playlist(string name = "default")
+        public Playlist()
         {
-            this._name = name;
+            string path = "Playlist/default";
+            this.path = path;
+            this._content = new List<IMedia>();
+        }
+
+        public Playlist(string path)
+        {
+            this._name = Path.GetFileName(path);
+            this.path = path;
             this._content = new List<IMedia>();
         }
 

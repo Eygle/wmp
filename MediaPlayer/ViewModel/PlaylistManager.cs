@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Serialization;
 
 namespace MediaPlayer.ViewModel
 {
@@ -21,9 +22,31 @@ namespace MediaPlayer.ViewModel
 
         static private Regex _regexName = new Regex("^[a-z|0-9|\\s]+$", RegexOptions.IgnoreCase);
 
+        public static void save(Playlist toSave)
+        {
+            using (FileStream fs = new FileStream(toSave.path, FileMode.Create))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Model.Playlist));
+                serializer.Serialize(fs, toSave);
+            }
+        }
+
+        public static Playlist load(string pathname)
+        {
+            Playlist pls;
+
+            using (FileStream fs = new FileStream(pathname, FileMode.Open, FileAccess.Read))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Model.Playlist));
+                pls = serializer.Deserialize(fs) as Model.Playlist;
+            }
+            return pls;
+        }
+
         public PlaylistManager() 
         {
             this._tree = new Dictionary<string, List<string>>();
+            this._playlists = new Dictionary<string, Playlist>();
             if (!Directory.Exists(PlaylistPath))
                 Directory.CreateDirectory(PlaylistPath);
             if (!Directory.Exists(LibraryPath))
@@ -32,8 +55,23 @@ namespace MediaPlayer.ViewModel
 
         private void    loadPlaylist(string path)
         {
-            Playlist pls = (File.Exists(path) ? CurrentPlaylist.load(path) : new Playlist(Path.GetFileName(path)));
-            this._playlists.Add(path , pls);
+            Playlist pls;
+            try
+            {
+                pls = PlaylistManager.load(path);
+            }
+            catch
+            {
+                pls = new Playlist(path);
+                PlaylistManager.save(pls);
+            }
+            this._playlists.Add(path, pls);
+        }
+
+        public Playlist selectPlaylistInFolder(User user, string name, string folder)
+        {
+            string pls = PlaylistPath + user.UserName + "/" + folder + "/" + name;
+            return (this._playlists[pls]);
         }
 
         public bool AddFolder(User user, string name)
@@ -98,7 +136,8 @@ namespace MediaPlayer.ViewModel
                 return false;
             }
             string pls = PlaylistPath + user.UserName + "/" + folder + "/" + name;
-            File.Create(pls);
+            FileStream fs = File.Create(pls);
+            fs.Close();
             this._tree[folder].Add(name);
             this.loadPlaylist(pls);
             return true;

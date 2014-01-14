@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace MediaPlayer.Model
 {
+    [Serializable]
     public enum mediaType
     {
         VIDEO,

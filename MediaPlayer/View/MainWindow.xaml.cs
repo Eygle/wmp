@@ -584,6 +584,14 @@ namespace MediaPlayer
                 item.Items.Add(new TreeViewItem { Header = name, Tag = "Playlist" });
         }
 
+        private void SelectPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
+            TreeViewItem folder = ItemsControl.ItemsControlFromItemContainer(item) as TreeViewItem;
+            
+            this._playList.selectPlaylist(this._playlistManager.selectPlaylistInFolder(this._users.getLoggedUser(), item.Header as string, folder.Header as string));
+        }
+
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
             TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
