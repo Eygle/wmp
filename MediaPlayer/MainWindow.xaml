@@ -291,7 +291,18 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <TreeView Margin="7,5,5,5.4" x:Name="treeView1" Grid.ColumnSpan="3" />
+                    <TreeView Margin="7,5,5,5.4" x:Name="treeView1" Grid.ColumnSpan="3" >
+                        <TreeView.ContextMenu>
+                            <ContextMenu Name="defaultMenu">
+                                <MenuItem Header="Reload playlists">
+                                    <MenuItem.Icon>
+                                        <Image Source="Images/LoopAllCommu.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </TreeView.ContextMenu>
+                        <TreeViewItem x:Name="playlists" Header="playlists"/>
+                    </TreeView>
                 </Grid>
             </TabItem>
             <TabItem Header="Youtube" GotFocus="TabItem_GotFocus">
