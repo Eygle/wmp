@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MediaPlayer.ViewModel
 {
@@ -22,6 +23,8 @@ namespace MediaPlayer.ViewModel
             this._tree = new Dictionary<string, List<string>>();
             if (!Directory.Exists(PlaylistPath))
                 Directory.CreateDirectory(PlaylistPath);
+            if (!Directory.Exists(LibraryPath))
+                Directory.CreateDirectory(LibraryPath);
         }
 
         public bool AddFolder(string username, string name)
@@ -38,12 +41,27 @@ namespace MediaPlayer.ViewModel
             try
             {
                 Directory.Delete(PlaylistPath + username + "/" + name, true);
-
                 this._tree.Remove(name);
                 return true;
             }
             catch
             {
+                return false;
+            }
+        }
+        public bool removePlaylistFromFolder(string username, string name, string folder)
+        {
+            try
+            {
+                if (MessageBox.Show("Do you really want to delete this playlist ?", "Playlist Change", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                    return false;
+                File.Delete(PlaylistPath + username + "/" + folder + "/" + name);
+                this._tree[folder].Remove(name);
+                return true;
+            }
+            catch
+            {
+                MessageBox.Show("Can't delete playlist", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
                 return false;
             }
         }
