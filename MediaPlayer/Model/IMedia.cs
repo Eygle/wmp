@@ -20,7 +20,10 @@ namespace MediaPlayer.Model
         string LengthString { get; set; }
         long LengthLong { get; set; }
         string Genre { get; set; }
+        string Album { get; set; }
         string PathName { get; set; }
         string FileSize { get; set; }
+        string Year { get; set; }
+        string Artist { get; set; }
     }
 }

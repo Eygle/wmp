@@ -6,12 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace MediaPlayer.ViewModel
 {
     class CurrentPlaylist
     {
+        private ObservableCollection<IMedia> _oc = new ObservableCollection<IMedia>();
         private Model.Playlist _playlist;
 
         public CurrentPlaylist()
@@ -50,8 +52,15 @@ namespace MediaPlayer.ViewModel
             MediaFactory f = new MediaFactory();
             List<IMedia> medias = new List<IMedia>();
             foreach (string fullPath in fullPaths)
-                medias.Add(f.createMedia(fullPath));
-            this.addToPlaylist(medias);
+            {
+                    IMedia m = f.createMedia(fullPath);
+                    if (m != null)
+                    {
+                        _oc.Add(m);
+                        medias.Add(m);
+                    }
+            }
+           this.addToPlaylist(medias);
         }
 
         public void addFolder(string[] pathNames)
@@ -59,7 +68,14 @@ namespace MediaPlayer.ViewModel
             MediaFactory f = new MediaFactory();
             List<IMedia> medias = new List<IMedia>();
             for (int i = 0; i < pathNames.Count(); ++i)
-                medias.Add(f.createMedia(pathNames[i]));
+            {
+                IMedia m = f.createMedia(pathNames[i]);
+                if (m != null)
+                {
+                    _oc.Add(m);
+                    medias.Add(m);
+                }
+            }
             this.addToPlaylist(medias);
         }
 
@@ -74,12 +90,16 @@ namespace MediaPlayer.ViewModel
             return this._playlist.getMediaAtIndex(index).Title;
         }
 
+        public void resetPlayList()
+        {
+            _oc.Clear();
+            foreach (IMedia item in this._playlist.getPlayList())
+                _oc.Add(item);
+        }
+
         public ObservableCollection<IMedia> getPlayList()
         {
-            ObservableCollection<IMedia> oc = new ObservableCollection<IMedia>();
-            foreach (IMedia item in this._playlist.getPlayList())
-                oc.Add(item);
-            return oc;
+            return _oc;
         }
 
         public int Count()
@@ -89,13 +109,23 @@ namespace MediaPlayer.ViewModel
 
         public void shuffle()
         {
-            this._playlist.shuffle();
+            Random rnd = new Random();
+            List<IMedia> mediaList =  this._playlist.getPlayList().OrderBy(x => rnd.Next()).ToList();
+            _oc.Clear();
+            foreach (IMedia item in mediaList)
+                _oc.Add(item);
+        }
+
+        public IMedia getMediaByIndex(int index)
+        {
+            return this._oc[index];
         }
 
         private void addToPlaylist(List<IMedia> items)
         {
             foreach (IMedia item in items)
                 this._playlist.add(item);
+            this.resetPlayList();
         }
     }
 }

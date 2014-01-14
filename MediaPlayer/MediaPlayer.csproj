@@ -75,14 +75,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="View\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CaptureWindow.xaml.cs">
-      <DependentUpon>CaptureWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Helper.cs" />
+    <Compile Include="View\Helper.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Video.cs" />
     <Compile Include="Model\Audio.cs" />
@@ -90,24 +87,20 @@
     <Compile Include="Model\Playlist.cs" />
     <Compile Include="ViewModel\CurrentPlaylist.cs" />
     <Compile Include="ViewModel\MediaFactory.cs" />
-    <Compile Include="WebCam.cs" />
-    <Page Include="CaptureWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="ViewModel\WebCam.cs" />
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
+    <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Simple Styles.xaml">
+    <Page Include="View\Simple Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -169,9 +162,7 @@
   <ItemGroup>
     <Resource Include="Images\snapshot.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\CameraCommu.png" />
     <Resource Include="Images\cursorCommu.png" />
@@ -200,7 +191,7 @@
     <Resource Include="Images\ShowPlaylistCommu.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ShuffleCommu.png" />
+    <Resource Include="Images\shuffleCommu.png" />
     <Resource Include="Images\slideBarCommu.png" />
     <Resource Include="Images\slowDownCommu.png" />
   </ItemGroup>

@@ -15,6 +15,7 @@ namespace MediaPlayer.Model
         private long _lengthLong;
         private string _title;
         private string _genre;
+        private string _album;
         private string _pathName;
         private string _fileSize;
         private string _artist;
@@ -45,10 +46,10 @@ namespace MediaPlayer.Model
             this.PathName = path;
 
             Dictionary<int, KeyValuePair<string, string>> fileProps = GetFileProps(path);
-            /*foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
+            foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
             {
                 Console.WriteLine(kv.ToString());
-            }*/
+            }
             this.LengthString = null;
             this.LengthLong = 0;
             this.Title = fileProps[0].Value;
@@ -109,6 +110,12 @@ namespace MediaPlayer.Model
         {
             get { return this._type; }
             set { this._type = value; }
+        }
+
+        public string Album
+        {
+            get { return this._album; }
+            set { this._album = value; }
         }
     }
 }

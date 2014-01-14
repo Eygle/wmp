@@ -16,6 +16,7 @@ namespace MediaPlayer.Model
         private long   _lengthLong;
         private string _title;
         private string _genre;
+        private string _album;
         private string _pathName;
         private string _fileSize;
         private string _artist;
@@ -45,16 +46,19 @@ namespace MediaPlayer.Model
         {
             this._pathName = path;
             Dictionary<int, KeyValuePair<string, string>> fileProps = GetFileProps(path);
-            /*foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
+            foreach (KeyValuePair<int, KeyValuePair<string, string>> kv in fileProps)
             {
                 Console.WriteLine(kv.ToString());
-            }*/
+            }
             this._lengthString = fileProps[27].Value;
             this._title = fileProps[21].Value;
+            if (String.IsNullOrEmpty(this._title))
+                this._title = fileProps[0].Value;
             this._fileSize = fileProps[1].Value;
             this._artist = fileProps[20].Value;
             this._year = fileProps[15].Value;
-            this._genre = null;
+            this._genre = fileProps[16].Value;
+            this._album = fileProps[14].Value;
             long[] multipliers = new long[] { 3600, 60, 1 };
             int i = 0;
             this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
@@ -112,6 +116,12 @@ namespace MediaPlayer.Model
         {
             get { return this._type; }
             set { this._type = value; }
+        }
+
+        public string Album
+        {
+            get { return this._album; }
+            set { this._album = value;  }
         }
     }
 }

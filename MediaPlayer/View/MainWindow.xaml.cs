@@ -29,12 +29,12 @@ namespace MediaPlayer
         private bool _isLoopAll = false;
         private bool _isLoopSingle = false;
         private bool _isShuffle = false;
+        private bool _fullScreen = false;
         private int _timeDurationSize = 2;
         private string[] _allowedExt = { ".mp3", ".mp4", ".asf", ".3gp", ".3g2", ".asx", ".avi", ".jpg", ".jpeg", ".gif", ".bmp", ".png" };
 
         private WebCam _webcam;
         private CurrentPlaylist _playList;
-        private CurrentPlaylist _savePlayList;
 
         private System.Windows.Threading.DispatcherTimer _timer = new System.Windows.Threading.DispatcherTimer();
 
@@ -176,20 +176,20 @@ namespace MediaPlayer
         {
             this._isPause = false;
             mediaElement.Play();
-            playButton.Background = this.loadImage("Images/PauseCommu.png");
+            playButton.Background = this.loadImage("../Images/PauseCommu.png");
         }
 
         private void pauseMedia()
         {
             this._isPause = true;
-            playButton.Background = this.loadImage("Images/PlayCommu.png");
+            playButton.Background = this.loadImage("../Images/PlayCommu.png");
             mediaElement.Pause();
         }
 
         private void stopMedia()
         {
             this._isPause = false;
-            playButton.Background = this.loadImage("Images/PlayCommu.png");
+            playButton.Background = this.loadImage("../Images/PlayCommu.png");
             mediaElement.Stop();
             videoProgressBar.Value = 0;
         }
@@ -203,11 +203,9 @@ namespace MediaPlayer
             {
                 try
                 {
-                    string[] str = openFileDialog1.FileNames;
                     this._playList.addFiles(openFileDialog1.InitialDirectory, openFileDialog1.FileNames);
                     this.playList.ItemsSource = this._playList.getPlayList();
-
-                    if (mediaElement.Source == null)
+                    if (mediaElement.Source == null && this._playList.getPlayList().Count() > 0)
                     {
                         mediaElement.Source = new Uri(this._playList.getMediaPath(0));
                         this.playMedia();
@@ -220,19 +218,6 @@ namespace MediaPlayer
             }
         }
 
-        private string[] getFilesWithAllowedExt(string[] files)
-        {
-            var res = new List<string>(files);
-            for (int i = 0; i < files.Length; ++i)
-            {
-                if (!_allowedExt.Contains(System.IO.Path.GetExtension(files[i])))
-                {
-                    res.RemoveAt(i);
-                }
-            }
-            return res.ToArray();
-        }
-
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
 
@@ -242,11 +227,9 @@ namespace MediaPlayer
             {
                 try
                 {
-                    string[] str = this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath));
-                    this._playList.addFolder(str); // this.getFilesWithAllowedExt(Directory.GetFiles(openFolderDialog1.SelectedPath))
-                    //SetPlayList("", str);
+                    this._playList.addFolder(Directory.GetFiles(openFolderDialog1.SelectedPath));
                     this.playList.ItemsSource = this._playList.getPlayList();
-                    if (mediaElement.Source == null)
+                    if (mediaElement.Source == null && this._playList.getPlayList().Count() > 0)
                     {
                         mediaElement.Source = new Uri(this._playList.getMediaPath(0));
                         this.playMedia();
@@ -288,12 +271,12 @@ namespace MediaPlayer
             {
                 _savedVolume = volumeBar.Value;
                 volumeBar.Value = 0;
-                volumeButton.Background = this.loadImage("Images/MuteCommu.png");
+                volumeButton.Background = this.loadImage("../Images/MuteCommu.png");
             }
             else
             {
                 volumeBar.Value = _savedVolume;
-                volumeButton.Background = this.loadImage("Images/volumeCommu.png");
+                volumeButton.Background = this.loadImage("../Images/volumeCommu.png");
             }
         }
 
@@ -320,22 +303,32 @@ namespace MediaPlayer
             }
         }
 
+        private void refreshLoopsButons()
+        {
+            if (this._isLoopAll)
+                loopAllButton.Background = this.loadImage("../Images/loopActivCommu.png");
+            else
+                loopAllButton.Background = this.loadImage("../Images/LoopAllCommu.png");
+            if (this._isLoopSingle)
+                LoopSingleButton.Background = this.loadImage("../Images/loopOneActiveCommu.png");
+            else
+                LoopSingleButton.Background = this.loadImage("../Images/LoopOneCommu.png");
+        }
+
         private void loopAllButton_Click(object sender, RoutedEventArgs e)
         {
             this._isLoopAll = this._isLoopAll ? false : true;
             if (this._isLoopAll)
-                loopAllButton.Background = this.loadImage("Images/loopActivCommu.png");
-            else
-                loopAllButton.Background = this.loadImage("Images/LoopAllCommu.png");
+                this._isLoopSingle = false;
+            this.refreshLoopsButons();
         }
 
         private void LoopSingleButton_Click(object sender, RoutedEventArgs e)
         {
             this._isLoopSingle = this._isLoopSingle ? false : true;
             if (this._isLoopSingle)
-                LoopSingleButton.Background = this.loadImage("Images/loopOneActiveCommu.png");
-            else
-                LoopSingleButton.Background = this.loadImage("Images/LoopOneCommu.png");
+                this._isLoopAll = false;
+            this.refreshLoopsButons();
         }
 
         private void showPlaylistButton_Click(object sender, RoutedEventArgs e)
@@ -350,20 +343,19 @@ namespace MediaPlayer
             this._isShuffle = this._isShuffle ? false : true;
             if (this._isShuffle)
             {
-                //this._savePlaylist = new CurrentPlaylist(this._playList);
                 this._playList.shuffle();
-                Random.Background = this.loadImage("Images/shuffleActiveCommu.png");
+                Random.Background = this.loadImage("../Images/shuffleActiveCommu.png");
             }
             else
             {
-                //this._playList =  new CurrentPlaylist(this._savePlaylist);
-                Random.Background = this.loadImage("Images/ShuffleCommu.png");
+                this._playList.resetPlayList();
+                Random.Background = this.loadImage("../Images/ShuffleCommu.png");
             }
         }
 
         private void mediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            mediaElement.Stop();
+            this.stopMedia();
             if (this._isLoopSingle)
                 this.playMedia();
             else
@@ -380,15 +372,25 @@ namespace MediaPlayer
                 this.totalTimeLabel.Content = this.formatTime(total);
                 this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
                 this._timeDurationSize = total.Hours > 0 ? 3 : 2;
-                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);//getName(mediaElement.Source.ToString());
-                //GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
+                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);
+                GridMusicInfos.Visibility = System.Windows.Visibility.Hidden;
                 if (mediaElement.HasAudio || mediaElement.HasVideo)
                     GridProgressBar.Visibility = System.Windows.Visibility.Visible;
                 else
                     GridProgressBar.Visibility = System.Windows.Visibility.Hidden;
+                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                if (currentMedia.Type == mediaType.AUDIO)
+                {
+                    musicTitle.Content = "Title:\t" + currentMedia.Title;
+                    musicSinger.Content = "Artist:\t" + currentMedia.Artist;
+                    musicAlbum.Content = "Album:\t" + currentMedia.Album;
+                    musicYear.Content = "Year:\t" + currentMedia.Year;
+                    GridMusicInfos.Visibility = System.Windows.Visibility.Visible;
+                }
             }
             catch
             {
+                System.Console.WriteLine("error");
             }
         }
 
@@ -486,7 +488,6 @@ namespace MediaPlayer
         private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
         {
             _webcam.Start();
-            _webcam.Continue();
         }
 
         private void CamCaptureTab_LostFocus(object sender, RoutedEventArgs e)
@@ -504,6 +505,21 @@ namespace MediaPlayer
                 mediaElement.Source = new Uri(this._playList.getMediaPath(this._listIndex));
                 this.playMedia();
             }
+        }
+
+        private void FullScreen_Click(object sender, RoutedEventArgs e)
+        {
+            if (!this._fullScreen)
+            {
+                this.WindowStyle = WindowStyle.None;
+                this.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+                this.WindowState = WindowState.Normal;
+            }
+            this._fullScreen = !this._fullScreen;
         }
     }
 }

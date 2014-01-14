@@ -66,11 +66,5 @@ namespace MediaPlayer.Model
         {
             return this._content.Count;
         }
-
-        public void shuffle()
-        {
-            Random rnd = new Random();
-            this._content = this._content.OrderBy(x => rnd.Next()).ToList();
-        }
     }
 }
