@@ -625,9 +625,9 @@ namespace MediaPlayer
             root.Items.Add(new TreeViewItem { Header = "default playlist", Tag = "Playlist" });
             if (this._users.getLoggedUser() != null)
             {
-                Dictionary<string, List<string>> tree = this._playlistManager.reload(this._users.getLoggedUser().UserName);
+                Dictionary<string, List<string>> treeReloaded = this._playlistManager.reload(this._users.getLoggedUser().UserName);
 
-                foreach (KeyValuePair<string, List<string>> entry in tree)
+                foreach (KeyValuePair<string, List<string>> entry in treeReloaded)
                 {
                     TreeViewItem folder = new TreeViewItem { Header = entry.Key, Tag = "PlaylistFolder" };
 
@@ -724,10 +724,15 @@ namespace MediaPlayer
                 this._users.changeUserName(this.ProfileUserNameTBx.Text);
         }
 
-        private void ChangeUserName_Copy_Click(object sender, RoutedEventArgs e)
+        private void ChangePassword_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to change your password?", "Changing User Name Warning", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
-                this._users.changePassword(this.ProfileOldPassword1TBx.Password, this.ProfileOldPassword2TBx.Password, this.ProfileNewPasswordTBx.Password);
+            {
+                this._users.changePassword(this.ProfileOldPasswordTBx.Password, this.ProfileNewPassword1TBx.Password, this.ProfileNewPassword2TBx.Password);
+                this.ProfileOldPasswordTBx.Password = "";
+                this.ProfileNewPassword1TBx.Password = "";
+                this.ProfileNewPassword2TBx.Password = "";
+            }
         }
     }
 }

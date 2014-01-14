@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaPlayer.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace MediaPlayer.ViewModel
     public class PlaylistManager
     {
         public static string PlaylistPath = "Playlists/";
+        public static string LibraryPath = "Libbrary/";
 
         private Dictionary<string, List<string>> _tree;
         static private Regex _regexName = new Regex("^[a-z|0-9|\\s]+$", RegexOptions.IgnoreCase);
@@ -36,6 +38,7 @@ namespace MediaPlayer.ViewModel
             try
             {
                 Directory.Delete(PlaylistPath + username + "/" + name, true);
+
                 this._tree.Remove(name);
                 return true;
             }
@@ -69,6 +72,25 @@ namespace MediaPlayer.ViewModel
                     this._tree[folder].Add(Path.GetFileName(pls));
             }
             return this._tree;
+        }
+
+        public void fillLibrary(List<Playlist> list)
+        {
+            Playlist audio = new Playlist();
+            Playlist video = new Playlist();
+            Playlist image = new Playlist();
+            foreach (Playlist pl in list)
+            {
+                foreach (IMedia m in pl.getPlayList())
+                {
+                    if (m.Type == mediaType.AUDIO)
+                        audio.add(m);
+                    else if (m.Type == mediaType.VIDEO)
+                        video.add(m);
+                    else if (m.Type == mediaType.IMAGE)
+                        image.add(m);
+                }
+            }
         }
     }
 }

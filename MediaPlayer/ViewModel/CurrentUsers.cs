@@ -196,26 +196,31 @@ namespace MediaPlayer.ViewModel
             MessageBox.Show("Your UserName as been successfully changed.", "Name Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
         }
 
-        public void changePassword(string passwordOne, string passwordTwo, string newPassword)
+        public void changePassword(string oldPassword, string passwordOne, string passwordTwo)
         {
-            if (passwordOne.Count() < 6 || passwordTwo.Count() < 6 || newPassword.Count() < 6)
+            if (oldPassword.Count() < 6 || passwordOne.Count() < 6 || passwordTwo.Count() < 6)
             {
                 MessageBox.Show("Your password must be of at least 6 characters.", "Password Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
                 return;
             }
             using (System.Security.Cryptography.MD5 md5Hash = System.Security.Cryptography.MD5.Create())
             {
+                string hashOld = GetMd5Hash(md5Hash, oldPassword);
                 string hashOne = GetMd5Hash(md5Hash, passwordOne);
                 string hashTwo = GetMd5Hash(md5Hash, passwordTwo);
-                string hashNew = GetMd5Hash(md5Hash, newPassword);
                 if (hashOne != hashTwo)
                 {
                     MessageBox.Show("Password missmatch!", "Password Change", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.None);
                     return;
                 }
                 User user = this._users.getUsers().Select(u => u).Where(u => u.UserName == this._loggedInUser.UserName).First();
+                if (user.Password != hashOld)
+                {
+                    MessageBox.Show("Your password is incorrect !", "Password Change", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.None);
+                    return;
+                }
                 this._users.getUsers().Remove(user);
-                user.Password = hashNew;
+                user.Password = hashOne;
                 this.addUser(user);
                 MessageBox.Show("Your Password as been successfully changed.", "Password Change", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
             }
