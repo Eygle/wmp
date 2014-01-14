@@ -541,7 +541,7 @@ namespace MediaPlayer
 
             //ResourceDictionary tmp = this.treeView1.Resources;
             //foreach (KeyValuePair<string, int> kv in tmp)
-                //MessageBox.Show(kv.Value.ToString());
+            //MessageBox.Show(kv.Value.ToString());
             if (item == null)
                 context = this.treeView1.FindResource("RootMenu") as ContextMenu;
             else if ((item.Tag as string) == "Playlist")
@@ -565,7 +565,7 @@ namespace MediaPlayer
             TreeViewItem item = this.treeView1.Items.GetItemAt(0) as TreeViewItem;
             string name = Microsoft.VisualBasic.Interaction.InputBox("Prompt", "Title", "new playlist", 0, 0);
             item.Items.Add(new TreeViewItem { Header = name });
-        } 
+        }
 
         private void CreateUserBtn_Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -594,6 +594,19 @@ namespace MediaPlayer
         private void audioAnimationMediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
             MessageBox.Show("fail to open animation");
+        }
+
+        void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader headerClicked = e.OriginalSource as GridViewColumnHeader;
+            if (headerClicked != null)
+            {
+                if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
+                {
+                    string header = headerClicked.Column.Header as string;
+                    _playList.sortPlaylist(header);
+                }
+            }
         }
     }
 }
