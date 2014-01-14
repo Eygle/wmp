@@ -9,7 +9,7 @@ using Shell32;
 namespace MediaPlayer.Model
 {
     [Serializable]
-    public class mediaImage : IMedia
+    public class Image : IMedia
     {
         private string _lengthString;
         private long _lengthLong;
@@ -22,7 +22,7 @@ namespace MediaPlayer.Model
         private string _year;
         private mediaType _type;
 
-        public mediaImage() { }
+        public Image() { }
 
         Dictionary<int, KeyValuePair<string, string>> GetFileProps(string filename)
         {
@@ -41,7 +41,7 @@ namespace MediaPlayer.Model
             return fileProps;
         }
 
-        public mediaImage(string path)
+        public Image(string path)
         {
             this.PathName = path;
 
