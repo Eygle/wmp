@@ -54,15 +54,16 @@
         </DataTemplate>
         <DataTemplate x:Key="titleTemplate">
             <TextBlock TextAlignment="Left" Text="{Binding Path=Title}"/>
+
         </DataTemplate>
         <DataTemplate x:Key="fileSizeTemplate">
-            <TextBlock TextAlignment="Center" Text="{Binding Path=FileSize}"/>
+            <TextBlock TextAlignment="Left" Text="{Binding Path=FileSize}"/>
         </DataTemplate>
         <DataTemplate x:Key="lengthStringTemplate">
-            <TextBlock TextAlignment="Center" Text="{Binding Path=LengthString}"/>
+            <TextBlock TextAlignment="Left" Text="{Binding Path=LengthString}"/>
         </DataTemplate>
         <DataTemplate x:Key="genreTemplate">
-            <TextBlock TextAlignment="Right" Text="{Binding Path=Genre}"/>
+            <TextBlock TextAlignment="Left" Text="{Binding Path=Genre}"/>
         </DataTemplate>
     </Window.Resources>
     <Grid Background="White" x:Name="grid1">
@@ -275,10 +276,10 @@
                     </Grid.ColumnDefinitions>
                     <Rectangle Margin="0,0,-0.8,-0.6" x:Name="rectangle1" Stroke="#FFB5B1B1" Fill="#FFE3E3E3" Grid.ColumnSpan="4" />
                     <GridSplitter HorizontalAlignment="Left" Margin="7,6,0,0" x:Name="gridSplitter1" VerticalAlignment="Top"/>
-                    <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="3" Margin="0,6,10.2,6.4">
+                    <ListView x:Name="playList" ItemsSource="{Binding IMenu}" Grid.Column="3" Margin="0,6,10.2,6.4" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Width="32" Header="Type" CellTemplate="{StaticResource iconTemplate}" />
+                                <GridViewColumn x:Name="PlaylistTytleColumn" Width="32" Header="Type" CellTemplate="{StaticResource iconTemplate}" />
                                 <GridViewColumn Width="100" Header="Title" CellTemplate="{StaticResource titleTemplate}" />
                                 <GridViewColumn Width="100" Header="File Size" CellTemplate="{StaticResource fileSizeTemplate}" />
                                 <GridViewColumn Width="100" Header="Time" CellTemplate="{StaticResource lengthStringTemplate}" />

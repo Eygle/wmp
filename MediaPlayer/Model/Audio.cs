@@ -17,6 +17,7 @@ namespace MediaPlayer.Model
     {
         private string _lengthString;
         private long   _lengthLong;
+        private long    _size;
         private string _title;
         private string _genre;
         private string _album;
@@ -26,6 +27,12 @@ namespace MediaPlayer.Model
         private string _year;
         private mediaType _type;
         private BitmapImage _icon;
+
+        private Dictionary<string, int> _sizesRefs = new Dictionary<string, int>() { 
+            {"Ko", 1000},
+            {"Mo", 1000000},
+            {"Go", 1000000000}
+        };
 
         public Audio() { }
 
@@ -68,6 +75,20 @@ namespace MediaPlayer.Model
             this._lengthLong = this._lengthString.Split(':').Aggregate(0, (long total, string part) => total += Int64.Parse(part) * multipliers[i++]);
             this._type = mediaType.AUDIO;
             this._icon = new BitmapImage(new Uri(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "/../../Images/audio.ico"));
+            if (this._fileSize != null && this._fileSize != "")
+                this._size = getSizeFromString(this._fileSize);
+        }
+
+        public long getSizeFromString(string str)
+        {
+            int mult = 0;
+            long res = 0;
+            string[] tmp = str.Split(' ');
+            string sizeScale = tmp[1];
+            float nbr = Single.Parse(tmp[0]);
+            mult = this._sizesRefs[sizeScale];
+            res += (long)(mult * nbr);
+            return res;
         }
 
         public string LengthString
@@ -103,6 +124,12 @@ namespace MediaPlayer.Model
         {
             get { return this._fileSize; }
             set { this._fileSize = value; }
+        }
+
+        public long Size
+        {
+            get { return this._size; }
+            set { this._size = value; }
         }
 
         public string Artist

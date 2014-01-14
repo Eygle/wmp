@@ -14,12 +14,27 @@ namespace MediaPlayer.ViewModel
 {
     class CurrentPlaylist
     {
+        public enum direction
+        {
+            ASC,
+            DESC
+        };
+
         private ObservableCollection<IMedia> _oc = new ObservableCollection<IMedia>();
         private Model.Playlist _playlist;
+        private delegate void sortPlaylistFunc();
+        private Dictionary<string, Func<bool>> _sortPlaylistsFuncs = new Dictionary<string, Func<bool>>();
+        private string _lastSortHeader = "";
+        private direction _lastDirection;
 
         public CurrentPlaylist()
         {
             this._playlist = new Model.Playlist();
+            this._sortPlaylistsFuncs["Title"] = sortByTitle;
+            this._sortPlaylistsFuncs["File Size"] = sortBySize;
+            this._sortPlaylistsFuncs["Time"] = sortByTime;
+            this._sortPlaylistsFuncs["Genre"] = sortByGenre;
+            this._sortPlaylistsFuncs["Type"] = sortByType;
         }
 
         public CurrentPlaylist(CurrentPlaylist o)
@@ -122,6 +137,71 @@ namespace MediaPlayer.ViewModel
                 _oc.Add(item);
         }
 
+        private bool sortByTitle()
+        {
+            List<IMedia> mediaList;
+            if (this._lastDirection == direction.ASC)
+                mediaList = this._playlist.getPlayList().OrderBy(m => m.Title).ToList();
+            else
+                mediaList = this._playlist.getPlayList().OrderByDescending(m => m.Title).ToList();
+             _oc.Clear();
+             foreach (IMedia item in mediaList)
+                 _oc.Add(item);
+             return true;
+        }
+
+        private bool sortByTime()
+        {
+            List<IMedia> mediaList;
+            if (this._lastDirection == direction.ASC)
+                mediaList = this._playlist.getPlayList().OrderBy(m => m.LengthLong).ToList();
+            else
+                mediaList = this._playlist.getPlayList().OrderByDescending(m => m.LengthLong).ToList();
+            _oc.Clear();
+            foreach (IMedia item in mediaList)
+                _oc.Add(item);
+            return true;
+        }
+
+        private bool sortByGenre()
+        {
+            List<IMedia> mediaList;
+            if (this._lastDirection == direction.ASC)
+                mediaList = this._playlist.getPlayList().OrderBy(m => m.Genre).ToList();
+            else
+                mediaList = this._playlist.getPlayList().OrderByDescending(m => m.Genre).ToList();
+            _oc.Clear();
+            foreach (IMedia item in mediaList)
+                _oc.Add(item);
+            return true;
+        }
+
+        private bool sortBySize()
+        {
+            List<IMedia> mediaList;
+            if (this._lastDirection == direction.ASC)
+                mediaList = this._playlist.getPlayList().OrderBy(m => m.Size).ToList();
+            else
+                mediaList = this._playlist.getPlayList().OrderByDescending(m => m.Size).ToList();
+            _oc.Clear();
+            foreach (IMedia item in mediaList)
+                _oc.Add(item);
+            return true;
+        }
+
+        private bool sortByType()
+        {
+            List<IMedia> mediaList;
+            if (this._lastDirection == direction.ASC)
+                mediaList = this._playlist.getPlayList().OrderBy(m => m.Type).ToList();
+            else
+                mediaList = this._playlist.getPlayList().OrderByDescending(m => m.Type).ToList();
+            _oc.Clear();
+            foreach (IMedia item in mediaList)
+                _oc.Add(item);
+            return true;
+        }
+
         public IMedia getMediaByIndex(int index)
         {
             return this._oc[index];
@@ -134,6 +214,16 @@ namespace MediaPlayer.ViewModel
                 this._playlist.add(item);
             }
             this.resetPlayList();
+        }
+
+        public void sortPlaylist(string header)
+        {
+            direction dir = direction.ASC;
+            if (header == _lastSortHeader)
+                dir = this._lastDirection == direction.ASC ? direction.DESC : direction.ASC;
+            this._lastDirection = dir;
+            this._lastSortHeader = header;
+            _sortPlaylistsFuncs[header]();
         }
     }
 }

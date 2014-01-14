@@ -27,6 +27,7 @@ namespace MediaPlayer.Model
         string FileSize { get; set; }
         string Year { get; set; }
         string Artist { get; set; }
+        long Size { get; set; }
         BitmapImage Icon { get; set; }
     }
 }
