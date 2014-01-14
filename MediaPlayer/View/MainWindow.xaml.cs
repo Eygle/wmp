@@ -49,6 +49,7 @@ namespace MediaPlayer
             _users = new CurrentUsers();
             _webcam.InitializeWebCam(ref captureImage);
             this.hideAudioElements();
+            this._playlistManager = new PlaylistManager();
         }
 
         ~MainWindow()
@@ -563,8 +564,11 @@ namespace MediaPlayer
         {
             TreeViewItem item = this.treeView1.Items.GetItemAt(0) as TreeViewItem;
             string name = Microsoft.VisualBasic.Interaction.InputBox("Prompt", "Title", "new playlist", 0, 0);
-            item.Items.Add(new TreeViewItem { Header = name });
-        }
+            if (this._playlistManager.AddPlaylist(name))
+                item.Items.Add(new TreeViewItem { Header = name });
+            else
+                MessageBox.Show("Error: playlist's name invalid");
+        } 
 
         private void CreateUserBtn_Copy_Click(object sender, RoutedEventArgs e)
         {
