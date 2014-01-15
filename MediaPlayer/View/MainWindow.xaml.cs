@@ -405,18 +405,20 @@ namespace MediaPlayer
         {
             try
             {
-                System.TimeSpan total = this.mediaElement.NaturalDuration.TimeSpan;
-                this._timeDurationSize = 2;
-                this.videoProgressBar.Maximum = total.TotalSeconds;
-                this.totalTimeLabel.Content = this.formatTime(total);
-                this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
-                this._timeDurationSize = total.Hours > 0 ? 3 : 2;
-                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);
-                if (mediaElement.HasAudio || mediaElement.HasVideo)
+                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                if ((mediaElement.HasAudio || mediaElement.HasVideo) && currentMedia.Type != mediaType.IMAGE)
+                {
+                    System.TimeSpan total = this.mediaElement.NaturalDuration.TimeSpan;
+                    this._timeDurationSize = 2;
+                    this.videoProgressBar.Maximum = total.TotalSeconds;
+                    this.totalTimeLabel.Content = this.formatTime(total);
+                    this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
                     GridProgressBar.Visibility = System.Windows.Visibility.Visible;
+                    this._timeDurationSize = total.Hours > 0 ? 3 : 2;
+                }
                 else
                     GridProgressBar.Visibility = System.Windows.Visibility.Hidden;
-                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);
                 if (currentMedia.Type == mediaType.AUDIO)
                     this.displayAudioElements(currentMedia);
             }
