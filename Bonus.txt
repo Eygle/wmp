@@ -8,6 +8,7 @@ MEDIA PLAYER
 	Full screen
 	Mute/Unmute
 	Drag & Drop
+	Icone de programme + nom de programme
 
 PLAYLISTS
 	Playlist (multiples)

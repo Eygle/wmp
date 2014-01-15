@@ -18,6 +18,7 @@ using System.Threading;
 using MediaPlayer.ViewModel;
 using MediaPlayer.Model;
 using System.Collections.ObjectModel;
+using MediaPlayer.View;
 
 namespace MediaPlayer
 {
@@ -51,6 +52,8 @@ namespace MediaPlayer
             _webcam.InitializeWebCam(ref captureImage);
             this.hideAudioElements();
             this._playlistManager = new PlaylistManager();
+
+            Prompt.ShowDialog("coucuo", "toto");
         }
 
         ~MainWindow()

@@ -93,6 +93,7 @@
     <Compile Include="ViewModel\CurrentUsers.cs" />
     <Compile Include="ViewModel\MediaFactory.cs" />
     <Compile Include="ViewModel\WebCam.cs" />
+    <Compile Include="View\Prompt.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
