@@ -1,0 +1,27 @@
+MEDIA PLAYER
+	Avance/recule Rapide
+	Slide bar
+	Aléatoire/Normal
+	Répéter toute la liste
+	Répéter l'élément courant
+	Ouvrir depuis fichier ou dossier
+	Full screen
+	Mute/Unmute
+	Drag & Drop
+
+PLAYLISTS
+	Playlist (multiples)
+	Medias infos [metadatas] (size/type/...)
+	Library (video/audio/images)
+	Recherche dans les playlist (placeholder like)
+	Tris sur tous les champs des playlists
+	Gestion playlists + dossiers
+	Lecture d'un media depuis playlist
+	Changement de la playlsit courrante
+
+YOUTUBE PLAYER
+CAMERA CAPTURE
+SETTINGS
+	Login/Logout
+	Account Maangement (username / password / create / delete /change)
+	Save/Load Playlists
