@@ -82,6 +82,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\MediaUsers.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\XmlAnything.cs" />
     <Compile Include="ViewModel\PlaylistManager.cs" />
     <Compile Include="ViewModel\CurrentPlaylist.cs" />
     <Compile Include="ViewModel\Helper.cs" />

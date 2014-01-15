@@ -96,75 +96,75 @@ namespace MediaPlayer.Model
             return res;
         }
 
-        public string LengthString
+        public override string LengthString
         {
             get { return this._lengthString; }
             set { this._lengthString = value; }
         }
 
-        public long LengthLong
+        public override long LengthLong
         {
             get { return this._lengthLong; }
             set { this._lengthLong = value; }
         }
 
-        public string Title
+        public override string Title
         {
             get { return this._title; }
             set { this._title = value; }
         }
-        public string Genre
+        public override string Genre
         {
             get { return this._genre; }
             set { this._genre = value; }
         }
 
-        public string PathName
+        public override string PathName
         {
             get { return this._pathName; }
             set { this._pathName = value; }
         }
 
-        public string FileSize
+        public override string FileSize
         {
             get { return this._fileSize; }
             set { this._fileSize = value; }
         }
 
-        public long Size
+        public override long Size
         {
             get { return this._size; }
             set { this._size = value; }
         }
 
-        public string Artist
+        public override string Artist
         {
             get { return this._artist; }
             set { this._artist = value; }
         }
 
-        public string Year
+        public override string Year
         {
             get { return this._year; }
             set { this._year = value; }
         }
 
-        public mediaType Type
+        public override mediaType Type
         {
             get { return this._type; }
             set { this._type = value; }
         }
 
-        public string Album
+        public override string Album
         {
             get { return this._album; }
             set { this._album = value; }
         }
 
-        public BitmapImage Icon
+        /*public override BitmapImage Icon
         {
             get { return this._icon; }
             set { this._icon = value; }
-        }
+        }*/
     }
 }

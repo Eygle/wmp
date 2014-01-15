@@ -46,10 +46,10 @@ namespace MediaPlayer
             InitializeComponent();
             DataContext = this;
             initTimer();
-            _webcam = new WebCam();
             _playList = new CurrentPlaylist();
             _users = new CurrentUsers();
-            _webcam.InitializeWebCam(ref captureImage);
+
+            _webcam = new WebCam();
             this.hideAudioElements();
             this._playlistManager = new PlaylistManager();
         }
@@ -518,17 +518,6 @@ namespace MediaPlayer
             Helper.SaveImageCapture((BitmapSource)captureImage.Source);
         }
 
-        private void CamCaptureTab_GotFocus(object sender, RoutedEventArgs e)
-        {
-            _webcam.Start();
-            _webcam.Continue();
-        }
-
-        private void CamCaptureTab_LostFocus(object sender, RoutedEventArgs e)
-        {
-            _webcam.Stop();
-        }
-
         private void FullScreen_Click(object sender, RoutedEventArgs e)
         {
             if (!this._fullScreen)
@@ -752,6 +741,35 @@ namespace MediaPlayer
             }
             this._isShuffle = false;
             Random.Background = this.loadImage("../Images/ShuffleCommu.png");
+        }
+
+        private void CamCaptureTab_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Tabulations_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabItem ti = Tabulations.SelectedItem as TabItem;
+            if (ti.Name == "CamCaptureTab")
+            {
+                this.CamCaptureTabSelected();
+            }
+            else
+            {
+                try
+                {
+                    _webcam.Stop();
+                }
+                catch { }
+            }
+        }
+
+        private void CamCaptureTabSelected()
+        {
+            _webcam.InitializeWebCam(ref captureImage);
+            _webcam.Start();
+            _webcam.Continue();
         }
     }
 }

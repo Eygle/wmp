@@ -70,7 +70,7 @@
     <Grid Background="White" x:Name="grid1">
 
 
-        <TabControl x:Name="Tabulations" Margin="0,0,0,0">
+        <TabControl x:Name="Tabulations" Margin="0,0,0,0" SelectionChanged="Tabulations_SelectionChanged">
             <TabItem x:Name="mediaTab" Header="Medias" BorderThickness="0,0,0,1" AllowDrop="True" Foreground="Black" RenderTransformOrigin="0,0.5">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -361,7 +361,7 @@
                     <WebBrowser x:Name="YoutubeEmbededPlayer" HorizontalAlignment="Left" Margin="5,42,5,5" VerticalAlignment="Top" Visibility="Hidden"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="CamCaptureTab" Header="Camera Capture" GotFocus="CamCaptureTab_GotFocus" LostFocus="CamCaptureTab_LostFocus">
+            <TabItem x:Name="CamCaptureTab" Header="Camera Capture" >
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="White" Offset="0"/>

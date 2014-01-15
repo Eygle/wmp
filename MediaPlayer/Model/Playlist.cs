@@ -9,6 +9,11 @@ using System.Xml.Serialization;
 
 namespace MediaPlayer.Model
 {
+    public class Flibble
+    {
+        public XmlAnything<IMedia> Foo;
+    }
+
     [Serializable]
     public class Playlist
     {
@@ -18,14 +23,16 @@ namespace MediaPlayer.Model
         public long _totalLength;
         [XmlElement(ElementName = "NumberElements")]
         public int _size;
-        //[XmlElement(ElementName = "Content")]
-        [XmlIgnore()]
+        [XmlElement(ElementName = "Content")]
+        //public List<Flibble> _saveContent;
+        //[XmlIgnore()]
         public List<IMedia> _content;
         [XmlIgnore()]
         public string path;
 
         public Playlist()
         {
+
             string path = PlaylistManager.PlaylistPath + "default";
             this.path = path;
             this._content = new List<IMedia>();
@@ -36,6 +43,16 @@ namespace MediaPlayer.Model
             this._name = Path.GetFileName(path);
             this.path = path;
             this._content = new List<IMedia>();
+        }
+
+        public void setSavablePlaylist()
+        {
+            foreach (IMedia item in _content)
+            {
+                Flibble x = new Flibble();
+                x.Foo = new XmlAnything<IMedia>(item);
+                //_saveContent.Add(x);
+            }
         }
 
         public void clear()

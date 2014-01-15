@@ -26,6 +26,7 @@ namespace MediaPlayer.ViewModel
         {
             using (FileStream fs = new FileStream(toSave.path, FileMode.Create))
             {
+                //toSave.setSavablePlaylist();
                 XmlSerializer serializer = new XmlSerializer(typeof(Model.Playlist));
                 serializer.Serialize(fs, toSave);
             }

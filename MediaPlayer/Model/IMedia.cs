@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using System.Xml.Serialization;
 
 namespace MediaPlayer.Model
 {
@@ -16,19 +17,22 @@ namespace MediaPlayer.Model
         AUDIO
     };
 
-    public interface IMedia
+    [XmlInclude(typeof(Video))]
+    [XmlInclude(typeof(Audio))]
+    [XmlInclude(typeof(Image))]
+    public abstract class IMedia
     {
-        string Title { get; set; }
-        mediaType Type { get; set; }
-        string LengthString { get; set; }
-        long LengthLong { get; set; }
-        string Genre { get; set; }
-        string Album { get; set; }
-        string PathName { get; set; }
-        string FileSize { get; set; }
-        string Year { get; set; }
-        string Artist { get; set; }
-        long Size { get; set; }
-        BitmapImage Icon { get; set; }
+        public abstract string Title { get; set; }
+        public abstract mediaType Type { get; set; }
+        public abstract string LengthString { get; set; }
+        public abstract long LengthLong { get; set; }
+        public abstract string Genre { get; set; }
+        public abstract string Album { get; set; }
+        public abstract string PathName { get; set; }
+        public abstract string FileSize { get; set; }
+        public abstract string Year { get; set; }
+        public abstract string Artist { get; set; }
+        public abstract long Size { get; set; }
+        //public abstract BitmapImage Icon { get; set; }
     }
 }
