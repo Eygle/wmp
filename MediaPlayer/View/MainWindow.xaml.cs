@@ -606,7 +606,7 @@ namespace MediaPlayer
             TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
             TreeViewItem root = treeView1.Items[0] as TreeViewItem;
 
-            if (this._playlistManager.removeFolder(item.Header as string))
+            if (this._playlistManager.removeFolder(item.Header as string,this._users.getLoggedUser().UserName))
                 root.Items.Remove(item);
             else
                 MessageBox.Show("Can't delete folder", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);

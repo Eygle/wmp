@@ -28,16 +28,16 @@ namespace MediaPlayer.ViewModel
         {
             if (this._tree.ContainsKey(name) || !_regexName.Match(name).Success)
                 return false;
-            Directory.CreateDirectory(PlaylistPath + userName + "/" + name); // TODO: don't hardcode the usernam
+            Directory.CreateDirectory(PlaylistPath + userName + "/" + name);
             this._tree.Add(name, new List<string>());
             return true;
         }
 
-        public bool removeFolder(string name)
+        public bool removeFolder(string name, string userName)
         {
             try
             {
-                Directory.Delete(PlaylistPath + "toto" + "/" + name, true); // TODO: don't hardcode the username
+                Directory.Delete(PlaylistPath + userName + "/" + name, true);
                 this._tree.Remove(name);
                 return true;
             }
