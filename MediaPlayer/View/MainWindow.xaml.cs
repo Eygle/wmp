@@ -601,6 +601,17 @@ namespace MediaPlayer
                 MessageBox.Show("Folder's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
         } 
 
+        private void DeleteFolder_Click(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
+            TreeViewItem root = treeView1.Items[0] as TreeViewItem;
+
+            if (this._playlistManager.removeFolder(item.Header as string))
+                root.Items.Remove(item);
+            else
+                MessageBox.Show("Can't delete folder", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
+        }
+
         private void ReloadTreeView_Click(object sender, RoutedEventArgs e)
         {
             Dictionary<string, List<string>> tree = this._playlistManager.reload("toto"); // TODO: don't hardcode the username

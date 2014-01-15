@@ -309,7 +309,7 @@
                                         <Image Source="../Images/AddPlaylistCommu.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="Remove folder">
+                                <MenuItem Header="Remove folder" Click="DeleteFolder_Click">
                                     <MenuItem.Icon>
                                         <Image Source="../Images/removeFolder.png" />
                                     </MenuItem.Icon>
