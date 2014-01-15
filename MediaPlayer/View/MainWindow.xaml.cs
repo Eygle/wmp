@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ using System.Threading;
 using MediaPlayer.ViewModel;
 using MediaPlayer.Model;
 using System.Collections.ObjectModel;
+using MediaPlayer.View;
 
 namespace MediaPlayer
 {
@@ -354,7 +356,21 @@ namespace MediaPlayer
             TabPlaylists.Focus();
         }
 
-
+        private void videoProgressBar_ValueChanged(object sender, DragCompletedEventArgs e)
+        {
+            try
+            {
+                double prog = videoProgressBar.Value;
+                if (Math.Abs(prog - mediaElement.Position.TotalSeconds) > 2)
+                {
+                    TimeSpan ts = new TimeSpan(0, 0, 0, (int)prog);
+                    mediaElement.Position = ts;
+                }
+            }
+            catch
+            {
+            }
+        }
 
         private void Random_Click(object sender, RoutedEventArgs e)
         {
@@ -375,7 +391,12 @@ namespace MediaPlayer
         {
             this.stopMedia();
             if (this._isLoopSingle)
+            {
                 this.playMedia();
+                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                if (currentMedia.Type == mediaType.AUDIO)
+                    this.displayAudioElements(currentMedia);
+            }
             else
                 this.goNextMedia();
         }
@@ -384,18 +405,20 @@ namespace MediaPlayer
         {
             try
             {
-                System.TimeSpan total = this.mediaElement.NaturalDuration.TimeSpan;
-                this._timeDurationSize = 2;
-                this.videoProgressBar.Maximum = total.TotalSeconds;
-                this.totalTimeLabel.Content = this.formatTime(total);
-                this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
-                this._timeDurationSize = total.Hours > 0 ? 3 : 2;
-                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);
-                if (mediaElement.HasAudio || mediaElement.HasVideo)
+                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                if ((mediaElement.HasAudio || mediaElement.HasVideo) && currentMedia.Type != mediaType.IMAGE)
+                {
+                    System.TimeSpan total = this.mediaElement.NaturalDuration.TimeSpan;
+                    this._timeDurationSize = 2;
+                    this.videoProgressBar.Maximum = total.TotalSeconds;
+                    this.totalTimeLabel.Content = this.formatTime(total);
+                    this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, 0));
                     GridProgressBar.Visibility = System.Windows.Visibility.Visible;
+                    this._timeDurationSize = total.Hours > 0 ? 3 : 2;
+                }
                 else
                     GridProgressBar.Visibility = System.Windows.Visibility.Hidden;
-                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                mediaTitle.Content = this._playList.getMediaTitle(this._listIndex);
                 if (currentMedia.Type == mediaType.AUDIO)
                     this.displayAudioElements(currentMedia);
             }
@@ -432,22 +455,6 @@ namespace MediaPlayer
                 if (pos > videoProgressBar.Value || pos == 0)
                     videoProgressBar.Value = pos;
                 this.currentTimeLabel.Content = this.formatTime(new System.TimeSpan(0, 0, (int)mediaElement.Position.TotalSeconds));
-            }
-        }
-
-        private void videoProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            try
-            {
-                double prog = videoProgressBar.Value;
-                if (Math.Abs(prog - mediaElement.Position.TotalSeconds) > 2)
-                {
-                    TimeSpan ts = new TimeSpan(0, 0, 0, (int)prog);
-                    mediaElement.Position = ts;
-                }
-            }
-            catch
-            {
             }
         }
 
@@ -580,30 +587,17 @@ namespace MediaPlayer
             TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
             string name = Microsoft.VisualBasic.Interaction.InputBox("Enter playlist's name below :", "Playlist Creation", "new playlist", 0, 0);
             
-            if (name == "")
-                return;
-            if (this._playlistManager.AddPlaylistToFolder(this._users.getLoggedUser().UserName, name, (item.Header as string)))
+            if (this._playlistManager.AddPlaylistToFolder(this._users.getLoggedUser(), name, (item.Header as string)))
                 item.Items.Add(new TreeViewItem { Header = name, Tag = "Playlist" });
-            else
-                MessageBox.Show("playlist's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
         }
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
-            if (this._users.getLoggedUser() != null)
-            {
-                TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
-                string name = Microsoft.VisualBasic.Interaction.InputBox("Enter folder's name below :", "Folder Creation", "new folder", 0, 0);
+            TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
+            string name = Microsoft.VisualBasic.Interaction.InputBox("Enter folder's name below :", "Folder Creation", "new folder", 0, 0);
             
-                if (name == "")
-                    return;
-                if (this._playlistManager.AddFolder(this._users.getLoggedUser().UserName, name))
-                    item.Items.Add(new TreeViewItem { Header = name, Tag = "PlaylistFolder" });
-                else
-                    MessageBox.Show("Folder's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
-            }
-            else
-                MessageBox.Show("You must be logged to create folders", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);                
+            if (this._playlistManager.AddFolder(this._users.getLoggedUser(), name))
+                item.Items.Add(new TreeViewItem { Header = name, Tag = "PlaylistFolder" });
         }
 
         private void DeleteFolder_Click(object sender, RoutedEventArgs e)
@@ -611,31 +605,32 @@ namespace MediaPlayer
             TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
             TreeViewItem root = treeView1.Items[0] as TreeViewItem;
 
-            if (this._playlistManager.removeFolder(this._users.getLoggedUser().UserName, item.Header as string))
+            if (this._playlistManager.removeFolder(this._users.getLoggedUser(), item.Header as string))
                 root.Items.Remove(item);
-            else
-                MessageBox.Show("Can't delete folder", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
+        }
+
+        private void DeletePlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
+            TreeViewItem folder = ItemsControl.ItemsControlFromItemContainer(item) as TreeViewItem;
+
+            if (this._playlistManager.removePlaylistFromFolder(this._users.getLoggedUser(), item.Header as string, folder.Header as string))
+                folder.Items.Remove(item);
+        }
+
+        private void reloadTreeView()
+        {
+            TreeViewItem root = treeView1.Items[0] as TreeViewItem;
+            List<TreeViewItem> lst = this._playlistManager.reload(this._users.getLoggedUser());
+
+            root.Items.Clear();
+            foreach (TreeViewItem item in lst)
+                root.Items.Add(item);
         }
 
         private void ReloadTreeView_Click(object sender, RoutedEventArgs e)
         {
-            TreeViewItem root = treeView1.Items[0] as TreeViewItem;
-
-            root.Items.Clear();
-            root.Items.Add(new TreeViewItem { Header = "default playlist", Tag = "Playlist" });
-            if (this._users.getLoggedUser() != null)
-            {
-                Dictionary<string, List<string>> treeReloaded = this._playlistManager.reload(this._users.getLoggedUser().UserName);
-
-                foreach (KeyValuePair<string, List<string>> entry in treeReloaded)
-                {
-                    TreeViewItem folder = new TreeViewItem { Header = entry.Key, Tag = "PlaylistFolder" };
-
-                    root.Items.Add(folder);
-                    foreach (string pls in entry.Value)
-                        folder.Items.Add(new TreeViewItem { Header = pls, Tag = "Playlist" });
-                }
-            }
+            reloadTreeView();
             MessageBox.Show("Reload done", "Playlist info", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
         }
 
@@ -655,6 +650,7 @@ namespace MediaPlayer
                 this.ProfileUserNameTBx.Text = this._users.getLoggedUser().UserName;
                 this.Login.Visibility = Visibility.Hidden;
                 this.Profile.Visibility = Visibility.Visible;
+                reloadTreeView();
             }
         }
 
@@ -663,6 +659,7 @@ namespace MediaPlayer
             this._users.logoutUser();
             this.Profile.Visibility = Visibility.Hidden;
             this.Login.Visibility = Visibility.Visible;
+            reloadTreeView();
         }
 
         private void audioAnimationMediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
