@@ -389,8 +389,8 @@
                 <Grid Background="White" Margin="0,2,0.2,2.6">
                     <Grid x:Name="Login" Visibility="Visible" Background="#FFFFFF" Width="350" Height="200">
                         <Label x:Name="LoginLbl" Content="Login" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="20"/>
-                        <Label x:Name="userNameLbl" Content="User Name:" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Height="25"/>
-                        <TextBox x:Name="userNameTbx" MaxLength="12" Width="200" Height="25" Margin="100,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                        <Label x:Name="userNameLbl" Content="User Name:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Height="25"/>
+                        <TextBox x:Name="userNameTbx" MaxLength="12" Width="200" Height="25" Margin="100,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                         <Label x:Name="passwordLbl" Content="Password:" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Height="25"/>
                         <PasswordBox x:Name="passwordPbx" MaxLength="12" HorizontalAlignment="Left" Margin="100,100,0,0" VerticalAlignment="Top" Width="200" Height="25"/>
                         <Button x:Name="LoginBtn" Content="Login" HorizontalAlignment="Center" Margin="-85,0,0,10" VerticalAlignment="Bottom" Width="75" IsCancel="True" Click="LoginBtn_Click"/>
