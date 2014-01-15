@@ -391,7 +391,12 @@ namespace MediaPlayer
         {
             this.stopMedia();
             if (this._isLoopSingle)
+            {
                 this.playMedia();
+                IMedia currentMedia = this._playList.getMediaByIndex(this._listIndex);
+                if (currentMedia.Type == mediaType.AUDIO)
+                    this.displayAudioElements(currentMedia);
+            }
             else
                 this.goNextMedia();
         }
