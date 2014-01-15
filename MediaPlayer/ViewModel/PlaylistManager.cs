@@ -24,20 +24,21 @@ namespace MediaPlayer.ViewModel
                 Directory.CreateDirectory(PlaylistPath);
         }
 
-        public bool AddFolder(string name, string userName)
+        public bool AddFolder(string username, string name)
         {
             if (this._tree.ContainsKey(name) || !_regexName.Match(name).Success)
                 return false;
-            Directory.CreateDirectory(PlaylistPath + userName + "/" + name);
+            Directory.CreateDirectory(PlaylistPath + username + "/" + name);
             this._tree.Add(name, new List<string>());
             return true;
         }
 
-        public bool removeFolder(string name, string userName)
+        public bool removeFolder(string username, string name)
         {
             try
             {
-                Directory.Delete(PlaylistPath + userName + "/" + name, true);
+                Directory.Delete(PlaylistPath + username + "/" + name, true);
+
                 this._tree.Remove(name);
                 return true;
             }
@@ -46,12 +47,12 @@ namespace MediaPlayer.ViewModel
                 return false;
             }
         }
-        
-        public bool AddPlaylistToFolder(string name, string folder, string userName)  
+
+        public bool AddPlaylistToFolder(string username, string name, string folder)
         {
             if (this._tree[folder].Contains(name) || !_regexName.Match(name).Success)
                 return false;
-            File.Create(PlaylistPath + userName + "/" + folder + "/" + name);
+            File.Create(PlaylistPath + username + "/" + folder + "/" + name);
             this._tree[folder].Add(name);
             return true;
         }
