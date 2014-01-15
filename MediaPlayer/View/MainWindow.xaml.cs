@@ -582,7 +582,7 @@ namespace MediaPlayer
             
             if (name == "")
                 return;
-            if (this._playlistManager.AddPlaylistToFolder(name, (item.Header as string)))
+            if (this._playlistManager.AddPlaylistToFolder(name, (item.Header as string), this._users.getLoggedUser().UserName))
                 item.Items.Add(new TreeViewItem { Header = name, Tag = "Playlist" });
             else
                 MessageBox.Show("playlist's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
@@ -592,10 +592,10 @@ namespace MediaPlayer
         {
             TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
             string name = Microsoft.VisualBasic.Interaction.InputBox("Enter folder's name below :", "Folder Creation", "new folder", 0, 0);
-            
+
             if (name == "")
                 return;
-            if (this._playlistManager.AddFolder(name))
+            if (this._playlistManager.AddFolder(name, this._users.getLoggedUser().UserName))
                 item.Items.Add(new TreeViewItem { Header = name, Tag = "PlaylistFolder" });
             else
                 MessageBox.Show("Folder's name invalid", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
@@ -606,7 +606,7 @@ namespace MediaPlayer
             TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
             TreeViewItem root = treeView1.Items[0] as TreeViewItem;
 
-            if (this._playlistManager.removeFolder(item.Header as string))
+            if (this._playlistManager.removeFolder(item.Header as string,this._users.getLoggedUser().UserName))
                 root.Items.Remove(item);
             else
                 MessageBox.Show("Can't delete folder", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
@@ -614,7 +614,7 @@ namespace MediaPlayer
 
         private void ReloadTreeView_Click(object sender, RoutedEventArgs e)
         {
-            Dictionary<string, List<string>> tree = this._playlistManager.reload("toto"); // TODO: don't hardcode the username
+            Dictionary<string, List<string>> tree = this._playlistManager.reload(this._users.getLoggedUser().UserName);
 
             TreeViewItem root = treeView1.Items[0] as TreeViewItem;
 
