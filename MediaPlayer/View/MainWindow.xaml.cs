@@ -52,8 +52,6 @@ namespace MediaPlayer
             _webcam.InitializeWebCam(ref captureImage);
             this.hideAudioElements();
             this._playlistManager = new PlaylistManager();
-
-            Prompt.ShowDialog("coucuo", "toto");
         }
 
         ~MainWindow()
