@@ -377,12 +377,13 @@ namespace MediaPlayer
             this._isShuffle = !this._isShuffle;
             if (this._isShuffle)
             {
-                this._playList.shuffle();
+                this._listIndex = this._playList.shuffle(this._listIndex);
                 Random.Background = this.loadImage("../Images/shuffleActiveCommu.png");
+                
             }
             else
             {
-                this._playList.resetPlayList();
+                this._listIndex = this._playList.resetPlayList(this._listIndex);
                 Random.Background = this.loadImage("../Images/ShuffleCommu.png");
             }
         }
