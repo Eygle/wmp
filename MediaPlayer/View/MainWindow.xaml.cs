@@ -640,7 +640,6 @@ namespace MediaPlayer
         private void CreateUserBtn_Copy_Click(object sender, RoutedEventArgs e)
         {
             this._users.addUser(this.userNameTbx.Text, this.passwordPbx.Password);
-            this._users.save();
         }
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
