@@ -718,10 +718,15 @@ namespace MediaPlayer
                 this._users.changeUserName(this.ProfileUserNameTBx.Text);
         }
 
-        private void ChangeUserName_Copy_Click(object sender, RoutedEventArgs e)
+        private void ChangePassword_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to change your password?", "Changing User Name Warning", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
-                this._users.changePassword(this.ProfileOldPassword1TBx.Password, this.ProfileOldPassword2TBx.Password, this.ProfileNewPasswordTBx.Password);
+            {
+                this._users.changePassword(this.ProfileOldPasswordTBx.Password, this.ProfileNewPassword1TBx.Password, this.ProfileNewPassword2TBx.Password);
+                this.ProfileOldPasswordTBx.Password = "";
+                this.ProfileNewPassword1TBx.Password = "";
+                this.ProfileNewPassword2TBx.Password = "";
+            }
         }
     }
 }
