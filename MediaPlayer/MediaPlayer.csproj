@@ -84,7 +84,7 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="ViewModel\PlaylistManager.cs" />
     <Compile Include="ViewModel\CurrentPlaylist.cs" />
-    <Compile Include="View\Helper.cs" />
+    <Compile Include="ViewModel\Helper.cs" />
     <Compile Include="Model\Image.cs" />
     <Compile Include="Model\Video.cs" />
     <Compile Include="Model\Audio.cs" />
