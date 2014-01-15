@@ -616,7 +616,16 @@ namespace MediaPlayer
                 MessageBox.Show("Can't delete folder", "Playlist Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None);
         }
 
-        private void ReloadTreeView_Click(object sender, RoutedEventArgs e)
+        private void DeletePlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem item = this.treeView1.SelectedItem as TreeViewItem;
+            TreeViewItem folder = ItemsControl.ItemsControlFromItemContainer(item) as TreeViewItem;
+
+            if (this._playlistManager.removePlaylistFromFolder(this._users.getLoggedUser().UserName, item.Header as string, folder.Header as string))
+                folder.Items.Remove(item);
+        }
+
+        private void reloadTreeView()
         {
             TreeViewItem root = treeView1.Items[0] as TreeViewItem;
 
@@ -635,6 +644,11 @@ namespace MediaPlayer
                         folder.Items.Add(new TreeViewItem { Header = pls, Tag = "Playlist" });
                 }
             }
+        }
+
+        private void ReloadTreeView_Click(object sender, RoutedEventArgs e)
+        {
+            reloadTreeView();
             MessageBox.Show("Reload done", "Playlist info", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None);
         }
 
@@ -654,6 +668,7 @@ namespace MediaPlayer
                 this.ProfileUserNameTBx.Text = this._users.getLoggedUser().UserName;
                 this.Login.Visibility = Visibility.Hidden;
                 this.Profile.Visibility = Visibility.Visible;
+                reloadTreeView();
             }
         }
 
@@ -662,6 +677,7 @@ namespace MediaPlayer
             this._users.logoutUser();
             this.Profile.Visibility = Visibility.Hidden;
             this.Login.Visibility = Visibility.Visible;
+            reloadTreeView();
         }
 
         private void audioAnimationMediaElement_MediaFailed(object sender, ExceptionRoutedEventArgs e)
