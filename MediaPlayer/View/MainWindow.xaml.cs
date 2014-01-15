@@ -731,5 +731,19 @@ namespace MediaPlayer
                 this.ProfileNewPassword2TBx.Password = "";
             }
         }
+
+        private void playList_Drop(object sender, DragEventArgs e)
+        {
+            string[] files = e.Data.GetData(DataFormats.FileDrop) as string[];
+            this._playList.addFolder(files);
+            this.playList.ItemsSource = this._playList.getPlayList();
+            if (mediaElement.Source == null && this._playList.getPlayList().Count() > 0)
+            {
+                mediaElement.Source = new Uri(this._playList.getMediaPath(0));
+                this.playMedia();
+            }
+            this._isShuffle = false;
+            Random.Background = this.loadImage("../Images/ShuffleCommu.png");
+        }
     }
 }
