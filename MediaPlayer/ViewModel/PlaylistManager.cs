@@ -45,7 +45,10 @@ namespace MediaPlayer.ViewModel
             {
                 return false;
             }
-        }       public bool AddPlaylistToFolder(string name, string folder)        {
+        }
+        
+        public bool AddPlaylistToFolder(string name, string folder, string userName)  
+        {
             if (this._tree[folder].Contains(name) || !_regexName.Match(name).Success)
                 return false;
             File.Create(PlaylistPath + userName + "/" + folder + "/" + name);
